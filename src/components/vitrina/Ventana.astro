@@ -1,0 +1,31 @@
+---
+// Marco de las vistas de ejemplo: barra superior, contenido y la tarjeta
+// blanca flotante con los tres resultados del pilar.
+import Check from '../iconos/Check.astro';
+
+interface Props {
+  titulo: string;
+  puntos: string[];
+}
+const { titulo, puntos } = Astro.props;
+---
+<div class="relative pb-2 sm:pb-10">
+  <div class="overflow-hidden rounded-2xl border border-white/10 bg-superficie">
+    <div class="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 text-[0.8rem]">
+      <span class="flex min-w-0 items-center gap-2 font-medium text-texto/90">
+        <span class="size-2 shrink-0 rounded-full bg-acento-claro"></span>
+        <span class="truncate">{titulo}</span>
+      </span>
+      <span class="shrink-0 rounded-md border border-white/15 px-2 py-0.5 text-tenue">Vista de ejemplo</span>
+    </div>
+    <div class="relative min-h-[18rem] bg-[radial-gradient(120%_70%_at_100%_0%,rgb(var(--luz-1)/0.22),transparent_60%)] p-4 sm:p-5 sm:pb-24">
+      <slot />
+    </div>
+  </div>
+
+  <ul class="relative z-10 -mt-6 ml-auto w-[90%] space-y-2.5 rounded-2xl bg-white p-4 text-[0.95rem] text-tinta shadow-[0_24px_60px_-20px_rgb(0_0_0/0.7)] sm:absolute sm:right-4 sm:-bottom-2 sm:mt-0 sm:w-auto sm:p-5 lg:-right-6">
+    {puntos.map((p) => (
+      <li class="flex items-center gap-2.5"><Check class="size-5 shrink-0 text-acento-blanco" />{p}</li>
+    ))}
+  </ul>
+</div>

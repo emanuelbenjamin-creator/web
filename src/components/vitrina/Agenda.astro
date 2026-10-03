@@ -1,0 +1,31 @@
+---
+import Ventana from './Ventana.astro';
+
+const dias = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+const citas = [
+  { hora: '09:00', que: 'Consulta', estado: 'Confirmada' },
+  { hora: '11:30', que: 'Control', estado: 'Recordatorio enviado' },
+  { hora: '16:30', que: 'Limpieza dental', estado: 'Reservada por WhatsApp hace 1 min', nueva: true },
+];
+---
+<Ventana titulo="Agenda · conectada a Google Calendar" puntos={['Reservas desde WhatsApp o la web', 'Confirmaciones automáticas', 'Recordatorios que evitan faltas']}>
+  <div class="grid grid-cols-6 gap-1.5 text-center text-[0.75rem]">
+    {dias.map((d, i) => (
+      <span class:list={['rounded-lg py-2', i === 2 ? 'bg-acento font-semibold text-sobre-acento' : 'bg-superficie-2 text-texto-2']}>{d}</span>
+    ))}
+  </div>
+  <ul class="mt-4 space-y-2 text-[0.88rem]">
+    {citas.map((c, i) => (
+      <li
+        class:list={['aparecer flex items-center gap-3 rounded-xl p-3', c.nueva ? 'border border-[rgb(var(--luz-1)/0.5)] bg-[rgb(var(--luz-1)/0.16)]' : 'bg-superficie-2']}
+        style={`animation-delay:${i * 150}ms`}
+      >
+        <span class="font-titulo text-base font-semibold tabular-nums">{c.hora}</span>
+        <span class="min-w-0">
+          <span class="block font-semibold">{c.que}</span>
+          <span class="block text-[0.78rem] text-texto-2">{c.estado}</span>
+        </span>
+      </li>
+    ))}
+  </ul>
+</Ventana>

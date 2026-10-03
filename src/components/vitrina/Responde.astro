@@ -1,0 +1,29 @@
+---
+import Ventana from './Ventana.astro';
+
+const mensajes = [
+  { de: 'cliente', texto: 'Hola, ¿cuánto cuesta una limpieza dental? ¿Atienden mañana?', hora: '23:47' },
+  { de: 'agente', texto: '¡Hola! Sí, mañana tenemos 10:00 y 16:30. La limpieza incluye revisión y pulido. ¿Te reservo una?', hora: '23:47' },
+  { de: 'cliente', texto: '16:30, por favor', hora: '23:48' },
+  { de: 'agente', texto: 'Listo, quedó agendada para mañana a las 16:30. Te enviaré un recordatorio.', hora: '23:48' },
+];
+---
+<Ventana titulo="WhatsApp · atención automática" puntos={['Responde precios y dudas', 'Toma pedidos y agenda', 'Pasa a una persona si hace falta']}>
+  <ol class="flex flex-col gap-2.5 text-[0.92rem] leading-snug">
+    {mensajes.map((m, i) => (
+      <li
+        class:list={[
+          'aparecer max-w-[85%] rounded-2xl px-3.5 py-2.5',
+          m.de === 'cliente'
+            ? 'self-start rounded-bl-md bg-superficie-2'
+            : 'self-end rounded-br-md border border-[rgb(var(--luz-1)/0.45)] bg-[rgb(var(--luz-1)/0.18)]',
+        ]}
+        style={`animation-delay:${i * 180}ms`}
+      >
+        <span class="sr-only">{m.de === 'cliente' ? 'Cliente:' : 'Agente:'}</span>
+        {m.texto}
+        <span class="mt-1 block text-right text-[0.7rem] text-texto-2">{m.hora}{m.de === 'agente' && ' · al instante'}</span>
+      </li>
+    ))}
+  </ol>
+</Ventana>

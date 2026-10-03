@@ -1,0 +1,18 @@
+---
+// Columnas de luz difuminadas detrás de la portada y del inicio de la vitrina.
+// Alto y brillo de cada columna, simétricos alrededor del centro.
+const columnas = [
+  [56, 0.7], [66, 0.8], [80, 0.95], [70, 0.7], [92, 1], [100, 0.85],
+  [92, 1], [70, 0.7], [80, 0.95], [66, 0.8], [56, 0.7],
+] as const;
+---
+<div class="luz" aria-hidden="true">
+  {['luz__columnas luz__columnas--suave', 'luz__columnas luz__columnas--nitida'].map((capa) => (
+    <div class={capa}>
+      {columnas.map(([alto, brillo], i) => (
+        <span class="luz__columna" style={`--alto:${alto}%;--brillo:${brillo};--retraso:${-i * 1.7}s`}></span>
+      ))}
+    </div>
+  ))}
+  <div class="luz__velo"></div>
+</div>

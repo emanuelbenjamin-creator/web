@@ -1,0 +1,34 @@
+---
+import Ventana from './Ventana.astro';
+
+const columnas = [
+  { titulo: 'Nuevos', tarjetas: [
+    { texto: 'Contacto de Instagram', detalle: 'Entró solo hace 2 min', nuevo: true },
+    { texto: 'Anuncio de Meta', detalle: 'Calificado por el agente' },
+  ] },
+  { titulo: 'En seguimiento', tarjetas: [
+    { texto: 'Cotización enviada', detalle: 'Recordatorio automático mañana' },
+    { texto: 'Carrito abandonado', detalle: 'Mensaje de recuperación enviado' },
+  ] },
+  { titulo: 'Cerrados', tarjetas: [
+    { texto: 'Venta cerrada', detalle: 'Después de 3 seguimientos' },
+  ] },
+];
+---
+<Ventana titulo="CRM · embudo de ventas" puntos={['Cada contacto entra solo', 'Seguimiento hasta cerrar', 'Recupera clientes y cotizaciones']}>
+  <div class="grid grid-cols-3 gap-2.5 text-[0.8rem] leading-snug sm:gap-3">
+    {columnas.map((c) => (
+      <div>
+        <p class="mb-2 text-[0.75rem] font-semibold text-texto-2">{c.titulo}</p>
+        <ul class="space-y-2">
+          {c.tarjetas.map((t, i) => (
+            <li class:list={['aparecer rounded-xl bg-superficie-2 p-2.5', t.nuevo && 'ring-1 ring-[rgb(var(--luz-1)/0.7)]']} style={`animation-delay:${i * 150}ms`}>
+              <span class="block font-semibold text-texto">{t.texto}</span>
+              <span class="mt-0.5 block text-texto-2">{t.detalle}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</Ventana>

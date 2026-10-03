@@ -1,45 +1,140 @@
 @import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque/opsz.css";
+@import "@fontsource-variable/figtree";
 
-/* Tokens del sitio: colores, tipografías y radios. Se completan con el
-   estilo definido para la landing; los componentes usan solo estos nombres
-   (bg-fondo, text-texto, font-titulo, etc.). */
+/* Acento intercambiable: violeta (por defecto, como la referencia) o lima
+   (?acento=lima). Contrastes verificados: blanco sobre #6A45F5 5.55:1,
+   #B3A6FF sobre el fondo 9.2:1, fondo sobre lima 15:1. */
+:root {
+  --ac: #6a45f5;            /* botones y marcas */
+  --ac-texto: #ffffff;      /* texto sobre el acento */
+  --ac-claro: #b3a6ff;      /* acento como texto sobre fondo oscuro */
+  --ac-sobre-blanco: #6a45f5; /* acento sobre tarjetas blancas */
+  --luz-1: 106 69 245;      /* columnas de luz */
+  --luz-2: 255 138 76;      /* brillo cálido de abajo */
+  --luz-3: 255 95 162;
+}
+:root[data-acento="lima"] {
+  --ac: #c6f84c;
+  --ac-texto: #0a0b14;
+  --ac-claro: #c6f84c;
+  --ac-sobre-blanco: #3f6212;
+  --luz-1: 150 214 52;
+  --luz-2: 62 216 195;
+  --luz-3: 198 248 76;
+}
+
+@theme inline {
+  --color-acento: var(--ac);
+  --color-sobre-acento: var(--ac-texto);
+  --color-acento-claro: var(--ac-claro);
+  --color-acento-blanco: var(--ac-sobre-blanco);
+}
+
 @theme {
-  --color-fondo: #ffffff;
-  --color-superficie: #f5f6fa;
-  --color-borde: #e3e6ef;
-  --color-texto: #14182b;
-  --color-texto-suave: #4a5170;
-  --color-acento: #3f6bff;
-  --color-acento-texto: #ffffff;
+  --color-fondo: #0a0b14;
+  --color-superficie: #141625;
+  --color-superficie-2: #1c1f33;
+  --color-tarjeta: #0e0f1a;
+  --color-linea: rgb(245 244 250 / 0.09);
+  --color-texto: #f5f4fa;
+  --color-texto-2: #a9acc2;
+  --color-tenue: #7d8099;
+  --color-tinta: #0a0b14;
+  --color-whatsapp: #25d366; /* solo el botón flotante de WhatsApp */
 
-  --font-titulo: system-ui, sans-serif;
-  --font-cuerpo: system-ui, sans-serif;
+  --font-titulo: "Bricolage Grotesque Variable", ui-sans-serif, sans-serif;
+  --font-cuerpo: "Figtree Variable", ui-sans-serif, sans-serif;
+
+  --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  scroll-padding-top: 5rem;
 }
 
 body {
   background: var(--color-fondo);
   color: var(--color-texto);
   font-family: var(--font-cuerpo);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+h1, h2, h3, p, li {
+  text-wrap: pretty;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 2px;
+  outline: 2px solid var(--ac-claro);
+  outline-offset: 3px;
+}
+
+/* Columnas de luz de la portada: barras verticales difuminadas que suben
+   desde un brillo cálido. Respiran lento; con "reducir movimiento" quedan
+   quietas. */
+.luz {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+}
+.luz__columnas {
+  position: absolute;
+  inset: 0 -3%;
+  display: flex;
+  align-items: flex-end;
+}
+/* Resplandor amplio + una capa más nítida que marca el borde de cada
+   columna, como en la referencia. */
+.luz__columnas--suave { filter: blur(34px); }
+.luz__columnas--nitida { filter: blur(5px); opacity: 0.45; mix-blend-mode: screen; }
+.luz__columna {
+  flex: 1;
+  height: var(--alto);
+  background: linear-gradient(
+    to top,
+    rgb(var(--luz-2) / 1) 0%,
+    rgb(var(--luz-3) / 0.95) 10%,
+    rgb(var(--luz-1) / 1) 30%,
+    rgb(var(--luz-1) / 0.55) 62%,
+    rgb(var(--luz-1) / 0.12) 88%,
+    transparent 100%
+  );
+  opacity: var(--brillo);
+  animation: respirar 10s ease-in-out infinite;
+  animation-delay: var(--retraso);
+}
+.luz__velo {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(42% 30% at 50% 24%, rgb(10 11 20 / 0.45), transparent 75%),
+    linear-gradient(to bottom, var(--color-fondo) 0%, transparent 16%);
+}
+
+@keyframes respirar {
+  0%, 100% { opacity: var(--brillo); }
+  50% { opacity: calc(var(--brillo) * 0.7); }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.aparecer {
+  animation: aparecer 0.45s var(--ease-salida) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

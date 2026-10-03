@@ -1,10 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
----
+import Encabezado from '../components/Encabezado.astro';
+import FondoLuz from '../components/FondoLuz.astro';
+import Portada from '../components/Portada.astro';
+import Vitrina from '../components/Vitrina.astro';
+import Tecnologias from '../components/Tecnologias.astro';
+import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
 
-<Base titulo="Próximamente" descripcion="Sitio en construcción.">
-  <main class="mx-auto flex min-h-dvh max-w-3xl flex-col items-center justify-center gap-4 px-4 text-center">
-    <h1 class="font-titulo text-4xl font-semibold tracking-tight">Próximamente</h1>
-    <p class="text-texto-suave">Estamos preparando este sitio.</p>
+const pendientes = [
+  'El problema', 'Cómo trabajamos', 'Casos por rubro (Antes / Ahora)', 'Demos en video', 'Calculadora de ahorro',
+  'Datos del mercado', 'Planes y precios', 'Testimonios', 'Preguntas frecuentes', 'Llamado final y formulario', 'Pie de página',
+];
+---
+<Base
+  titulo="Automatiza Studio | Agencia de automatización con IA en Perú"
+  descripcion="Agentes de IA para WhatsApp, CRM y automatización de procesos para empresas. Tu negocio responde, vende, agenda y se administra solo, las 24 horas."
+>
+  <Encabezado />
+  <main>
+    <div class="relative isolate">
+      <FondoLuz />
+      <Portada />
+      <Vitrina />
+    </div>
+    <Tecnologias />
+
+    <!-- v0: lo que sigue se construye después de aprobar el estilo -->
+    <section class="mx-auto max-w-6xl px-4 py-16" aria-label="Secciones pendientes">
+      <div class="rounded-2xl border border-dashed border-white/20 p-6 text-texto-2">
+        <p class="font-semibold text-texto">[v0] Aquí siguen las demás secciones de la portada:</p>
+        <p class="mt-2 text-sm">{pendientes.join(' · ')}</p>
+      </div>
+    </section>
   </main>
+  <WhatsAppFlotante />
 </Base>

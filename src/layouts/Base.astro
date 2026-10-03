@@ -7,8 +7,8 @@ interface Props {
   imagen?: string; // ruta en public/ para la vista previa en redes
 }
 
-const { titulo, descripcion, imagen = '/og.png' } = Astro.props;
-const urlImagen = Astro.site ? new URL(imagen, Astro.site).href : imagen;
+const { titulo, descripcion, imagen } = Astro.props;
+const urlImagen = imagen && Astro.site ? new URL(imagen, Astro.site).href : imagen;
 ---
 
 <!doctype html>
@@ -18,18 +18,28 @@ const urlImagen = Astro.site ? new URL(imagen, Astro.site).href : imagen;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
+    <meta name="theme-color" content="#0a0b14" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {Astro.site && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />}
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_PE" />
+    <meta property="og:site_name" content="Automatiza Studio" />
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descripcion} />
-    <meta property="og:image" content={urlImagen} />
-    <meta name="twitter:card" content="summary_large_image" />
+    {urlImagen && <meta property="og:image" content={urlImagen} />}
+    <meta name="twitter:card" content={urlImagen ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={titulo} />
     <meta name="twitter:description" content={descripcion} />
-    <meta name="twitter:image" content={urlImagen} />
+
+    <!-- Variante de color para comparar: ?acento=lima -->
+    <script is:inline>
+      try {
+        if (new URLSearchParams(location.search).get('acento') === 'lima') {
+          document.documentElement.dataset.acento = 'lima';
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body class="min-h-dvh antialiased">
     <slot />
