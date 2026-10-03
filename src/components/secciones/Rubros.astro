@@ -1,6 +1,7 @@
 ---
 import Flecha from '../iconos/Flecha.astro';
 import { RUBROS } from '../../datos/rubros';
+import { publicada } from '../../datos/sitio';
 ---
 <section id="rubros" class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-rubros">
   <div class="mx-auto max-w-6xl" data-pestanas>
@@ -45,9 +46,11 @@ import { RUBROS } from '../../datos/rubros';
             Lo resolvemos con:
             {r.pilares.map((p) => <span class="rounded-full border border-white/15 px-3 py-1 text-texto">{p}</span>)}
           </p>
-          <a href={`/rubros/${r.id}/`} class="inline-flex min-h-11 items-center gap-2 font-semibold text-acento-claro hover:underline">
-            Ver soluciones para {r.nombre.toLowerCase()} <Flecha />
-          </a>
+          {publicada(`/rubros/${r.id}/`) && (
+            <a href={`/rubros/${r.id}/`} class="inline-flex min-h-11 items-center gap-2 font-semibold text-acento-claro hover:underline">
+              Ver soluciones para {r.nombre.toLowerCase()} <Flecha />
+            </a>
+          )}
         </div>
       </div>
     ))}

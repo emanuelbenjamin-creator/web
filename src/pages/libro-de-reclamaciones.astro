@@ -1,0 +1,238 @@
+---
+// Libro de Reclamaciones virtual (D.S. 011-2011-PCM, modificado por el
+// D.S. 101-2022-PCM). El sitio no tiene servidor: la hoja se envía por correo
+// al proveedor con copia al consumidor, y se puede imprimir.
+// [CONECTA EL LIBRO A UN SERVICIO ANTES DE PUBLICAR]: la norma pide numeración
+// correlativa y registro de cada hoja; eso necesita un proveedor de libro de
+// reclamaciones virtual o un formulario con base de datos.
+import Interna from '../layouts/Interna.astro';
+import { SITIO } from '../datos/sitio';
+
+const campo =
+  'mt-2 block min-h-12 w-full rounded-xl border border-white/15 bg-fondo px-4 text-texto placeholder:text-tenue outline-none transition-colors focus:border-acento-claro aria-[invalid=true]:border-error';
+const etiqueta = 'block font-medium';
+const bloque = 'rounded-[24px] border border-white/10 bg-tarjeta p-6 sm:p-8';
+---
+<Interna
+  titulo="Libro de Reclamaciones"
+  descripcion="Libro de Reclamaciones virtual de Automatiza Studio, conforme al Código de Protección y Defensa del Consumidor."
+  bajada="Conforme al Código de Protección y Defensa del Consumidor, ponemos a tu disposición nuestro Libro de Reclamaciones virtual."
+  ancho="amplio"
+>
+  <p class="mb-8 rounded-xl border border-dashed border-white/30 p-4 text-sm font-semibold" data-no-imprimir>
+    [CONECTA EL LIBRO A UN SERVICIO ANTES DE PUBLICAR: numeración correlativa, registro de cada hoja y copia automática al
+    correo del consumidor. Verifica también el formato vigente con Indecopi.]
+  </p>
+
+  <form class="space-y-6" novalidate data-libro data-correo={SITIO.correo}>
+    <div class={`${bloque} grid gap-4 text-sm text-texto-2 sm:grid-cols-2 lg:grid-cols-4`}>
+      <p><span class="block text-tenue">Fecha</span><span class="font-semibold text-texto" data-fecha>—</span></p>
+      <p><span class="block text-tenue">Hoja de reclamación N.°</span><span class="font-semibold text-texto">Se asigna al registrarla</span></p>
+      <p><span class="block text-tenue">Razón social</span><span class="font-semibold text-texto">[RAZÓN SOCIAL]</span></p>
+      <p><span class="block text-tenue">RUC · Dirección</span><span class="font-semibold text-texto">[RUC] · [DIRECCIÓN]</span></p>
+    </div>
+
+    <fieldset class={bloque}>
+      <legend class="sr-only">1. Identificación del consumidor reclamante</legend>
+      <h2 class="font-titulo text-2xl font-medium tracking-tight" aria-hidden="true">1. Identificación del consumidor reclamante</h2>
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        <div class="sm:col-span-2">
+          <label for="lr-nombre" class={etiqueta}>Nombre completo</label>
+          <input id="lr-nombre" name="nombre" required autocomplete="name" class={campo} aria-describedby="err-nombre" />
+          <span id="err-nombre" class="mt-1 block text-sm text-error"></span>
+        </div>
+        <div>
+          <label for="lr-tipo-doc" class={etiqueta}>Tipo de documento</label>
+          <select id="lr-tipo-doc" name="tipoDocumento" required class={campo} aria-describedby="err-tipo-doc">
+            <option value="">Elige</option><option>DNI</option><option>Carné de extranjería</option><option>Pasaporte</option><option>RUC</option>
+          </select>
+          <span id="err-tipo-doc" class="mt-1 block text-sm text-error"></span>
+        </div>
+        <div>
+          <label for="lr-doc" class={etiqueta}>Número de documento</label>
+          <input id="lr-doc" name="documento" required inputmode="numeric" class={campo} aria-describedby="err-doc" />
+          <span id="err-doc" class="mt-1 block text-sm text-error"></span>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="lr-domicilio" class={etiqueta}>Domicilio</label>
+          <input id="lr-domicilio" name="domicilio" required autocomplete="street-address" class={campo} aria-describedby="err-domicilio" />
+          <span id="err-domicilio" class="mt-1 block text-sm text-error"></span>
+        </div>
+        <div>
+          <label for="lr-telefono" class={etiqueta}>Teléfono</label>
+          <input id="lr-telefono" name="telefono" type="tel" required autocomplete="tel" pattern="[\d\s+\-\(\)]{6,20}" class={campo} aria-describedby="err-telefono" />
+          <span id="err-telefono" class="mt-1 block text-sm text-error"></span>
+        </div>
+        <div>
+          <label for="lr-correo" class={etiqueta}>Correo electrónico</label>
+          <input id="lr-correo" name="correo" type="email" required autocomplete="email" class={campo} aria-describedby="err-correo" />
+          <span id="err-correo" class="mt-1 block text-sm text-error"></span>
+        </div>
+        <label class="flex items-center gap-3 sm:col-span-2">
+          <input type="checkbox" name="menor" class="size-4 accent-[var(--ac)]" data-menor /> Soy menor de edad
+        </label>
+        <div class="hidden sm:col-span-2" data-apoderado>
+          <label for="lr-apoderado" class={etiqueta}>Nombre del padre, madre o apoderado</label>
+          <input id="lr-apoderado" name="apoderado" class={campo} aria-describedby="err-apoderado" />
+          <span id="err-apoderado" class="mt-1 block text-sm text-error"></span>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class={bloque}>
+      <legend class="sr-only">2. Identificación del bien contratado</legend>
+      <h2 class="font-titulo text-2xl font-medium tracking-tight" aria-hidden="true">2. Identificación del bien contratado</h2>
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        <div role="radiogroup" aria-labelledby="lr-bien-titulo" aria-describedby="err-bien">
+          <p id="lr-bien-titulo" class={etiqueta}>¿Producto o servicio?</p>
+          <div class="mt-3 flex gap-6">
+            <label class="flex items-center gap-2"><input type="radio" name="bien" value="Producto" required class="size-4 accent-[var(--ac)]" /> Producto</label>
+            <label class="flex items-center gap-2"><input type="radio" name="bien" value="Servicio" class="size-4 accent-[var(--ac)]" checked /> Servicio</label>
+          </div>
+          <span id="err-bien" class="mt-1 block text-sm text-error"></span>
+        </div>
+        <div>
+          <label for="lr-monto" class={etiqueta}>Monto reclamado (S/) <span class="font-normal text-tenue">· opcional</span></label>
+          <input id="lr-monto" name="monto" type="number" min="0" step="0.01" inputmode="decimal" class={campo} />
+        </div>
+        <div class="sm:col-span-2">
+          <label for="lr-descripcion" class={etiqueta}>Descripción del producto o servicio</label>
+          <input id="lr-descripcion" name="descripcion" required class={campo} aria-describedby="err-descripcion" placeholder="Por ejemplo: Plan Responde, mensualidad de octubre" />
+          <span id="err-descripcion" class="mt-1 block text-sm text-error"></span>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class={bloque}>
+      <legend class="sr-only">3. Detalle de la reclamación y pedido del consumidor</legend>
+      <h2 class="font-titulo text-2xl font-medium tracking-tight" aria-hidden="true">3. Detalle de la reclamación y pedido del consumidor</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-label="Tipo">
+        <label class="flex cursor-pointer gap-3 rounded-2xl border border-white/15 p-4 has-checked:border-acento-claro has-checked:bg-[rgb(var(--luz-1)/0.14)]">
+          <input type="radio" name="tipo" value="Reclamo" required checked class="mt-1 size-4 accent-[var(--ac)]" />
+          <span><span class="font-semibold">Reclamo</span><span class="block text-sm text-texto-2">Disconformidad relacionada con los productos o servicios.</span></span>
+        </label>
+        <label class="flex cursor-pointer gap-3 rounded-2xl border border-white/15 p-4 has-checked:border-acento-claro has-checked:bg-[rgb(var(--luz-1)/0.14)]">
+          <input type="radio" name="tipo" value="Queja" class="mt-1 size-4 accent-[var(--ac)]" />
+          <span><span class="font-semibold">Queja</span><span class="block text-sm text-texto-2">Disconformidad no relacionada con los productos o servicios, o malestar con la atención.</span></span>
+        </label>
+      </div>
+      <div class="mt-5">
+        <label for="lr-detalle" class={etiqueta}>Detalle</label>
+        <textarea id="lr-detalle" name="detalle" required rows="5" class={`${campo} py-3`} aria-describedby="err-detalle"></textarea>
+        <span id="err-detalle" class="mt-1 block text-sm text-error"></span>
+      </div>
+      <div class="mt-5">
+        <label for="lr-pedido" class={etiqueta}>Pedido</label>
+        <textarea id="lr-pedido" name="pedido" required rows="3" class={`${campo} py-3`} aria-describedby="err-pedido" placeholder="¿Qué solución esperas?"></textarea>
+        <span id="err-pedido" class="mt-1 block text-sm text-error"></span>
+      </div>
+    </fieldset>
+
+    <div class={bloque}>
+      <label class="flex items-start gap-3 text-sm text-texto-2">
+        <input type="checkbox" name="declaracion" required class="mt-0.5 size-4 shrink-0 accent-[var(--ac)]" aria-describedby="err-declaracion" />
+        <span>Declaro que los datos consignados son verdaderos y acepto la <a href="/privacidad/" class="text-acento-claro underline">Política de Privacidad</a>.</span>
+      </label>
+      <span id="err-declaracion" class="mt-1 block text-sm text-error"></span>
+      <ul class="mt-6 space-y-2 border-t border-white/10 pt-5 text-sm text-texto-2">
+        <li>La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para interponer una denuncia ante el Indecopi.</li>
+        <li>El proveedor debe responder el reclamo o la queja en un plazo no mayor a quince (15) días hábiles improrrogables.</li>
+      </ul>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row" data-no-imprimir>
+        <button type="submit" class="inline-flex min-h-13 items-center justify-center rounded-xl bg-acento px-7 font-semibold text-sobre-acento transition-[filter,transform] duration-150 hover:-translate-y-0.5 hover:brightness-110">
+          Enviar hoja de reclamación
+        </button>
+        <button type="button" class="inline-flex min-h-13 items-center justify-center rounded-xl border border-white/25 px-6 font-semibold hover:bg-white/5" data-imprimir>
+          Imprimir o guardar en PDF
+        </button>
+      </div>
+      <p class="mt-3 text-sm text-tenue" data-no-imprimir>Se abrirá tu correo con la hoja lista para enviar, con copia a tu correo.</p>
+      <p class="mt-5 hidden rounded-xl border border-[rgb(var(--luz-1)/0.5)] bg-[rgb(var(--luz-1)/0.15)] p-4 font-medium" role="status" data-listo>
+        Envía el correo que se abrió para registrar tu hoja. Te recomendamos también imprimirla o guardarla en PDF.
+      </p>
+    </div>
+  </form>
+</Interna>
+
+<script>
+  const mensajes: Record<string, string> = {
+    nombre: 'Escribe tu nombre completo.',
+    tipoDocumento: 'Elige el tipo de documento.',
+    documento: 'Escribe el número de documento.',
+    domicilio: 'Escribe tu domicilio.',
+    telefono: 'Escribe un teléfono válido.',
+    correo: 'Escribe un correo válido.',
+    apoderado: 'Escribe el nombre del padre, madre o apoderado.',
+    bien: 'Indica si es un producto o un servicio.',
+    descripcion: 'Describe el producto o servicio.',
+    detalle: 'Cuéntanos qué pasó.',
+    pedido: 'Indica qué solución esperas.',
+    declaracion: 'Necesitamos tu confirmación para registrar la hoja.',
+  };
+
+  document.querySelectorAll<HTMLFormElement>('[data-libro]').forEach((form) => {
+    const hoy = new Date();
+    const fecha = hoy.toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' });
+    form.querySelector('[data-fecha]')!.textContent = fecha;
+
+    const menor = form.querySelector<HTMLInputElement>('[data-menor]')!;
+    const apoderado = form.querySelector<HTMLElement>('[data-apoderado]')!;
+    const campoApoderado = apoderado.querySelector('input')!;
+    menor.addEventListener('change', () => {
+      apoderado.classList.toggle('hidden', !menor.checked);
+      campoApoderado.required = menor.checked;
+    });
+
+    const revisar = (c: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      const vacio = c.type !== 'checkbox' && c.type !== 'radio' && c.value.trim() === '';
+      const valido = c.checkValidity() && !vacio;
+      c.setAttribute('aria-invalid', String(!valido));
+      const error = document.getElementById(c.getAttribute('aria-describedby') ?? '');
+      if (error) error.textContent = valido ? '' : mensajes[c.name] ?? 'Revisa este campo.';
+      return valido;
+    };
+
+    form.querySelector('[data-imprimir]')?.addEventListener('click', () => window.print());
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const campos = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]')].filter(
+        (c) => c.type !== 'radio',
+      );
+      const invalidos = campos.filter((c) => !revisar(c));
+      if (invalidos.length) {
+        invalidos[0].focus();
+        return;
+      }
+      const d = new FormData(form);
+      const v = (k: string) => String(d.get(k) ?? '').trim();
+      const cuerpo = [
+        `HOJA DE RECLAMACIÓN · ${fecha}`,
+        `Tipo: ${v('tipo')}`,
+        '',
+        '1. Consumidor',
+        `Nombre: ${v('nombre')}`,
+        `Documento: ${v('tipoDocumento')} ${v('documento')}`,
+        `Domicilio: ${v('domicilio')}`,
+        `Teléfono: ${v('telefono')} · Correo: ${v('correo')}`,
+        d.get('menor') ? `Menor de edad. Padre, madre o apoderado: ${v('apoderado')}` : '',
+        '',
+        '2. Bien contratado',
+        `${v('bien')}: ${v('descripcion')}`,
+        `Monto reclamado: ${v('monto') ? `S/ ${v('monto')}` : 'no indicado'}`,
+        '',
+        '3. Detalle',
+        v('detalle'),
+        '',
+        'Pedido',
+        v('pedido'),
+      ].filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n');
+      const asunto = `Libro de Reclamaciones: ${v('tipo')} de ${v('nombre')}`;
+      // Se abre el correo con un enlace temporal (con copia al consumidor).
+      const enlace = document.createElement('a');
+      enlace.href = `mailto:${form.dataset.correo}?cc=${encodeURIComponent(v('correo'))}&subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+      enlace.click();
+      form.querySelector<HTMLElement>('[data-listo]')?.classList.remove('hidden');
+    });
+  });
+</script>

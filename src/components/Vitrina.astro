@@ -5,7 +5,7 @@ import Vende from './vitrina/Vende.astro';
 import Agenda from './vitrina/Agenda.astro';
 import Administra from './vitrina/Administra.astro';
 import Conecta from './vitrina/Conecta.astro';
-import { PILARES } from '../datos/sitio';
+import { PILARES, publicada } from '../datos/sitio';
 
 const textos = {
   responde: {
@@ -71,7 +71,7 @@ const vistas = { responde: Responde, vende: Vende, agenda: Agenda, administra: A
             </h3>
             <p class="mt-5 max-w-lg text-texto-2">{textos[p.id].texto}</p>
             <a
-              href={p.ruta}
+              href={publicada(p.ruta) ? p.ruta : '#demos'}
               class="mt-8 inline-flex min-h-12 items-center gap-2 rounded-xl bg-acento px-6 font-semibold text-sobre-acento transition-[filter,transform] duration-150 hover:-translate-y-0.5 hover:brightness-110"
             >
               Ver cómo funciona <Flecha />

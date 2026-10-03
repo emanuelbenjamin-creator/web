@@ -1,14 +1,14 @@
 ---
 import WhatsApp from './iconos/WhatsApp.astro';
-import { enlaceWhatsApp } from '../datos/sitio';
+import { enlaceWhatsApp, publicada } from '../datos/sitio';
 
 const menu = [
-  { texto: 'Servicios', href: '#servicios' },
-  { texto: 'Rubros', href: '#rubros' },
-  { texto: 'Precios', href: '#precios' },
+  { texto: 'Servicios', href: '/#servicios' },
+  { texto: 'Rubros', href: '/#rubros' },
+  { texto: 'Precios', href: '/#precios' },
   { texto: 'Nosotros', href: '/nosotros/' },
-  { texto: 'Contacto', href: '#contacto' },
-];
+  { texto: 'Contacto', href: '/#contacto' },
+].filter((m) => m.href.startsWith('/#') || publicada(m.href));
 ---
 
 <header class="sticky top-0 z-40 border-b border-transparent bg-fondo/70 backdrop-blur-md transition-colors data-[bajo=true]:border-linea" data-encabezado>
@@ -30,7 +30,11 @@ const menu = [
     <div class="ml-auto flex items-center gap-1.5 md:gap-3">
       <div class="hidden items-center rounded-lg border border-linea p-0.5 text-sm sm:flex" aria-label="Idioma">
         <span class="rounded-md bg-white/10 px-2 py-1 font-semibold" aria-current="true">ES</span>
-        <a href="/en/" class="rounded-md px-2 py-1 text-texto-2 transition-colors hover:text-texto" hreflang="en" lang="en">EN</a>
+        {publicada('/en/') ? (
+          <a href="/en/" class="rounded-md px-2 py-1 text-texto-2 transition-colors hover:text-texto" hreflang="en" lang="en">EN</a>
+        ) : (
+          <span class="cursor-not-allowed rounded-md px-2 py-1 text-tenue" title="English version coming soon" lang="en">EN</span>
+        )}
       </div>
       <a
         href={enlaceWhatsApp()}
@@ -63,7 +67,7 @@ const menu = [
       ))}
       <li class="mt-2 flex items-center gap-3 border-t border-linea px-2 pt-4 text-base">
         <span class="font-semibold">ES</span>
-        <a href="/en/" class="text-texto-2" hreflang="en" lang="en">English</a>
+        {publicada('/en/') ? <a href="/en/" class="text-texto-2" hreflang="en" lang="en">English</a> : <span class="text-tenue" lang="en">English (coming soon)</span>}
       </li>
     </ul>
   </nav>

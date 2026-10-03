@@ -40,8 +40,19 @@ Cada push a `main` publica el sitio y cada pull request tiene su vista previa.
 | Respuesta de "¿Puedo cancelar cuando quiera?" | `src/datos/preguntas.ts` (quita `pendiente: true` cuando la definas) |
 | [VERIFICAR TARIFA VIGENTE DE META] | `src/components/secciones/Precios.astro` |
 
-Las páginas internas (cada pilar, rubros, Nosotros, Blog, Privacidad, Términos y
-Libro de Reclamaciones) todavía no existen: sus enlaces dan 404 hasta crearlas.
+| Datos de la empresa en las páginas legales: [RAZÓN SOCIAL], [RUC], [DIRECCIÓN], [FECHA] y los demás corchetes | `src/pages/privacidad.astro`, `src/pages/terminos.astro`, `src/pages/libro-de-reclamaciones.astro` |
+| Revisión legal: [BORRADOR: REVISAR CON UN ABOGADO…] | Privacidad y Términos (después de revisarlos, quitar `<AvisoBorrador />`) |
+| Libro de Reclamaciones conectado a un servicio (numeración correlativa, registro y copia al consumidor) | `src/pages/libro-de-reclamaciones.astro` |
+
+## Páginas
+
+- Publicadas: portada, `/privacidad/`, `/terminos/`, `/libro-de-reclamaciones/` y la página 404.
+- Al crear una página nueva, agrega su ruta a `PUBLICADAS` en `src/datos/sitio.ts`: los enlaces del menú, el
+  pie, la vitrina y los rubros que apuntan a ella se activan solos. Mientras tanto llevan a su sección de la
+  portada o no se muestran, así que no hay enlaces rotos.
+- `npm run revisar-enlaces` (después del build) comprueba que ningún enlace interno lleve a una página o
+  sección que no existe.
+- El mapa del sitio (`sitemap-index.xml`) se genera solo en cada build.
 
 ## Portada en un solo archivo
 

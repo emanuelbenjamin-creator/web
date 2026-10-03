@@ -1,0 +1,70 @@
+---
+import Interna from '../layouts/Interna.astro';
+import AvisoBorrador from '../components/AvisoBorrador.astro';
+import { SITIO } from '../datos/sitio';
+---
+<Interna
+  titulo="Términos y condiciones"
+  descripcion="Condiciones de uso del sitio y de los servicios de automatización con IA de Automatiza Studio."
+  bajada="Las condiciones para usar este sitio y para contratar nuestros servicios."
+>
+  <AvisoBorrador />
+  <div class="prosa">
+    <p><strong>Última actualización:</strong> [FECHA]</p>
+
+    <h2>1. Quiénes somos</h2>
+    <p>
+      Este sitio pertenece a [RAZÓN SOCIAL] (“Automatiza Studio”), con RUC [RUC] y domicilio en [DIRECCIÓN]. Puedes
+      escribirnos a <a href={`mailto:${SITIO.correo}`}>{SITIO.correo}</a>.
+    </p>
+
+    <h2>2. Uso del sitio</h2>
+    <p>
+      Puedes navegar el sitio y usar sus herramientas, como la calculadora de ahorro, libremente. Los resultados de la
+      calculadora son referenciales y no constituyen una oferta ni una garantía de ahorro.
+    </p>
+
+    <h2>3. Precios y propuestas</h2>
+    <ul>
+      <li>Los precios publicados son “desde” y sirven como referencia. El precio final es el de la propuesta escrita que te enviamos después del diagnóstico.</li>
+      <li>Los precios en soles no incluyen IGV.</li>
+      <li>El diagnóstico gratuito no te obliga a contratar.</li>
+    </ul>
+
+    <h2>4. Pagos y mensualidades</h2>
+    <p>[CONDICIONES DE PAGO: ADELANTO, SALDO, MEDIOS DE PAGO Y FECHA DE COBRO DE LA MENSUALIDAD]</p>
+    <p>La mensualidad incluye soporte, servidor y mejoras, según lo que indique tu propuesta.</p>
+
+    <h2>5. Costos de terceros</h2>
+    <p>
+      Algunos servicios dependen de plataformas de terceros que cobran por su cuenta, por ejemplo Meta por los mensajes de
+      WhatsApp. Esos costos no están incluidos en nuestros precios, salvo que la propuesta diga lo contrario, y dependen de
+      las tarifas vigentes de cada plataforma.
+    </p>
+
+    <h2>6. Permanencia y cancelación</h2>
+    <p>[POLÍTICA DE PERMANENCIA Y CANCELACIÓN: DEBE COINCIDIR CON LA RESPUESTA DE LAS PREGUNTAS FRECUENTES]</p>
+
+    <h2>7. Propiedad intelectual</h2>
+    <p>
+      Los textos, el diseño y la marca de este sitio pertenecen a Automatiza Studio. La titularidad de lo que desarrollamos
+      para tu empresa se rige por lo que indique tu propuesta o contrato.
+    </p>
+
+    <h2>8. Responsabilidad</h2>
+    <p>
+      Trabajamos para que cada automatización funcione de forma correcta y continua, pero dependemos de servicios de
+      terceros (WhatsApp, proveedores de IA, alojamiento) que pueden tener interrupciones ajenas a nosotros. [LÍMITES DE
+      RESPONSABILIDAD A DEFINIR CON TU ABOGADO]
+    </p>
+
+    <h2>9. Datos personales</h2>
+    <p>Tratamos tus datos según nuestra <a href="/privacidad/">Política de Privacidad</a>.</p>
+
+    <h2>10. Reclamos</h2>
+    <p>Si algo no salió como esperabas, puedes escribirnos o usar nuestro <a href="/libro-de-reclamaciones/">Libro de Reclamaciones</a>.</p>
+
+    <h2>11. Ley aplicable</h2>
+    <p>Estos términos se rigen por las leyes de la República del Perú. [JURISDICCIÓN: POR EJEMPLO, LOS JUZGADOS DE {SITIO.ciudad}]</p>
+  </div>
+</Interna>

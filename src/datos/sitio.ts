@@ -16,13 +16,19 @@ export const pendiente = (valor: string) => valor.startsWith('[');
 // Enlace de WhatsApp con un mensaje ya escrito. Mientras falte el número,
 // lleva al formulario de contacto para que ningún botón quede roto.
 export function enlaceWhatsApp(mensaje = 'Hola, quiero automatizar mi negocio') {
-  if (pendiente(SITIO.whatsapp)) return '#contacto';
+  if (pendiente(SITIO.whatsapp)) return '/#contacto';
   return `https://wa.me/${SITIO.whatsapp}?text=${encodeURIComponent(mensaje)}`;
 }
 
 export function enlaceAgenda() {
-  return pendiente(SITIO.agenda) ? '#contacto' : SITIO.agenda;
+  return pendiente(SITIO.agenda) ? '/#contacto' : SITIO.agenda;
 }
+
+// Páginas internas ya construidas. Al crear una página nueva se agrega
+// aquí, y los enlaces que apuntan a ella se activan solos (mientras tanto
+// llevan a su sección de la portada o no se muestran, para que no haya 404).
+export const PUBLICADAS = new Set<string>(['/privacidad/', '/terminos/', '/libro-de-reclamaciones/']);
+export const publicada = (ruta: string) => PUBLICADAS.has(ruta);
 
 export const PILARES = [
   { id: 'responde', nombre: 'Responde', ruta: '/servicios/responde' },

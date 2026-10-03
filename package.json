@@ -8,9 +8,11 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "exportar": "node scripts/exportar-html.mjs"
+    "exportar": "node scripts/exportar-html.mjs",
+    "revisar-enlaces": "node scripts/revisar-enlaces.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource-variable/figtree": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",

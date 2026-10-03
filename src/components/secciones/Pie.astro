@@ -1,14 +1,14 @@
 ---
-import { PILARES, SITIO, enlaceWhatsApp, pendiente } from '../../datos/sitio';
+import { PILARES, SITIO, enlaceWhatsApp, pendiente, publicada } from '../../datos/sitio';
 
 const columnas = [
-  { titulo: 'Servicios', enlaces: PILARES.map((p) => ({ texto: p.nombre, href: p.ruta })) },
+  { titulo: 'Servicios', enlaces: PILARES.map((p) => ({ texto: p.nombre, href: publicada(p.ruta) ? p.ruta : '/#servicios' })) },
   { titulo: 'Empresa', enlaces: [
     { texto: 'Nosotros', href: '/nosotros/' },
     { texto: 'Precios', href: '/#precios' },
     { texto: 'Blog', href: '/blog/' },
     { texto: 'Contacto', href: '/#contacto' },
-  ] },
+  ].filter((e) => e.href.startsWith('/#') || publicada(e.href)) },
   { titulo: 'Legal', enlaces: [
     { texto: 'Política de Privacidad', href: '/privacidad/' },
     { texto: 'Términos', href: '/terminos/' },
