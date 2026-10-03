@@ -97,7 +97,7 @@ const flecha = 'M6 9l6 6 6-6';
       <div class="hidden items-center rounded-lg border border-linea p-0.5 text-sm sm:flex" aria-label={e.idiomaAria}>
         {enEspanol && <span class="rounded-md bg-white/10 px-2 py-1 font-semibold" aria-current="true">ES</span>}
         {otroIdioma.listo ? (
-          <a href={otroIdioma.href} class="rounded-md px-2 py-1 text-texto-2 transition-colors hover:text-texto" hreflang={otroIdioma.lang} lang={otroIdioma.lang}>{otroIdioma.corto}</a>
+          <a href={otroIdioma.href} class="rounded-md px-2 py-1 text-texto-2 transition-colors hover:text-texto" hreflang={otroIdioma.lang} lang={otroIdioma.lang}>{otroIdioma.corto}<span class="sr-only"> ({otroIdioma.largo})</span></a>
         ) : (
           <span class="cursor-not-allowed rounded-md px-2 py-1 text-tenue" title="English version coming soon" lang="en">EN</span>
         )}

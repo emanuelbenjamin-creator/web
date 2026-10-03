@@ -11,7 +11,11 @@ interface Props {
   tipoOg?: 'website' | 'article';
 }
 
-const { titulo, descripcion, imagen, alternos, tipoOg = 'website' } = Astro.props;
+const { titulo: tituloPedido, descripcion, imagen, alternos, tipoOg = 'website' } = Astro.props;
+// Google corta los títulos de más de ~65 caracteres: ahí se prioriza el tema
+// de la página y se omite " | Automatiza Studio".
+const MARCA = ' | Automatiza Studio';
+const titulo = tituloPedido.length > 65 && tituloPedido.endsWith(MARCA) ? tituloPedido.slice(0, -MARCA.length) : tituloPedido;
 const t = textos(Astro.currentLocale);
 const urlImagen = imagen && Astro.site ? new URL(imagen, Astro.site).href : imagen;
 const absoluta = (ruta: string) => (Astro.site ? new URL(ruta, Astro.site).href : ruta);

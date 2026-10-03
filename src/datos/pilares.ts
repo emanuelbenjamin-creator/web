@@ -16,9 +16,9 @@ export interface ContenidoPilar {
 export const CONTENIDO_PILARES: Record<IdPilar, ContenidoPilar> = {
   responde: {
     seo: {
-      titulo: 'Agente de IA para WhatsApp: chatbot con IA para tu negocio | Automatiza Studio',
+      titulo: 'Agente de IA para WhatsApp: chatbot con IA para tu negocio',
       descripcion:
-        'Agente de IA para WhatsApp, Instagram, Facebook y tu web que responde las 24 horas con la información real de tu negocio, toma pedidos y pasa a una persona cuando hace falta.',
+        'Agente de IA para WhatsApp, Instagram y tu web: responde las 24 horas con la información de tu negocio, toma pedidos y pasa a una persona cuando hace falta.',
     },
     titulo: 'Un agente de IA que responde tu WhatsApp las 24 horas',
     bajada:
@@ -63,7 +63,7 @@ export const CONTENIDO_PILARES: Record<IdPilar, ContenidoPilar> = {
     seo: {
       titulo: 'CRM para pymes con seguimiento automático | Automatiza Studio',
       descripcion:
-        'CRM para pymes que se llena solo: cada contacto de WhatsApp, redes, tu web y anuncios de Meta entra al embudo y recibe seguimiento automático hasta comprar. Recupera clientes, carritos y cotizaciones.',
+        'CRM para pymes que se llena solo: cada contacto de WhatsApp, redes y tu web entra al embudo y recibe seguimiento automático. Recupera clientes y cotizaciones.',
     },
     titulo: 'Un CRM que se llena solo y no deja enfriar a ningún cliente',
     bajada:
@@ -101,9 +101,9 @@ export const CONTENIDO_PILARES: Record<IdPilar, ContenidoPilar> = {
   },
   agenda: {
     seo: {
-      titulo: 'Agenda automática por WhatsApp con recordatorios | Automatiza Studio',
+      titulo: 'Agenda automática por WhatsApp con recordatorios',
       descripcion:
-        'Reservas automáticas desde WhatsApp o tu web, conectadas a Google Calendar, con confirmaciones, recordatorios y reprogramaciones automáticas para reducir las inasistencias.',
+        'Reservas automáticas desde WhatsApp o tu web, conectadas a tu calendario, con confirmaciones y recordatorios para reducir las inasistencias.',
     },
     titulo: 'Citas que se agendan, confirman y recuerdan solas',
     bajada:
@@ -139,9 +139,9 @@ export const CONTENIDO_PILARES: Record<IdPilar, ContenidoPilar> = {
   },
   administra: {
     seo: {
-      titulo: 'Automatización de procesos para empresas: facturas, reportes y cobranzas | Automatiza Studio',
+      titulo: 'Automatización de procesos: facturas, reportes y cobranzas',
       descripcion:
-        'Automatización de procesos administrativos: lectura automática de facturas y comprobantes, reportes de ventas, caja e inventario que llegan solos, conciliaciones, alertas de stock y cobranzas.',
+        'Automatización de procesos: lectura de facturas, reportes de ventas, caja e inventario que llegan solos, conciliaciones, alertas de stock y cobranzas.',
     },
     titulo: 'Menos Excel: facturas, reportes y cobranzas en automático',
     bajada:
@@ -177,9 +177,9 @@ export const CONTENIDO_PILARES: Record<IdPilar, ContenidoPilar> = {
   },
   conecta: {
     seo: {
-      titulo: 'Integración de sistemas: CRM, ERP, facturación y tienda online | Automatiza Studio',
+      titulo: 'Integración de sistemas: CRM, ERP, facturación y tienda online',
       descripcion:
-        'Integración de sistemas para empresas: conectamos tu CRM, ERP, facturación electrónica, tienda online, Google Workspace, Excel y bases de datos para que la información fluya sola, sin copiar y pegar.',
+        'Integración de sistemas: conectamos tu CRM, ERP, facturación electrónica, tienda online y Excel para que la información fluya sola, sin copiar y pegar.',
     },
     titulo: 'Tus sistemas conectados, sin copiar y pegar datos',
     bajada:

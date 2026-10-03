@@ -106,7 +106,7 @@ export const CONTENIDO_RUBROS: Record<string, ContenidoRubro> = {
   },
   tiendas: {
     seo: {
-      titulo: 'Automatización para tiendas online y retail: WhatsApp, carritos y stock | Automatiza Studio',
+      titulo: 'Automatización para tiendas online: WhatsApp, carritos y stock',
       descripcion: 'Agente de IA que responde sobre stock y envíos, mensajes que recuperan carritos abandonados y tu tienda conectada con tus otros sistemas.',
     },
     titulo: 'Automatización para tiendas online y retail',
@@ -163,7 +163,7 @@ export const CONTENIDO_RUBROS: Record<string, ContenidoRubro> = {
   },
   talleres: {
     seo: {
-      titulo: 'Avisos automáticos y citas por WhatsApp para talleres y servicios técnicos | Automatiza Studio',
+      titulo: 'Citas y avisos por WhatsApp para talleres y servicios técnicos',
       descripcion: 'Tus clientes reciben avisos automáticos del avance de su equipo o vehículo y agendan su cita por WhatsApp, sin llamar.',
     },
     titulo: 'Avisos y citas automáticas para talleres y servicios técnicos',

@@ -1,6 +1,6 @@
 ---
 titulo: ¿Cuánto cuesta un chatbot de WhatsApp con IA en Perú en 2026?
-descripcion: Rangos de precio de un chatbot de WhatsApp con IA en Perú en 2026, qué hace que suba o baje, la mensualidad, lo que cobra Meta por los mensajes y cómo saber si te conviene.
+descripcion: Cuánto cuesta un chatbot de WhatsApp con IA en Perú en 2026, qué sube o baja el precio, la mensualidad, lo que cobra Meta y cómo saber si te conviene.
 fecha: 2026-10-03
 ---
 

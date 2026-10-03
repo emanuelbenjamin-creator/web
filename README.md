@@ -16,9 +16,15 @@ npm run check    # revisa tipos y errores de Astro
 
 ## Estructura
 
-- `src/pages/index.astro`: la página; arma las secciones.
+- `src/pages/`: una ruta por página. `index.astro` y `en/index.astro` muestran la misma portada
+  (`src/components/PaginaInicio.astro`) en cada idioma.
+- `src/i18n/es.ts` y `src/i18n/en.ts`: todos los textos de la portada, menú y pie en cada idioma.
+- `src/datos/`: datos del sitio (`sitio.ts`), pilares (`pilares.ts`), rubros (`rubros.ts` y
+  `rubros-paginas.ts`) y preguntas frecuentes (`preguntas.ts`). Las páginas de pilares y rubros se generan
+  desde ahí con una sola plantilla cada una.
+- `src/content/blog/`: un archivo `.md` por artículo.
 - `src/components/`: una sección por archivo.
-- `src/layouts/Base.astro`: `<head>` con título, descripción, vista previa para redes y favicon.
+- `src/layouts/Base.astro`: `<head>` con título, descripción, vista previa para redes, hreflang y favicon.
 - `src/styles/global.css`: tokens de diseño (colores, tipografías) en `@theme`.
 - `public/`: archivos que se sirven tal cual (favicon, imagen para redes, robots.txt).
 
@@ -38,15 +44,25 @@ Cada push a `main` publica el sitio y cada pull request tiene su vista previa.
 | [VIDEO PENDIENTE] ×3 | `src/components/secciones/Demos.astro` |
 | [TESTIMONIO REAL PENDIENTE] ×3 | `src/components/secciones/Testimonios.astro` (solo testimonios reales, con permiso) |
 | Respuesta de "¿Puedo cancelar cuando quiera?" | `src/datos/preguntas.ts` (quita `pendiente: true` cuando la definas) |
-| [VERIFICAR TARIFA VIGENTE DE META] | `src/components/secciones/Precios.astro` |
-
+| [VERIFICAR TARIFA VIGENTE DE META] | `src/components/secciones/Precios.astro` y el artículo del blog |
+| [NOMBRE Y EXPERIENCIA], [FOTO PENDIENTE] | `src/pages/nosotros.astro` |
 | Datos de la empresa en las páginas legales: [RAZÓN SOCIAL], [RUC], [DIRECCIÓN], [FECHA] y los demás corchetes | `src/pages/privacidad.astro`, `src/pages/terminos.astro`, `src/pages/libro-de-reclamaciones.astro` |
 | Revisión legal: [BORRADOR: REVISAR CON UN ABOGADO…] | Privacidad y Términos (después de revisarlos, quitar `<AvisoBorrador />`) |
 | Libro de Reclamaciones conectado a un servicio (numeración correlativa, registro y copia al consumidor) | `src/pages/libro-de-reclamaciones.astro` |
 
 ## Páginas
 
-- Publicadas: portada, `/privacidad/`, `/terminos/`, `/libro-de-reclamaciones/` y la página 404.
+- Publicadas:
+  - portada en español (`/`) e inglés (`/en/`, precios en dólares);
+  - los 5 pilares en `/servicios/<pilar>/` y los 9 rubros en `/rubros/<rubro>/`;
+  - `/precios/`, `/nosotros/`, `/contacto/`;
+  - `/blog/` con el artículo `/blog/cuanto-cuesta-chatbot-whatsapp-ia-peru-2026/`;
+  - `/privacidad/`, `/terminos/`, `/libro-de-reclamaciones/` y la página 404.
+- Las páginas internas existen solo en español. En `/en/` el menú y el pie llevan a las secciones de la
+  portada en inglés.
+- **Nuevo artículo del blog:** crea `src/content/blog/<url-del-articulo>.md` con `titulo`, `descripcion` y
+  `fecha` arriba (copia el primero como modelo). Aparece solo en `/blog/` y en el mapa del sitio. Con
+  `borrador: true` no se publica.
 - Al crear una página nueva, agrega su ruta a `PUBLICADAS` en `src/datos/sitio.ts`: los enlaces del menú, el
   pie, la vitrina y los rubros que apuntan a ella se activan solos. Mientras tanto llevan a su sección de la
   portada o no se muestran, así que no hay enlaces rotos.
