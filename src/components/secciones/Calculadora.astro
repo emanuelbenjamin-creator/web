@@ -1,0 +1,111 @@
+---
+import { enlaceAgenda } from '../../datos/sitio';
+import { ancla, textos } from '../../i18n';
+const t = textos(Astro.currentLocale);
+const c = t.calculadora;
+// Valores iniciales: 15 horas a la semana al costo de ejemplo del idioma.
+const HORAS = 15;
+const formato = new Intl.NumberFormat(t.locale, { style: 'currency', currency: c.moneda, maximumFractionDigits: 0 });
+const inicial = {
+  mes: formato.format((HORAS * c.costoInicial * 52) / 12),
+  anio: formato.format(HORAS * c.costoInicial * 52),
+  jornadas: Math.round((HORAS * 52) / 12 / 8),
+};
+---
+<section id={t.ids.calculadora} class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-calculadora">
+  <div class="mx-auto max-w-6xl">
+    <h2 id="titulo-calculadora" class="max-w-3xl font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl">{c.titulo}</h2>
+    <p class="mt-4 max-w-xl text-texto-2">{c.bajada}</p>
+
+    <div class="mt-12 grid overflow-hidden rounded-[24px] border border-white/10 lg:grid-cols-2" data-calculadora data-locale={t.locale} data-moneda={c.moneda}>
+      <form class="space-y-9 bg-tarjeta p-6 sm:p-10" onsubmit="return false">
+        <div>
+          <div class="flex items-baseline justify-between gap-4">
+            <label for="calc-horas" class="font-semibold">{c.horas}</label>
+            <span class="shrink-0 font-titulo text-2xl font-medium"><output for="calc-horas" data-ver-horas>{HORAS}</output> h</span>
+          </div>
+          <p class="mt-1 text-sm text-tenue" id="ayuda-horas">{c.ayudaHoras}</p>
+          <input
+            id="calc-horas"
+            type="range"
+            min="1"
+            max="80"
+            step="1"
+            value={HORAS}
+            aria-describedby="ayuda-horas"
+            class="mt-5 h-2 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-[var(--ac)]"
+            data-horas
+          />
+          <div class="mt-2 flex justify-between text-xs text-tenue" aria-hidden="true"><span>1 h</span><span>80 h</span></div>
+        </div>
+
+        <div>
+          <label for="calc-costo" class="font-semibold">{c.costo}</label>
+          <p class="mt-1 text-sm text-tenue" id="ayuda-costo">{c.ayudaCosto}</p>
+          <div class="mt-4 flex max-w-[14rem] items-center rounded-xl border border-white/15 bg-fondo focus-within:border-acento-claro">
+            <span class="pl-4 text-texto-2" aria-hidden="true">{c.simbolo}</span>
+            <input
+              id="calc-costo"
+              type="number"
+              inputmode="decimal"
+              min="1"
+              max="1000"
+              step="0.5"
+              value={c.costoInicial}
+              aria-describedby="ayuda-costo"
+              class="min-h-12 w-full bg-transparent px-3 font-titulo text-xl outline-none"
+              data-costo
+            />
+          </div>
+        </div>
+      </form>
+
+      <div class="relative flex flex-col justify-between gap-10 bg-[radial-gradient(120%_90%_at_100%_0%,rgb(var(--luz-1)/0.45),transparent_60%),radial-gradient(90%_70%_at_0%_100%,rgb(var(--luz-3)/0.18),transparent_60%)] bg-superficie p-6 sm:p-10">
+        <div aria-live="polite">
+          <p class="text-texto-2">{c.dejando}</p>
+          <p class="mt-1 font-titulo text-6xl leading-none font-semibold tracking-[-0.04em] sm:text-7xl" data-mes>{inicial.mes}</p>
+          <p class="mt-2 text-lg text-texto-2">{c.alMes}</p>
+          <dl class="mt-8 grid grid-cols-2 gap-6 border-t border-white/10 pt-6">
+            <div>
+              <dt class="text-sm text-tenue">{c.alAnio}</dt>
+              <dd class="mt-1 font-titulo text-2xl font-medium" data-anio>{inicial.anio}</dd>
+            </div>
+            <div>
+              <dt class="text-sm text-tenue">{c.jornadas}</dt>
+              <dd class="mt-1 font-titulo text-2xl font-medium" data-jornadas>{inicial.jornadas}</dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <a
+            href={enlaceAgenda(ancla(t, 'contacto'))}
+            class="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-white px-6 font-semibold text-tinta transition-transform duration-150 hover:-translate-y-0.5 sm:w-auto"
+          >
+            {t.comun.agendar}
+          </a>
+          <p class="mt-4 text-xs text-tenue">{c.formula}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-calculadora]').forEach((calc) => {
+    const formato = new Intl.NumberFormat(calc.dataset.locale, { style: 'currency', currency: calc.dataset.moneda, maximumFractionDigits: 0 });
+    const horas = calc.querySelector<HTMLInputElement>('[data-horas]')!;
+    const costo = calc.querySelector<HTMLInputElement>('[data-costo]')!;
+    const ver = (sel: string) => calc.querySelector<HTMLElement>(sel)!;
+    const calcular = () => {
+      const h = Math.min(80, Math.max(0, Number(horas.value) || 0));
+      const c = Math.min(1000, Math.max(0, Number(costo.value) || 0));
+      ver('[data-ver-horas]').textContent = String(h);
+      ver('[data-mes]').textContent = formato.format((h * c * 52) / 12);
+      ver('[data-anio]').textContent = formato.format(h * c * 52);
+      ver('[data-jornadas]').textContent = String(Math.round((h * 52) / 12 / 8));
+    };
+    horas.addEventListener('input', calcular);
+    costo.addEventListener('input', calcular);
+    calcular();
+  });
+</script>

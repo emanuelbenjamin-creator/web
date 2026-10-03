@@ -1,0 +1,109 @@
+---
+// Página de cada rubro: /rubros/clinicas/, /rubros/inmobiliarias/, etc.
+import Pagina from '../../layouts/Pagina.astro';
+import Migas from '../../components/Migas.astro';
+import Acciones from '../../components/Acciones.astro';
+import LlamadoFinal from '../../components/LlamadoFinal.astro';
+import Flecha from '../../components/iconos/Flecha.astro';
+import { PILARES, publicada } from '../../datos/sitio';
+import { RUBROS } from '../../datos/rubros';
+import { CONTENIDO_RUBROS } from '../../datos/rubros-paginas';
+
+export function getStaticPaths() {
+  return RUBROS.map((r) => ({ params: { rubro: r.id }, props: { rubro: r } }));
+}
+
+const { rubro } = Astro.props;
+const c = CONTENIDO_RUBROS[rubro.id];
+const pilar = (nombre: string) => PILARES.find((p) => p.nombre === nombre)!;
+const pilaresUsados = PILARES.filter((p) => (rubro.pilares as readonly string[]).includes(p.nombre) || c.automatiza.some((a) => a.pilar === p.nombre));
+const otros = RUBROS.filter((r) => r.id !== rubro.id);
+---
+<Pagina titulo={c.seo.titulo} descripcion={c.seo.descripcion}>
+  <section class="relative isolate overflow-hidden border-b border-linea px-4 pt-10 pb-16 md:px-6 md:pt-14 md:pb-20">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_80%_at_50%_0%,rgb(var(--luz-1)/0.35),transparent_70%)]" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl">
+      <Migas items={[{ texto: 'Inicio', href: '/' }, { texto: 'Rubros', href: '/#rubros' }, { texto: rubro.nombre }]} />
+      <h1 class="mt-8 max-w-4xl font-titulo text-[2.4rem] leading-[1.04] font-medium tracking-[-0.035em] text-balance sm:text-6xl">{c.titulo}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-texto-2">{c.bajada}</p>
+      <div class="mt-9"><Acciones mensaje={`Hola, tengo un negocio del rubro ${rubro.nombre.toLowerCase()} y quiero automatizarlo`} /></div>
+
+      <div class="mt-14 grid gap-3 md:grid-cols-2 md:gap-4">
+        <div class="rounded-2xl bg-superficie p-6 md:p-8">
+          <p class="flex items-center gap-2 text-sm font-semibold text-tenue"><span class="size-2 rounded-full bg-tenue"></span>Antes</p>
+          <p class="mt-4 text-lg text-texto-2 md:text-xl">{rubro.antes}</p>
+        </div>
+        <div class="rounded-2xl border border-[rgb(var(--luz-1)/0.55)] bg-[rgb(var(--luz-1)/0.12)] p-6 md:p-8">
+          <p class="flex items-center gap-2 text-sm font-semibold text-acento-claro"><span class="size-2 rounded-full bg-acento-claro"></span>Ahora</p>
+          <p class="mt-4 text-lg md:text-xl">{rubro.ahora}</p>
+        </div>
+      </div>
+      <p class="mt-4 text-sm text-tenue">Ejemplo de lo que se puede automatizar, no un caso de cliente.</p>
+    </div>
+  </section>
+
+  <section class="px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-automatiza">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-automatiza" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Qué puedes automatizar</h2>
+      <ul class="mt-12 grid border-t border-linea md:grid-cols-2">
+        {c.automatiza.map((a) => {
+          const p = pilar(a.pilar);
+          return (
+            <li class="flex items-start gap-4 border-b border-linea py-7 md:pr-10">
+              <a href={publicada(p.ruta) ? p.ruta : '/#servicios'} class="shrink-0 rounded-full border border-[rgb(var(--luz-1)/0.6)] px-3 py-1 text-sm font-semibold text-acento-claro hover:bg-[rgb(var(--luz-1)/0.15)]">{a.pilar}</a>
+              <p class="text-lg">{a.texto}</p>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-dia">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-dia" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Un día con tu negocio en automático</h2>
+      <ol class="relative mt-14 space-y-10 border-l border-white/15 pl-8 md:ml-4">
+        {c.momentos.map((m) => (
+          <li class="relative">
+            <span class="absolute top-1.5 -left-[2.4rem] size-3.5 rounded-full border-2 border-acento-claro bg-fondo" aria-hidden="true"></span>
+            <p class="font-titulo text-xl font-medium text-acento-claro">{m.hora}</p>
+            <p class="mt-1 max-w-2xl text-lg text-texto-2">{m.texto}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-pilares-rubro">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-pilares-rubro" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Los servicios que usarías</h2>
+      <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {pilaresUsados.map((p) => (
+          <li>
+            <a href={publicada(p.ruta) ? p.ruta : '/#servicios'} class="flex h-full items-center justify-between gap-3 rounded-2xl border border-white/10 bg-tarjeta px-6 py-5 transition-colors hover:border-white/25">
+              <span>
+                <span class="block font-titulo text-xl font-medium">{p.nombre}</span>
+                <span class="block text-texto-2">{p.lema}</span>
+              </span>
+              <Flecha class="size-5 shrink-0 text-acento-claro" />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-8 text-texto-2">Planes desde S/1,500 de implementación. <a href={publicada('/precios/') ? '/precios/' : '/#precios'} class="font-semibold text-acento-claro hover:underline">Ver planes y precios</a></p>
+    </div>
+  </section>
+
+  <LlamadoFinal mensaje={`Hola, tengo un negocio del rubro ${rubro.nombre.toLowerCase()} y quiero automatizarlo`} />
+
+  <nav class="border-t border-linea px-4 py-14 md:px-6" aria-labelledby="titulo-otros-rubros">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-otros-rubros" class="text-sm font-semibold text-tenue">Otros rubros</h2>
+      <ul class="mt-5 flex flex-wrap gap-2">
+        {otros.map((r) => (
+          <li><a href={`/rubros/${r.id}/`} class="inline-flex min-h-11 items-center rounded-full border border-white/15 px-4 text-texto-2 transition-colors hover:border-white/40 hover:text-texto">{r.nombre}</a></li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+</Pagina>

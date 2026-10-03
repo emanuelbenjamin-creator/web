@@ -1,0 +1,73 @@
+---
+import Flecha from './iconos/Flecha.astro';
+import Responde from './vitrina/Responde.astro';
+import Vende from './vitrina/Vende.astro';
+import Agenda from './vitrina/Agenda.astro';
+import Administra from './vitrina/Administra.astro';
+import Conecta from './vitrina/Conecta.astro';
+import { PILARES, publicada } from '../datos/sitio';
+import { textos } from '../i18n';
+
+const t = textos(Astro.currentLocale);
+const v = t.vitrina;
+const vistas = { responde: Responde, vende: Vende, agenda: Agenda, administra: Administra, conecta: Conecta };
+// En español, "Ver cómo funciona" lleva a la página del pilar; si no existe
+// (o en inglés), a los videos de demostración de la portada.
+const destino = (ruta: string) => (t.idioma === 'es' && publicada(ruta) ? ruta : `#${t.ids.demos}`);
+---
+<section id={t.ids.servicios} class="relative px-3 pb-16 sm:px-4 md:pb-24">
+  <h2 class="sr-only">{v.tituloOculto}</h2>
+  <div class="mx-auto max-w-6xl rounded-[24px] border border-white/10 bg-tarjeta/95 p-4 shadow-[0_40px_120px_-30px_rgb(0_0_0/0.8)] backdrop-blur-sm sm:p-8 lg:p-12" data-vitrina data-pestanas>
+    <div
+      role="tablist"
+      aria-label={v.tablistAria}
+      class="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0"
+    >
+      {PILARES.map((p, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`pestana-${p.id}`}
+          aria-controls={`panel-${p.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          class="min-h-11 shrink-0 snap-start rounded-full border border-transparent bg-white/[0.07] px-5 text-[0.95rem] font-medium text-texto/85 transition-colors hover:bg-white/[0.12] hover:text-texto aria-selected:border-white/80 aria-selected:bg-fondo aria-selected:text-texto"
+        >
+          {t.pilares[p.id]}
+        </button>
+      ))}
+    </div>
+
+    {PILARES.map((p, i) => {
+      const Vista = vistas[p.id];
+      return (
+        <div
+          role="tabpanel"
+          id={`panel-${p.id}`}
+          aria-labelledby={`pestana-${p.id}`}
+          hidden={i !== 0}
+          class="mt-8 grid items-center gap-10 lg:mt-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14"
+        >
+          <div class="aparecer">
+            <h3 class="font-titulo text-[2rem] leading-[1.08] font-medium tracking-[-0.03em] text-balance sm:text-[2.5rem] lg:text-[2.75rem]">
+              {v.textos[p.id].titulo}
+            </h3>
+            <p class="mt-5 max-w-lg text-texto-2">{v.textos[p.id].texto}</p>
+            <a
+              href={destino(p.ruta)}
+              class="mt-8 inline-flex min-h-12 items-center gap-2 rounded-xl bg-acento px-6 font-semibold text-sobre-acento transition-[filter,transform] duration-150 hover:-translate-y-0.5 hover:brightness-110"
+            >
+              {v.verComoFunciona} <Flecha />
+            </a>
+          </div>
+          <Vista />
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  import { activarPestanas } from '../scripts/pestanas';
+  activarPestanas();
+</script>

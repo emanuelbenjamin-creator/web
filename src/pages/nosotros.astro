@@ -1,0 +1,77 @@
+---
+import Pagina from '../layouts/Pagina.astro';
+import Cabecera from '../components/Cabecera.astro';
+import LlamadoFinal from '../components/LlamadoFinal.astro';
+import Check from '../components/iconos/Check.astro';
+import { SITIO } from '../datos/sitio';
+
+const principios = [
+  { titulo: 'Vendemos resultados, no tecnología', texto: 'Hablamos de clientes atendidos, ventas cerradas y horas recuperadas. La tecnología es nuestro trabajo, no tu problema.' },
+  { titulo: 'Hablamos claro', texto: 'Sin tecnicismos: te explicamos qué vamos a hacer, cuánto cuesta y cuánto demora, en lenguaje de negocio.' },
+  { titulo: 'Tu equipo sigue al mando', texto: 'La IA se encarga de lo repetitivo y pasa a una persona cuando hace falta. Libera a tu equipo, no lo reemplaza.' },
+  { titulo: 'Tus datos son tuyos', texto: 'Cumplimos la Ley 29733 de Protección de Datos Personales y tú sigues siendo el dueño de tu información.' },
+  { titulo: 'Rápido y sin sorpresas', texto: 'Diagnóstico gratis, propuesta en 48 horas e implementación en 1 a 3 semanas.' },
+  { titulo: 'Mejora continua', texto: 'Después de lanzar, seguimos: revisamos cómo funciona y lo mejoramos cada mes.' },
+];
+---
+<Pagina
+  titulo="Nosotros | Automatiza Studio, agencia de automatización con IA"
+  descripcion="Automatiza Studio es una agencia de automatización con IA con base en Perú. Atendemos 100% remoto a pymes y empresas de Perú, Latinoamérica, España y EE. UU."
+>
+  <Cabecera
+    titulo="Somos tu área de automatización, sin que tengas que contratarla"
+    bajada={`Automatiza Studio es una agencia de automatización con IA con base en ${SITIO.ciudad}, Perú. Atendemos de forma 100% remota a pymes y empresas medianas de Perú, Latinoamérica, España y EE. UU.`}
+    migas={[{ texto: 'Inicio', href: '/' }, { texto: 'Nosotros' }]}
+  />
+
+  <section class="px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-porque">
+    <div class="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+      <div>
+        <h2 id="titulo-porque" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl">Por qué existimos</h2>
+        <p class="mt-6 text-lg text-texto-2">
+          La mayoría de las pymes no tiene un área de sistemas, y tampoco la quiere: prefiere que alguien de confianza se
+          encargue. Nosotros somos ese equipo. Hacemos que tu negocio responda, venda, agende y se administre solo, y
+          conectamos los sistemas que ya usas para que nadie tenga que copiar y pegar datos.
+        </p>
+      </div>
+      <figure class="rounded-[24px] bg-papel p-8 text-tinta sm:p-10">
+        <p class="font-titulo text-7xl leading-none font-semibold tracking-[-0.05em] text-acento">93%</p>
+        <p class="mt-4 text-lg text-tinta-2">de las pymes peruanas prefiere tercerizar o compartir la gestión tecnológica en lugar de tener un área interna.</p>
+        <figcaption class="mt-5 text-xs text-tinta-3">Fuente: ASUS, 2025</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-principios">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-principios" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Cómo trabajamos</h2>
+      <ul class="mt-12 grid border-t border-linea sm:grid-cols-2 lg:grid-cols-3">
+        {principios.map((p) => (
+          <li class="flex gap-3 border-b border-linea py-7 sm:pr-8">
+            <Check class="mt-0.5 size-6 shrink-0 text-acento-claro" />
+            <div>
+              <h3 class="text-lg font-semibold">{p.titulo}</h3>
+              <p class="mt-1 text-texto-2">{p.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-equipo">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-equipo" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Quién está detrás</h2>
+      <div class="mt-12 grid items-center gap-8 rounded-[24px] border border-dashed border-white/25 p-7 sm:grid-cols-[auto_1fr] sm:p-10">
+        <div class="flex size-32 items-center justify-center rounded-full bg-superficie-2 text-center text-sm font-semibold text-tenue">[FOTO PENDIENTE]</div>
+        <div>
+          <p class="font-titulo text-2xl font-medium">[NOMBRE Y EXPERIENCIA]</p>
+          <p class="mt-3 text-texto-2">[Cuenta en 2 o 3 frases quién eres, qué experiencia tienes y por qué fundaste Automatiza Studio. Solo datos reales.]</p>
+        </div>
+      </div>
+      <p class="mt-8 text-texto-2">{SITIO.ciudad}, Perú · Hora de Lima (UTC-5) · Atención 100% remota</p>
+    </div>
+  </section>
+
+  <LlamadoFinal titulo="¿Conversamos?" />
+</Pagina>

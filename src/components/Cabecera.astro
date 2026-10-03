@@ -1,0 +1,15 @@
+---
+// Cabecera de página interna: migas, título (H1), bajada y brillo suave.
+import Migas from './Migas.astro';
+interface Props { titulo: string; bajada?: string; migas?: { texto: string; href?: string }[] }
+const { titulo, bajada, migas } = Astro.props;
+---
+<div class="relative isolate overflow-hidden border-b border-linea px-4 pt-10 pb-14 md:px-6 md:pt-14 md:pb-20">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_90%_at_50%_0%,rgb(var(--luz-1)/0.33),transparent_70%)]" aria-hidden="true"></div>
+  <div class="mx-auto max-w-6xl">
+    {migas && <Migas items={migas} />}
+    <h1 class="mt-8 max-w-4xl font-titulo text-[2.4rem] leading-[1.04] font-medium tracking-[-0.035em] text-balance sm:text-6xl">{titulo}</h1>
+    {bajada && <p class="mt-6 max-w-2xl text-lg text-texto-2">{bajada}</p>}
+    <slot />
+  </div>
+</div>

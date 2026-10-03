@@ -1,0 +1,22 @@
+---
+import Ventana from './Ventana.astro';
+import { textos } from '../../i18n';
+const v = textos(Astro.currentLocale).vitrina.vistas.vende;
+---
+<Ventana titulo={v.titulo} puntos={v.puntos}>
+  <div class="grid grid-cols-3 gap-2.5 text-[0.8rem] leading-snug sm:gap-3">
+    {v.columnas.map((c) => (
+      <div>
+        <p class="mb-2 text-[0.75rem] font-semibold text-texto-2">{c.titulo}</p>
+        <ul class="space-y-2">
+          {c.tarjetas.map((tj, i) => (
+            <li class:list={['aparecer rounded-xl bg-superficie-2 p-2.5', tj.nuevo && 'ring-1 ring-[rgb(var(--luz-1)/0.7)]']} style={`animation-delay:${i * 150}ms`}>
+              <span class="block font-semibold text-texto">{tj.texto}</span>
+              <span class="mt-0.5 block text-texto-2">{tj.detalle}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</Ventana>

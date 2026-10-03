@@ -1,0 +1,6 @@
+---
+import Pasos from './Pasos.astro';
+import { textos } from '../../i18n';
+const t = textos(Astro.currentLocale).proceso;
+---
+<Pasos titulo={t.titulo} bajada={t.bajada} pasos={t.pasos} id="titulo-proceso" />

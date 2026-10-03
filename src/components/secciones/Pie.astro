@@ -1,0 +1,91 @@
+---
+import { PILARES, SITIO, enlaceWhatsApp, pendiente, publicada } from '../../datos/sitio';
+import { RUBROS } from '../../datos/rubros';
+import { ancla, textos } from '../../i18n';
+
+const t = textos(Astro.currentLocale);
+const p = t.pie;
+const enEspanol = t.idioma === 'es';
+type Enlace = { texto: string; href: string };
+const existe = (e: Enlace) => e.href.includes('#') || publicada(e.href);
+
+const columnas: { titulo: string; enlaces: Enlace[] }[] = [
+  {
+    titulo: p.servicios,
+    enlaces: PILARES.map((pl) => ({
+      texto: t.pilares[pl.id],
+      href: enEspanol && publicada(pl.ruta) ? pl.ruta : ancla(t, 'servicios'),
+    })),
+  },
+  ...(enEspanol && RUBROS.some((r) => publicada(`/rubros/${r.id}/`))
+    ? [{ titulo: p.rubros, enlaces: RUBROS.filter((r) => publicada(`/rubros/${r.id}/`)).map((r) => ({ texto: r.nombre, href: `/rubros/${r.id}/` })) }]
+    : []),
+  {
+    titulo: p.empresa,
+    enlaces: (enEspanol
+      ? [
+          { texto: t.encabezado.nosotros, href: '/nosotros/' },
+          { texto: t.encabezado.precios, href: publicada('/precios/') ? '/precios/' : ancla(t, 'precios') },
+          { texto: t.encabezado.blog, href: '/blog/' },
+          { texto: t.encabezado.contacto, href: publicada('/contacto/') ? '/contacto/' : ancla(t, 'contacto') },
+        ]
+      : [
+          { texto: t.encabezado.precios, href: ancla(t, 'precios') },
+          { texto: t.encabezado.contacto, href: ancla(t, 'contacto') },
+        ]
+    ).filter(existe),
+  },
+  {
+    titulo: p.legal,
+    enlaces: [
+      { texto: p.privacidad, href: '/privacidad/' },
+      { texto: p.terminos, href: '/terminos/' },
+      { texto: p.libro, href: '/libro-de-reclamaciones/' },
+    ],
+  },
+];
+const redes = [
+  { texto: 'Instagram', valor: SITIO.instagram, href: `https://instagram.com/${SITIO.instagram.replace('@', '')}` },
+  { texto: 'LinkedIn', valor: SITIO.linkedin, href: SITIO.linkedin },
+];
+---
+<footer class="border-t border-linea px-4 pt-16 pb-28 md:px-6 md:pb-16">
+  <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_2.4fr]">
+    <div>
+      <a href={t.inicio} class="inline-flex items-baseline gap-2 font-titulo text-xl tracking-tight" aria-label={t.comun.inicioAria}>
+        <span class="font-bold">Automatiza</span>
+        <span class="h-4 w-px self-center bg-texto/25" aria-hidden="true"></span>
+        <span class="text-texto-2">Studio</span>
+      </a>
+      <p class="mt-3 font-titulo text-lg text-texto/90">{p.eslogan}</p>
+      <ul class="mt-6 space-y-2 text-texto-2">
+        <li><a href={`mailto:${SITIO.correo}`} class="hover:text-texto">{SITIO.correo}</a></li>
+        <li><a href={enlaceWhatsApp(t.comun.mensajeWhatsApp, ancla(t, 'contacto'))} class="hover:text-texto">WhatsApp {SITIO.whatsapp}</a></li>
+        <li>{SITIO.ciudad}, {enEspanol ? 'Perú' : 'Peru'} · {p.remoto}</li>
+      </ul>
+      <ul class="mt-6 flex flex-wrap gap-3 text-sm">
+        {redes.map((r) =>
+          pendiente(r.valor) ? (
+            <li class="rounded-full border border-white/15 px-3 py-1.5 text-tenue">{r.texto} {r.valor}</li>
+          ) : (
+            <li><a href={r.href} class="inline-flex rounded-full border border-white/15 px-3 py-1.5 hover:border-white/40" rel="noopener">{r.texto}</a></li>
+          ),
+        )}
+      </ul>
+    </div>
+    <nav class:list={['grid grid-cols-2 gap-8', columnas.length > 3 ? 'sm:grid-cols-4' : 'sm:grid-cols-3']} aria-label={p.navAria}>
+      {columnas.map((c) => (
+        <div>
+          <h2 class="text-sm font-semibold text-tenue">{c.titulo}</h2>
+          <ul class="mt-4 space-y-1">
+            {c.enlaces.map((e) => <li><a href={e.href} class="inline-flex min-h-9 items-center text-texto-2 hover:text-texto">{e.texto}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  </div>
+  <div class="mx-auto mt-14 flex max-w-6xl flex-wrap justify-between gap-4 border-t border-linea pt-6 text-sm text-tenue">
+    <p>{p.derechos}</p>
+    <p>{p.hecho}</p>
+  </div>
+</footer>

@@ -1,0 +1,66 @@
+// Casos por rubro: ejemplos de lo que se puede automatizar, no clientes reales.
+export const RUBROS = [
+  {
+    id: 'clinicas',
+    nombre: 'Clínicas dentales y estéticas',
+    antes: 'La recepcionista responde 80 mensajes al día y los pacientes olvidan sus citas.',
+    ahora: 'El agente responde al instante, agenda en el calendario y envía recordatorios automáticos.',
+    pilares: ['Responde', 'Agenda'],
+  },
+  {
+    id: 'consultorios',
+    nombre: 'Consultorios',
+    antes: 'Entre paciente y paciente se acumulan los mensajes pidiendo turno, y cada cambio de horario es una llamada.',
+    ahora: 'Los pacientes reservan y reprograman solos por WhatsApp, y reciben su confirmación y su recordatorio.',
+    pilares: ['Responde', 'Agenda'],
+  },
+  {
+    id: 'inmobiliarias',
+    nombre: 'Inmobiliarias',
+    antes: 'Los interesados llegan por portales, anuncios y WhatsApp, y muchos se enfrían antes de que alguien les conteste.',
+    ahora: 'Cada interesado entra solo al CRM; el agente le pregunta zona y presupuesto, y agenda la visita con el asesor.',
+    pilares: ['Responde', 'Vende', 'Agenda'],
+  },
+  {
+    id: 'restaurantes',
+    nombre: 'Restaurantes y delivery',
+    antes: 'En hora punta los pedidos por WhatsApp se acumulan, se confunden direcciones y algunos se pierden.',
+    ahora: 'El agente muestra la carta, toma el pedido, confirma la dirección y lo pasa a cocina, sin errores de tipeo.',
+    pilares: ['Responde', 'Vende'],
+  },
+  {
+    id: 'academias',
+    nombre: 'Academias e institutos',
+    antes: 'En cada matrícula, el equipo responde una y otra vez las mismas preguntas sobre horarios y precios.',
+    ahora: 'El agente informa, califica al interesado, envía el enlace de pago y recuerda la fecha de inicio.',
+    pilares: ['Responde', 'Vende'],
+  },
+  {
+    id: 'tiendas',
+    nombre: 'Tiendas online y retail',
+    antes: 'Las consultas de stock y envíos se responden tarde, y los carritos abandonados se dan por perdidos.',
+    ahora: 'El agente responde sobre stock y envíos al momento, y un mensaje automático recupera los carritos abandonados.',
+    pilares: ['Responde', 'Vende', 'Conecta'],
+  },
+  {
+    id: 'estudios',
+    nombre: 'Estudios contables y legales',
+    antes: 'Se pasan horas pidiendo documentos a los clientes y copiando datos de facturas a Excel.',
+    ahora: 'Los documentos llegan por WhatsApp y se leen solos; los vencimientos y los cobros se recuerdan automáticamente.',
+    pilares: ['Administra', 'Conecta'],
+  },
+  {
+    id: 'distribuidoras',
+    nombre: 'Distribuidoras',
+    antes: 'Los pedidos llegan por WhatsApp, llamadas y correo, y alguien los digita a mano en el sistema.',
+    ahora: 'Los pedidos se registran solos en el ERP, el stock bajo genera una alerta y las cobranzas se recuerdan solas.',
+    pilares: ['Administra', 'Conecta'],
+  },
+  {
+    id: 'talleres',
+    nombre: 'Talleres y servicios técnicos',
+    antes: 'Los clientes llaman todo el día para preguntar si su equipo o su auto ya está listo.',
+    ahora: 'El cliente recibe avisos automáticos del avance y agenda su cita por WhatsApp, sin llamar.',
+    pilares: ['Responde', 'Agenda'],
+  },
+] as const;

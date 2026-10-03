@@ -1,0 +1,34 @@
+---
+import Pagina from '../layouts/Pagina.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Contacto from '../components/secciones/Contacto.astro';
+import { SITIO } from '../datos/sitio';
+---
+<Pagina
+  titulo="Contacto | Automatiza Studio"
+  descripcion="Agenda tu diagnóstico gratis de 30 minutos con Automatiza Studio o escríbenos por WhatsApp. Te enviamos la propuesta en 48 horas."
+>
+  <Cabecera
+    titulo="Hablemos de tu negocio"
+    bajada="Cuéntanos qué te gustaría automatizar. Te respondemos para coordinar tu diagnóstico gratis de 30 minutos y te enviamos la propuesta en 48 horas."
+    migas={[{ texto: 'Inicio', href: '/' }, { texto: 'Contacto' }]}
+  />
+  <Contacto />
+  <section class="border-t border-linea px-4 py-14 md:px-6" aria-labelledby="titulo-mas-contacto">
+    <div class="mx-auto grid max-w-6xl gap-8 text-texto-2 md:grid-cols-3">
+      <h2 id="titulo-mas-contacto" class="sr-only">Más información de contacto</h2>
+      <div>
+        <h3 class="font-semibold text-texto">Dónde estamos</h3>
+        <p class="mt-2">{SITIO.ciudad}, Perú. Atendemos de forma 100% remota en Perú, Latinoamérica, España y EE. UU., en hora de Lima (UTC-5).</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-texto">¿Tienes dudas antes?</h3>
+        <p class="mt-2">Revisa las <a href="/#preguntas" class="text-acento-claro underline">preguntas frecuentes</a> o los <a href="/precios/" class="text-acento-claro underline">planes y precios</a>.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-texto">Reclamos</h3>
+        <p class="mt-2">Si algo no salió bien, puedes usar nuestro <a href="/libro-de-reclamaciones/" class="text-acento-claro underline">Libro de Reclamaciones</a>.</p>
+      </div>
+    </div>
+  </section>
+</Pagina>

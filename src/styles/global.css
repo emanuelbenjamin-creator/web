@@ -1,0 +1,166 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque/opsz.css";
+@import "@fontsource-variable/figtree";
+
+/* Acento violeta. Contrastes verificados: blanco sobre #6A45F5 5.55:1,
+   #B3A6FF sobre el fondo 9.2:1, #6A45F5 sobre la banda clara 5.2:1. */
+:root {
+  --ac: #6a45f5;            /* botones y marcas */
+  --ac-texto: #ffffff;      /* texto sobre el acento */
+  --ac-claro: #b3a6ff;      /* acento como texto sobre fondo oscuro */
+  --ac-sobre-blanco: #6a45f5; /* acento sobre tarjetas blancas */
+  --luz-1: 106 69 245;      /* columnas de luz */
+  --luz-2: 255 138 76;      /* brillo cálido de abajo */
+  --luz-3: 255 95 162;
+}
+
+@theme inline {
+  --color-acento: var(--ac);
+  --color-sobre-acento: var(--ac-texto);
+  --color-acento-claro: var(--ac-claro);
+  --color-acento-blanco: var(--ac-sobre-blanco);
+}
+
+@theme {
+  --color-fondo: #0a0b14;
+  --color-superficie: #141625;
+  --color-superficie-2: #1c1f33;
+  --color-tarjeta: #0e0f1a;
+  --color-linea: rgb(245 244 250 / 0.09);
+  --color-texto: #f5f4fa;
+  --color-texto-2: #a9acc2;
+  --color-tenue: #7d8099;
+  --color-tinta: #0a0b14;
+  --color-tinta-2: #2b2e45; /* texto sobre la banda clara */
+  --color-tinta-3: #555a7a; /* fuentes y notas sobre la banda clara */
+  --color-papel: #f5f4fa;
+  --color-error: #ff8a8a; /* mensajes de error de formularios */
+  --color-whatsapp: #25d366; /* solo el botón flotante de WhatsApp */
+
+  --font-titulo: "Bricolage Grotesque Variable", ui-sans-serif, sans-serif;
+  --font-cuerpo: "Figtree Variable", ui-sans-serif, sans-serif;
+
+  --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--font-cuerpo);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+h1, h2, h3, p, li {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ac-claro);
+  outline-offset: 3px;
+}
+
+/* Columnas de luz de la portada: barras verticales difuminadas que suben
+   desde un brillo cálido. Respiran lento; con "reducir movimiento" quedan
+   quietas. */
+.luz {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+}
+.luz__columnas {
+  position: absolute;
+  inset: 0 -3%;
+  display: flex;
+  align-items: flex-end;
+}
+/* Resplandor amplio + una capa más nítida que marca el borde de cada
+   columna, como en la referencia. */
+.luz__columnas--suave { filter: blur(34px); }
+.luz__columnas--nitida { filter: blur(5px); opacity: 0.45; mix-blend-mode: screen; }
+.luz__columna {
+  flex: 1;
+  height: var(--alto);
+  background: linear-gradient(
+    to top,
+    rgb(var(--luz-2) / 1) 0%,
+    rgb(var(--luz-3) / 0.95) 10%,
+    rgb(var(--luz-1) / 1) 30%,
+    rgb(var(--luz-1) / 0.55) 62%,
+    rgb(var(--luz-1) / 0.12) 88%,
+    transparent 100%
+  );
+  opacity: var(--brillo);
+  animation: respirar 10s ease-in-out infinite;
+  animation-delay: var(--retraso);
+}
+.luz__velo {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(42% 30% at 50% 24%, rgb(10 11 20 / 0.45), transparent 75%),
+    linear-gradient(to bottom, var(--color-fondo) 0%, transparent 16%);
+}
+
+@keyframes respirar {
+  0%, 100% { opacity: var(--brillo); }
+  50% { opacity: calc(var(--brillo) * 0.7); }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.aparecer {
+  animation: aparecer 0.45s var(--ease-salida) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Texto largo de las páginas internas (legales, blog). */
+.prosa { color: var(--color-texto-2); line-height: 1.75; }
+.prosa > * + * { margin-top: 1.1em; }
+.prosa h2 {
+  margin-top: 2.6em;
+  color: var(--color-texto);
+  font-family: var(--font-titulo);
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.prosa h3 { margin-top: 1.8em; color: var(--color-texto); font-weight: 600; font-size: 1.1rem; }
+.prosa ul { list-style: disc; padding-left: 1.3em; }
+.prosa ol { list-style: decimal; padding-left: 1.3em; }
+.prosa table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.prosa th, .prosa td { padding: 0.75em 0.9em; border-bottom: 1px solid rgb(255 255 255 / 0.1); text-align: left; vertical-align: top; }
+.prosa th { color: var(--color-texto); font-weight: 600; background: var(--color-tarjeta); }
+/* Tablas anchas: se desplazan dentro de su caja en el celular. */
+.prosa .tabla { overflow-x: auto; border: 1px solid rgb(255 255 255 / 0.1); border-radius: 16px; }
+.prosa .tabla table { min-width: 560px; }
+.prosa .tabla tr:last-child td { border-bottom: 0; }
+.prosa li + li { margin-top: 0.4em; }
+.prosa strong { color: var(--color-texto); font-weight: 600; }
+.prosa a { color: var(--ac-claro); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Al imprimir la hoja de reclamación: solo el contenido. */
+@media print {
+  header, footer, [data-no-imprimir] { display: none !important; }
+  body { background: #fff; color: #000; }
+}

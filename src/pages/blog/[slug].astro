@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from 'astro:content';
+import Interna from '../../layouts/Interna.astro';
+import Migas from '../../components/Migas.astro';
+import LlamadoFinal from '../../components/LlamadoFinal.astro';
+import { SITIO } from '../../datos/sitio';
+
+export async function getStaticPaths() {
+  const articulos = await getCollection('blog', (a) => !a.data.borrador);
+  return articulos.map((a) => ({ params: { slug: a.id }, props: { articulo: a } }));
+}
+const { articulo } = Astro.props;
+const { Content } = await render(articulo);
+const { titulo, descripcion, fecha, actualizado } = articulo.data;
+const ruta = `/blog/${articulo.id}/`;
+const dia = (d: Date) => d.toISOString().slice(0, 10);
+const legible = (d: Date) => d.toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const datos = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: titulo,
+  description: descripcion,
+  datePublished: dia(fecha),
+  dateModified: dia(actualizado ?? fecha),
+  inLanguage: 'es-PE',
+  mainEntityOfPage: new URL(ruta, SITIO.dominio).href,
+  author: { '@type': 'Organization', name: 'Automatiza Studio', url: SITIO.dominio },
+  publisher: { '@type': 'Organization', name: 'Automatiza Studio', url: SITIO.dominio },
+};
+---
+<Interna titulo={titulo} tituloSeo={`${titulo} | Automatiza Studio`} descripcion={descripcion}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(datos)} />
+  <div slot="migas" class="mb-8"><Migas items={[{ texto: 'Inicio', href: '/' }, { texto: 'Blog', href: '/blog/' }, { texto: titulo }]} /></div>
+  <p class="-mt-4 mb-10 text-sm text-tenue">
+    Automatiza Studio · <time datetime={dia(fecha)}>{legible(fecha)}</time>
+    {actualizado && <> · Actualizado el <time datetime={dia(actualizado)}>{legible(actualizado)}</time></>}
+  </p>
+  <article class="prosa text-lg"><Content /></article>
+  <LlamadoFinal slot="despues" mensaje={`Hola, leí el artículo "${titulo}" y quiero mi diagnóstico gratis.`} />
+</Interna>

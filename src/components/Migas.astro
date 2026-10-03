@@ -1,0 +1,27 @@
+---
+// Migas de pan visibles + datos estructurados BreadcrumbList.
+import { SITIO } from '../datos/sitio';
+interface Props { items: { texto: string; href?: string }[] }
+const { items } = Astro.props;
+const lista = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((it, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: it.texto,
+    ...(it.href ? { item: new URL(it.href, SITIO.dominio).href } : {}),
+  })),
+};
+---
+<nav aria-label="Migas de pan" class="text-sm text-tenue">
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+    {items.map((it, i) => (
+      <li class="flex items-center gap-2">
+        {i > 0 && <span aria-hidden="true">/</span>}
+        {it.href ? <a href={it.href} class="hover:text-texto">{it.texto}</a> : <span aria-current="page" class="text-texto-2">{it.texto}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(lista)} />

@@ -1,0 +1,27 @@
+---
+import Linea from '../iconos/Linea.astro';
+import { textos } from '../../i18n';
+const t = textos(Astro.currentLocale).problema;
+type Icono = 'chat' | 'frio' | 'calendario' | 'tabla' | 'enlace' | 'equipo';
+---
+<section class="px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-problema">
+  <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <h2 id="titulo-problema" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl">{t.titulo}</h2>
+      <p class="mt-6 max-w-md text-texto-2">{t.bajada}</p>
+    </div>
+    <ul class="divide-y divide-linea border-y border-linea">
+      {t.dolores.map((d) => (
+        <li class="flex gap-4 py-6">
+          <span class="mt-0.5 inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-acento-claro">
+            <Linea nombre={d.icono as Icono} />
+          </span>
+          <div>
+            <h3 class="text-lg font-semibold">{d.titulo}</h3>
+            <p class="mt-1 text-texto-2">{d.texto}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

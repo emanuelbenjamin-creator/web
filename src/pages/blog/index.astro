@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Interna from '../../layouts/Interna.astro';
+import Migas from '../../components/Migas.astro';
+import LlamadoFinal from '../../components/LlamadoFinal.astro';
+
+const articulos = (await getCollection('blog', (a) => !a.data.borrador))
+  .sort((a, b) => b.data.fecha.valueOf() - a.data.fecha.valueOf());
+const fecha = (d: Date) => d.toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+<Interna
+  titulo="Blog"
+  tituloSeo="Blog de automatización con IA para pymes | Automatiza Studio"
+  descripcion="Guías claras sobre agentes de IA para WhatsApp, CRM, agenda automática y automatización de procesos para pymes en Perú y Latinoamérica."
+  bajada="Guías claras para automatizar tu negocio, sin tecnicismos."
+  ancho="amplio"
+>
+  <div slot="migas" class="mb-8"><Migas items={[{ texto: 'Inicio', href: '/' }, { texto: 'Blog' }]} /></div>
+  <ul class="grid gap-4 md:grid-cols-2">
+    {articulos.map((a) => (
+      <li>
+        <a href={`/blog/${a.id}/`} class="group flex h-full flex-col rounded-2xl border border-white/10 bg-tarjeta p-7 transition-colors hover:border-acento-claro/50">
+          <time datetime={a.data.fecha.toISOString().slice(0, 10)} class="text-sm text-tenue">{fecha(a.data.fecha)}</time>
+          <h2 class="mt-3 font-titulo text-2xl leading-tight font-medium tracking-tight text-balance">{a.data.titulo}</h2>
+          <p class="mt-3 flex-1 text-texto-2">{a.data.descripcion}</p>
+          <span class="mt-6 font-semibold text-acento-claro group-hover:underline">Leer artículo →</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  <LlamadoFinal slot="despues" />
+</Interna>

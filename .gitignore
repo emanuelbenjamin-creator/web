@@ -1,0 +1,22 @@
+# dependencias y build
+node_modules/
+dist/
+.astro/
+
+# entorno
+.env
+.env.*
+!.env.example
+
+# sistema y editores
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# logs
+npm-debug.log*
+.vercel
+
+# portada en un solo archivo (npm run exportar)
+exportado/

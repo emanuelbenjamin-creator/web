@@ -1,0 +1,66 @@
+---
+import Flecha from '../iconos/Flecha.astro';
+import { publicada } from '../../datos/sitio';
+import { textos } from '../../i18n';
+const t = textos(Astro.currentLocale);
+const r = t.rubros;
+const pagina = (id: string) => (r.conPagina && publicada(`/rubros/${id}/`) ? `/rubros/${id}/` : null);
+---
+<section id={t.ids.rubros} class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-rubros">
+  <div class="mx-auto max-w-6xl" data-pestanas>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 id="titulo-rubros" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">{r.titulo}</h2>
+        <p class="mt-4 max-w-xl text-texto-2">{r.bajada}</p>
+      </div>
+      <p class="text-sm text-tenue">{r.nota}</p>
+    </div>
+
+    <div role="tablist" aria-label={r.tablistAria} class="-mx-4 mt-10 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:flex-wrap md:px-0">
+      {r.lista.map((rb, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`pestana-rubro-${rb.id}`}
+          aria-controls={`panel-rubro-${rb.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          class="min-h-11 shrink-0 snap-start rounded-full border border-transparent bg-white/[0.07] px-4 text-[0.95rem] font-medium text-texto/85 transition-colors hover:bg-white/[0.12] hover:text-texto aria-selected:border-white/80 aria-selected:bg-fondo aria-selected:text-texto"
+        >
+          {rb.nombre}
+        </button>
+      ))}
+    </div>
+
+    {r.lista.map((rb, i) => (
+      <div role="tabpanel" id={`panel-rubro-${rb.id}`} aria-labelledby={`pestana-rubro-${rb.id}`} hidden={i !== 0} class="mt-8">
+        <div class="grid gap-3 md:grid-cols-2 md:gap-4">
+          <div class="aparecer rounded-2xl bg-superficie p-6 md:p-8">
+            <p class="flex items-center gap-2 text-sm font-semibold text-tenue"><span class="size-2 rounded-full bg-tenue"></span>{r.antes}</p>
+            <p class="mt-4 text-lg text-texto-2 md:text-xl">{rb.antes}</p>
+          </div>
+          <div class="aparecer rounded-2xl border border-[rgb(var(--luz-1)/0.55)] bg-[rgb(var(--luz-1)/0.12)] p-6 [animation-delay:90ms] md:p-8">
+            <p class="flex items-center gap-2 text-sm font-semibold text-acento-claro"><span class="size-2 rounded-full bg-acento-claro"></span>{r.ahora}</p>
+            <p class="mt-4 text-lg text-texto md:text-xl">{rb.ahora}</p>
+          </div>
+        </div>
+        <div class="mt-5 flex flex-wrap items-center justify-between gap-4">
+          <p class="flex flex-wrap items-center gap-2 text-sm text-texto-2">
+            {r.resolvemos}
+            {rb.pilares.map((p) => <span class="rounded-full border border-white/15 px-3 py-1 text-texto">{p}</span>)}
+          </p>
+          {pagina(rb.id) && (
+            <a href={pagina(rb.id)} class="inline-flex min-h-11 items-center gap-2 font-semibold text-acento-claro hover:underline">
+              {r.verSoluciones(rb.nombre)} <Flecha />
+            </a>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  import { activarPestanas } from '../../scripts/pestanas';
+  activarPestanas();
+</script>

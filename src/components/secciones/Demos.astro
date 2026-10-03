@@ -1,0 +1,27 @@
+---
+import Linea from '../iconos/Linea.astro';
+import { textos } from '../../i18n';
+const t = textos(Astro.currentLocale);
+const d = t.demos;
+---
+<!-- [VIDEO PENDIENTE]: reemplazar cada espacio por el video (YouTube/Vimeo con carga diferida o <video> con póster). -->
+<section id={t.ids.demos} class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-demos">
+  <div class="mx-auto max-w-6xl">
+    <h2 id="titulo-demos" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">{d.titulo}</h2>
+    <p class="mt-4 max-w-xl text-texto-2">{d.bajada}</p>
+    <ul class="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
+      {d.lista.map((demo) => (
+        <li>
+          <div class="flex aspect-video flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/25 bg-[radial-gradient(80%_80%_at_50%_0%,rgb(var(--luz-1)/0.18),transparent_70%)]">
+            <span class="inline-flex size-14 items-center justify-center rounded-full bg-white/10 text-texto">
+              <Linea nombre="play" class="size-6 translate-x-0.5" />
+            </span>
+            <span class="text-sm font-semibold text-tenue">[VIDEO PENDIENTE]</span>
+          </div>
+          <h3 class="mt-4 font-titulo text-xl font-medium tracking-tight">{demo.titulo}</h3>
+          <p class="mt-1 text-texto-2">{demo.texto}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

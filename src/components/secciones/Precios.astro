@@ -1,0 +1,119 @@
+---
+import Check from '../iconos/Check.astro';
+import { enlaceAgenda } from '../../datos/sitio';
+import { ancla, textos } from '../../i18n';
+
+interface Props {
+  // En la página /precios/ el título ya está arriba (H1): aquí se omite.
+  conTitulo?: boolean;
+}
+const { conTitulo = true } = Astro.props;
+const t = textos(Astro.currentLocale);
+const p = t.precios;
+type Moneda = 'pen' | 'usd';
+const monedas = p.monedas.map((m) => ({ ...m, id: m.id as Moneda }));
+const conSelector = monedas.length > 1;
+const agenda = enlaceAgenda(ancla(t, 'contacto'));
+---
+<section id={t.ids.precios} class="px-4 py-20 md:px-6 md:py-28" aria-label={conTitulo ? undefined : p.titulo} aria-labelledby={conTitulo ? 'titulo-precios' : undefined}>
+  <div class="mx-auto max-w-6xl" data-precios>
+    <div class:list={['flex flex-wrap items-end gap-6', conTitulo ? 'justify-between' : 'justify-end']}>
+      {conTitulo && (
+        <div>
+          <h2 id="titulo-precios" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">{p.titulo}</h2>
+          <p class="mt-4 max-w-xl text-texto-2">{p.bajada}</p>
+        </div>
+      )}
+      {conSelector && (
+        <div class="inline-flex rounded-xl border border-white/15 p-1 text-sm" role="group" aria-label={p.monedaAria}>
+          {monedas.map((m, i) => (
+            <button
+              type="button"
+              class:list={['min-h-10 rounded-lg px-4 font-semibold transition-colors aria-pressed:bg-white aria-pressed:text-tinta', i > 0 && 'text-texto-2']}
+              aria-pressed={i === 0 ? 'true' : 'false'}
+              data-moneda={m.id}
+            >
+              {m.texto}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <ul class:list={['grid gap-5 lg:grid-cols-3 lg:items-stretch', conTitulo || conSelector ? 'mt-12' : '']}>
+      {p.planes.map((plan) => (
+        <li
+          class:list={[
+            'relative flex flex-col rounded-[24px] p-7 sm:p-8',
+            plan.destacado
+              ? 'border border-[rgb(var(--luz-1)/0.8)] bg-[radial-gradient(120%_60%_at_50%_0%,rgb(var(--luz-1)/0.28),transparent_70%)] bg-tarjeta shadow-[0_30px_90px_-40px_rgb(var(--luz-1)/0.9)]'
+              : 'border border-white/10 bg-tarjeta',
+          ]}
+        >
+          {plan.destacado && (
+            <span class="absolute -top-3.5 left-7 rounded-full bg-acento px-3 py-1 text-xs font-semibold text-sobre-acento">{p.masElegido}</span>
+          )}
+          <h3 class="font-titulo text-2xl font-medium tracking-tight">{plan.nombre}</h3>
+          <p class="mt-1 text-texto-2 lg:min-h-[3.4rem]">{plan.resumen}</p>
+          <p class="mt-7 text-sm text-tenue">{p.implementacionDesde}</p>
+          <p class="font-titulo text-[2.6rem] leading-none font-semibold tracking-[-0.03em]">
+            {monedas.map((m, i) => <span data-moneda-valor={m.id} hidden={i !== 0}>{plan.precio[m.id]}</span>)}
+          </p>
+          <p class="mt-2 text-texto-2">
+            + {monedas.map((m, i) => <span data-moneda-valor={m.id} hidden={i !== 0}>{plan.mensual[m.id]}</span>)}
+          </p>
+          <p class="mt-4 inline-flex w-fit rounded-full bg-white/[0.07] px-3 py-1 text-sm font-medium">{plan.plazo}</p>
+          <ul class="mt-7 space-y-3 border-t border-white/10 pt-6 text-[0.97rem]">
+            {plan.incluye.map((i) => (
+              <li class="flex gap-2.5"><Check class="mt-0.5 size-5 shrink-0 text-acento-claro" />{i}</li>
+            ))}
+          </ul>
+          <div class="mt-auto pt-8">
+            <a
+              href={agenda}
+              class:list={[
+                'inline-flex min-h-12 w-full items-center justify-center rounded-xl px-6 font-semibold transition-[filter,transform] duration-150 hover:-translate-y-0.5',
+                plan.destacado ? 'bg-acento text-sobre-acento hover:brightness-110' : 'border border-white/25 hover:bg-white/5',
+              ]}
+            >
+              {t.comun.agendar}
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-10 grid gap-6 text-sm text-texto-2 md:grid-cols-2">
+      <ul class="space-y-2">
+        <li>{monedas.map((m, i) => <span data-moneda-valor={m.id} hidden={i !== 0}>{p.notaMoneda[m.id]}</span>)}</li>
+        <li>{p.mensualidad}</li>
+      </ul>
+      <p>
+        {p.meta}
+        <span class="text-tenue">{' '}[VERIFICAR TARIFA VIGENTE DE META]</span>
+      </p>
+    </div>
+
+    <div class="mt-10 flex flex-col items-start justify-between gap-5 rounded-2xl border border-white/10 bg-superficie p-6 sm:flex-row sm:items-center sm:p-8">
+      <p class="font-titulo text-xl font-medium tracking-tight sm:text-2xl">{p.franja}</p>
+      <a href={agenda} class="inline-flex min-h-12 shrink-0 items-center justify-center rounded-xl bg-white px-6 font-semibold text-tinta transition-transform duration-150 hover:-translate-y-0.5">
+        {t.comun.agendar}
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-precios]').forEach((bloque) => {
+    const botones = [...bloque.querySelectorAll<HTMLButtonElement>('[data-moneda]')];
+    botones.forEach((boton) =>
+      boton.addEventListener('click', () => {
+        botones.forEach((b) => {
+          b.setAttribute('aria-pressed', String(b === boton));
+          b.classList.toggle('text-texto-2', b !== boton);
+        });
+        bloque.querySelectorAll<HTMLElement>('[data-moneda-valor]').forEach((e) => (e.hidden = e.dataset.monedaValor !== boton.dataset.moneda));
+      }),
+    );
+  });
+</script>
