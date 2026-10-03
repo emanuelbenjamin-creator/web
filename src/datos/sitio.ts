@@ -50,6 +50,7 @@ export const PUBLICADAS = new Set<string>([
   '/precios/',
   '/nosotros/',
   '/contacto/',
+  '/blog/',
   ...PILARES.map((p) => p.ruta),
   ...RUBROS.map((r) => `/rubros/${r.id}/`),
 ]);

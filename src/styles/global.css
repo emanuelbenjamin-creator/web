@@ -147,6 +147,14 @@ h1, h2, h3, p, li {
 }
 .prosa h3 { margin-top: 1.8em; color: var(--color-texto); font-weight: 600; font-size: 1.1rem; }
 .prosa ul { list-style: disc; padding-left: 1.3em; }
+.prosa ol { list-style: decimal; padding-left: 1.3em; }
+.prosa table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.prosa th, .prosa td { padding: 0.75em 0.9em; border-bottom: 1px solid rgb(255 255 255 / 0.1); text-align: left; vertical-align: top; }
+.prosa th { color: var(--color-texto); font-weight: 600; background: var(--color-tarjeta); }
+/* Tablas anchas: se desplazan dentro de su caja en el celular. */
+.prosa .tabla { overflow-x: auto; border: 1px solid rgb(255 255 255 / 0.1); border-radius: 16px; }
+.prosa .tabla table { min-width: 560px; }
+.prosa .tabla tr:last-child td { border-bottom: 0; }
 .prosa li + li { margin-top: 0.4em; }
 .prosa strong { color: var(--color-texto); font-weight: 600; }
 .prosa a { color: var(--ac-claro); text-decoration: underline; text-underline-offset: 3px; }
