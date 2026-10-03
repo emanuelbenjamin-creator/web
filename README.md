@@ -28,3 +28,18 @@ npm run check    # revisa tipos y errores de Astro
 2. Vercel detecta Astro solo (build `npm run build`, salida `dist`). **Deploy**.
 
 Cada push a `main` publica el sitio y cada pull request tiene su vista previa.
+
+## Skills
+
+`.claude/skills/web-design-engineer/` es la skill
+[web-design-engineer](https://github.com/ConardLi/garden-skills/tree/web-design-engineer-v1.3.0/skills/web-design-engineer)
+de ConardLi/garden-skills, versión **1.3.0** (licencia MIT, incluida en la
+carpeta). Claude Code la carga sola al trabajar en este repo y guía el
+diseño de la landing: lectura del brief, sistema de diseño declarado antes
+de programar, recetas de estilo y autoevaluación.
+
+Para actualizarla a otra versión:
+
+```sh
+npx skills add ConardLi/garden-skills/tree/web-design-engineer-v<versión>/skills/web-design-engineer -a claude-code
+```
