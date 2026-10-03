@@ -36,6 +36,8 @@ for (const [etiqueta, src] of [...html.matchAll(/<script type="module" src="([^"
 }
 
 // 3. Favicon.
+// Las fuentes ya van incrustadas en el CSS: la precarga sobra.
+html = html.replace(/<link rel="preload"[^>]*as="font"[^>]*>/g, '');
 html = html.replace('href="/favicon.svg"', `href="${await dataUri('/favicon.svg', 'image/svg+xml')}"`);
 
 const restantes = [...html.matchAll(/(?:src|href)="\/_astro\/[^"]+"/g)].map((m) => m[0]);
