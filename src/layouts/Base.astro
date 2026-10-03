@@ -31,15 +31,8 @@ const urlImagen = imagen && Astro.site ? new URL(imagen, Astro.site).href : imag
     <meta name="twitter:card" content={urlImagen ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={titulo} />
     <meta name="twitter:description" content={descripcion} />
+    <slot name="head" />
 
-    <!-- Variante de color para comparar: ?acento=lima -->
-    <script is:inline>
-      try {
-        if (new URLSearchParams(location.search).get('acento') === 'lima') {
-          document.documentElement.dataset.acento = 'lima';
-        }
-      } catch (e) {}
-    </script>
   </head>
   <body class="min-h-dvh antialiased">
     <slot />

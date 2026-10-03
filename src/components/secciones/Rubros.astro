@@ -1,0 +1,60 @@
+---
+import Flecha from '../iconos/Flecha.astro';
+import { RUBROS } from '../../datos/rubros';
+---
+<section id="rubros" class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-rubros">
+  <div class="mx-auto max-w-6xl" data-pestanas>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 id="titulo-rubros" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Lo que cambia en tu rubro</h2>
+        <p class="mt-4 max-w-xl text-texto-2">Elige tu tipo de negocio y mira el antes y el después.</p>
+      </div>
+      <p class="text-sm text-tenue">Ejemplos de lo que se puede automatizar, no casos de clientes.</p>
+    </div>
+
+    <div role="tablist" aria-label="Rubros" class="-mx-4 mt-10 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:flex-wrap md:px-0">
+      {RUBROS.map((r, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`pestana-rubro-${r.id}`}
+          aria-controls={`panel-rubro-${r.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          class="min-h-11 shrink-0 snap-start rounded-full border border-transparent bg-white/[0.07] px-4 text-[0.95rem] font-medium text-texto/85 transition-colors hover:bg-white/[0.12] hover:text-texto aria-selected:border-white/80 aria-selected:bg-fondo aria-selected:text-texto"
+        >
+          {r.nombre}
+        </button>
+      ))}
+    </div>
+
+    {RUBROS.map((r, i) => (
+      <div role="tabpanel" id={`panel-rubro-${r.id}`} aria-labelledby={`pestana-rubro-${r.id}`} hidden={i !== 0} class="mt-8">
+        <div class="grid gap-3 md:grid-cols-2 md:gap-4">
+          <div class="aparecer rounded-2xl bg-superficie p-6 md:p-8">
+            <p class="flex items-center gap-2 text-sm font-semibold text-tenue"><span class="size-2 rounded-full bg-tenue"></span>Antes</p>
+            <p class="mt-4 text-lg text-texto-2 md:text-xl">{r.antes}</p>
+          </div>
+          <div class="aparecer rounded-2xl border border-[rgb(var(--luz-1)/0.55)] bg-[rgb(var(--luz-1)/0.12)] p-6 [animation-delay:90ms] md:p-8">
+            <p class="flex items-center gap-2 text-sm font-semibold text-acento-claro"><span class="size-2 rounded-full bg-acento-claro"></span>Ahora</p>
+            <p class="mt-4 text-lg text-texto md:text-xl">{r.ahora}</p>
+          </div>
+        </div>
+        <div class="mt-5 flex flex-wrap items-center justify-between gap-4">
+          <p class="flex flex-wrap items-center gap-2 text-sm text-texto-2">
+            Lo resolvemos con:
+            {r.pilares.map((p) => <span class="rounded-full border border-white/15 px-3 py-1 text-texto">{p}</span>)}
+          </p>
+          <a href={`/rubros/${r.id}/`} class="inline-flex min-h-11 items-center gap-2 font-semibold text-acento-claro hover:underline">
+            Ver soluciones para {r.nombre.toLowerCase()} <Flecha />
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  import { activarPestanas } from '../../scripts/pestanas';
+  activarPestanas();
+</script>

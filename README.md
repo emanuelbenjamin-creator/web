@@ -29,6 +29,27 @@ npm run check    # revisa tipos y errores de Astro
 
 Cada push a `main` publica el sitio y cada pull request tiene su vista previa.
 
+## Antes de publicar: completa los [CORCHETES]
+
+| Qué | Dónde |
+|---|---|
+| WhatsApp [NÚMERO], [CIUDAD], Instagram [@USUARIO], LinkedIn [PÁGINA], agenda [ENLACE DE CALENDLY O SIMILAR] | `src/datos/sitio.ts`: se cambian una vez y se actualiza todo el sitio. Mientras falte el número, los botones de WhatsApp llevan al formulario y el formulario abre el correo. |
+| Herramientas que no uses: [BORRA LAS QUE NO USES ANTES DE PUBLICAR] | `TECNOLOGIAS` en `src/datos/sitio.ts` |
+| [VIDEO PENDIENTE] ×3 | `src/components/secciones/Demos.astro` |
+| [TESTIMONIO REAL PENDIENTE] ×3 | `src/components/secciones/Testimonios.astro` (solo testimonios reales, con permiso) |
+| Respuesta de "¿Puedo cancelar cuando quiera?" | `src/datos/preguntas.ts` (quita `pendiente: true` cuando la definas) |
+| [VERIFICAR TARIFA VIGENTE DE META] | `src/components/secciones/Precios.astro` |
+
+Las páginas internas (cada pilar, rubros, Nosotros, Blog, Privacidad, Términos y
+Libro de Reclamaciones) todavía no existen: sus enlaces dan 404 hasta crearlas.
+
+## Portada en un solo archivo
+
+```sh
+npm run build
+npm run exportar   # crea exportado/automatiza-studio.html (CSS, JS y fuentes adentro)
+```
+
 ## Skills
 
 `.claude/skills/web-design-engineer/` es la skill

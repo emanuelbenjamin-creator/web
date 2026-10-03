@@ -1,0 +1,146 @@
+---
+import WhatsApp from '../iconos/WhatsApp.astro';
+import { RUBROS } from '../../datos/rubros';
+import { SITIO, enlaceAgenda, enlaceWhatsApp, pendiente } from '../../datos/sitio';
+
+const sistemas = ['CRM', 'ERP', 'Facturación electrónica', 'Tienda online', 'Excel o Google Sheets', 'Correo', 'Otro'];
+const porWhatsApp = !pendiente(SITIO.whatsapp);
+const campo =
+  'mt-2 block min-h-12 w-full rounded-xl border border-white/15 bg-fondo px-4 text-texto placeholder:text-tenue outline-none transition-colors focus:border-acento-claro aria-[invalid=true]:border-error';
+---
+<section id="contacto" class="relative isolate overflow-hidden border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-contacto">
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-[radial-gradient(60%_80%_at_50%_100%,rgb(var(--luz-1)/0.35),transparent_70%)]" aria-hidden="true"></div>
+  <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <div>
+      <h2 id="titulo-contacto" class="font-titulo text-[2.4rem] leading-[1.04] font-medium tracking-[-0.035em] text-balance sm:text-6xl">
+        Agenda tu diagnóstico gratis
+      </h2>
+      <p class="mt-5 max-w-md text-lg text-texto-2">30 minutos, sin compromiso. Te enviamos la propuesta en 48 horas.</p>
+      <ul class="mt-10 space-y-4">
+        <li>
+          <a href={enlaceWhatsApp()} class="inline-flex min-h-11 items-center gap-3 font-semibold hover:text-acento-claro">
+            <WhatsApp class="size-5 text-acento-claro" /> WhatsApp {SITIO.whatsapp}
+          </a>
+        </li>
+        <li><a href={`mailto:${SITIO.correo}`} class="inline-flex min-h-11 items-center font-semibold hover:text-acento-claro">{SITIO.correo}</a></li>
+        <li><a href={enlaceAgenda()} class="inline-flex min-h-11 items-center font-semibold hover:text-acento-claro">Agenda una llamada: {SITIO.agenda}</a></li>
+      </ul>
+      <p class="mt-8 text-sm text-tenue">{SITIO.ciudad}, Perú · Atención 100% remota en Perú, Latinoamérica, España y EE. UU.</p>
+    </div>
+
+    <form
+      class="rounded-[24px] border border-white/10 bg-tarjeta/95 p-6 backdrop-blur-sm sm:p-8"
+      novalidate
+      data-formulario
+      data-whatsapp={porWhatsApp ? SITIO.whatsapp : ''}
+      data-correo={SITIO.correo}
+    >
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label for="f-nombre" class="block font-medium">Nombre</label>
+          <input id="f-nombre" name="nombre" required autocomplete="name" class={campo} aria-describedby="error-nombre" />
+          <span id="error-nombre" class="mt-1 block text-sm text-error" data-error></span>
+        </div>
+        <div>
+          <label for="f-empresa" class="block font-medium">Empresa</label>
+          <input id="f-empresa" name="empresa" required autocomplete="organization" class={campo} aria-describedby="error-empresa" />
+          <span id="error-empresa" class="mt-1 block text-sm text-error" data-error></span>
+        </div>
+        <div>
+          <label for="f-rubro" class="block font-medium">Rubro</label>
+          <select id="f-rubro" name="rubro" required class={campo} aria-describedby="error-rubro">
+            <option value="">Elige tu rubro</option>
+            {RUBROS.map((r) => <option>{r.nombre}</option>)}
+            <option>Otro</option>
+          </select>
+          <span id="error-rubro" class="mt-1 block text-sm text-error" data-error></span>
+        </div>
+        <div>
+          <label for="f-whatsapp" class="block font-medium">WhatsApp</label>
+          <input id="f-whatsapp" name="whatsapp" type="tel" required autocomplete="tel" inputmode="tel" pattern="[\d\s+\-\(\)]{7,20}" placeholder="+51 999 999 999" class={campo} aria-describedby="error-whatsapp" />
+          <span id="error-whatsapp" class="mt-1 block text-sm text-error" data-error></span>
+        </div>
+      </div>
+
+      <fieldset class="mt-6">
+        <legend class="font-medium">¿Qué sistemas usas?</legend>
+        <div class="mt-3 flex flex-wrap gap-2">
+          {sistemas.map((s) => (
+            <label class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border border-white/15 px-4 text-[0.95rem] transition-colors has-checked:border-acento-claro has-checked:bg-[rgb(var(--luz-1)/0.18)]">
+              <input type="checkbox" name="sistemas" value={s} class="size-4 accent-[var(--ac)]" />{s}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="mt-6">
+        <label for="f-mensaje" class="block font-medium">¿Qué te gustaría automatizar?</label>
+        <textarea id="f-mensaje" name="mensaje" required rows="4" class={`${campo} py-3`} placeholder="Por ejemplo: responder los mensajes de WhatsApp y agendar citas." aria-describedby="error-mensaje"></textarea>
+        <span id="error-mensaje" class="mt-1 block text-sm text-error" data-error></span>
+      </div>
+
+      <label class="mt-5 flex items-start gap-3 text-sm text-texto-2">
+        <input type="checkbox" name="privacidad" required class="mt-0.5 size-4 shrink-0 accent-[var(--ac)]" aria-describedby="error-privacidad" />
+        <span>Acepto la <a href="/privacidad/" class="text-acento-claro underline">Política de Privacidad</a> y el uso de mis datos para responder esta solicitud (Ley 29733).</span>
+      </label>
+      <span id="error-privacidad" class="mt-1 block text-sm text-error" data-error></span>
+
+      <button type="submit" class="mt-7 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-xl bg-acento px-6 font-semibold text-sobre-acento transition-[filter,transform] duration-150 hover:-translate-y-0.5 hover:brightness-110">
+        {porWhatsApp ? (<><WhatsApp class="size-5" /> Enviar por WhatsApp</>) : 'Enviar solicitud'}
+      </button>
+      <p class="mt-3 text-center text-sm text-tenue">
+        {porWhatsApp ? 'Se abrirá WhatsApp con tu mensaje listo para enviar.' : 'Se abrirá tu correo con el mensaje listo para enviar.'}
+      </p>
+      <p class="mt-5 hidden rounded-xl border border-[rgb(var(--luz-1)/0.5)] bg-[rgb(var(--luz-1)/0.15)] p-4 text-center font-medium" role="status" data-listo>
+        ¡Listo! Envía el mensaje que se abrió y te respondemos para coordinar tu diagnóstico.
+      </p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const mensajes: Record<string, string> = {
+    nombre: 'Escribe tu nombre.',
+    empresa: 'Escribe el nombre de tu empresa.',
+    rubro: 'Elige tu rubro.',
+    whatsapp: 'Escribe un número de WhatsApp válido, con código de país.',
+    mensaje: 'Cuéntanos qué te gustaría automatizar.',
+    privacidad: 'Necesitamos tu aceptación para responderte.',
+  };
+
+  document.querySelectorAll<HTMLFormElement>('[data-formulario]').forEach((form) => {
+    const campos = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[required]')];
+    const error = (c: Element) => document.getElementById(c.getAttribute('aria-describedby') ?? '');
+    const revisar = (c: (typeof campos)[number]) => {
+      const valido = c.checkValidity() && (c.type === 'checkbox' || c.value.trim() !== '');
+      c.setAttribute('aria-invalid', String(!valido));
+      const e = error(c);
+      if (e) e.textContent = valido ? '' : mensajes[c.name] ?? 'Revisa este campo.';
+      return valido;
+    };
+    campos.forEach((c) => c.addEventListener(c.type === 'checkbox' ? 'change' : 'blur', () => revisar(c)));
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const invalidos = campos.filter((c) => !revisar(c));
+      if (invalidos.length) {
+        invalidos[0].focus();
+        return;
+      }
+      const d = new FormData(form);
+      const sistemas = d.getAll('sistemas').join(', ') || 'no lo indicó';
+      const texto =
+        `Hola, quiero agendar mi diagnóstico gratis.\n` +
+        `Nombre: ${d.get('nombre')}\nEmpresa: ${d.get('empresa')}\nRubro: ${d.get('rubro')}\n` +
+        `WhatsApp: ${d.get('whatsapp')}\nSistemas que usa: ${sistemas}\n` +
+        `Quiere automatizar: ${d.get('mensaje')}`;
+      const numero = form.dataset.whatsapp;
+      if (numero) {
+        window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
+      } else {
+        window.location.href = `mailto:${form.dataset.correo}?subject=${encodeURIComponent('Diagnóstico gratis')}&body=${encodeURIComponent(texto)}`;
+      }
+      form.querySelector<HTMLElement>('[data-listo]')?.classList.remove('hidden');
+    });
+  });
+</script>

@@ -17,3 +17,6 @@ dist/
 # logs
 npm-debug.log*
 .vercel
+
+# portada en un solo archivo (npm run exportar)
+exportado/

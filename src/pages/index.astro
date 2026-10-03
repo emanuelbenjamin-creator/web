@@ -5,33 +5,72 @@ import FondoLuz from '../components/FondoLuz.astro';
 import Portada from '../components/Portada.astro';
 import Vitrina from '../components/Vitrina.astro';
 import Tecnologias from '../components/Tecnologias.astro';
+import Problema from '../components/secciones/Problema.astro';
+import Proceso from '../components/secciones/Proceso.astro';
+import Rubros from '../components/secciones/Rubros.astro';
+import Demos from '../components/secciones/Demos.astro';
+import Calculadora from '../components/secciones/Calculadora.astro';
+import Datos from '../components/secciones/Datos.astro';
+import Precios from '../components/secciones/Precios.astro';
+import Testimonios from '../components/secciones/Testimonios.astro';
+import Preguntas from '../components/secciones/Preguntas.astro';
+import Contacto from '../components/secciones/Contacto.astro';
+import Pie from '../components/secciones/Pie.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
+import { SITIO } from '../datos/sitio';
+import { PREGUNTAS } from '../datos/preguntas';
 
-const pendientes = [
-  'El problema', 'Cómo trabajamos', 'Casos por rubro (Antes / Ahora)', 'Demos en video', 'Calculadora de ahorro',
-  'Datos del mercado', 'Planes y precios', 'Testimonios', 'Preguntas frecuentes', 'Llamado final y formulario', 'Pie de página',
-];
+// Datos estructurados para Google: la agencia y sus preguntas frecuentes
+// (sin las que todavía tienen la respuesta pendiente).
+const agencia = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: SITIO.nombre,
+  url: SITIO.dominio,
+  email: SITIO.correo,
+  description: 'Agencia de automatización con IA: agentes de IA para WhatsApp, CRM, agenda automática, automatización de procesos e integración de sistemas.',
+  areaServed: ['Perú', 'Latinoamérica', 'España', 'Estados Unidos'],
+  address: { '@type': 'PostalAddress', addressCountry: 'PE' },
+};
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: PREGUNTAS.filter((p) => !p.pendiente).map((p) => ({
+    '@type': 'Question',
+    name: p.pregunta,
+    acceptedAnswer: { '@type': 'Answer', text: p.respuesta },
+  })),
+};
 ---
 <Base
   titulo="Automatiza Studio | Agencia de automatización con IA en Perú"
-  descripcion="Agentes de IA para WhatsApp, CRM y automatización de procesos para empresas. Tu negocio responde, vende, agenda y se administra solo, las 24 horas."
+  descripcion="Agentes de IA para WhatsApp, CRM para pymes, automatización de procesos e integración de sistemas. Tu negocio responde, vende, agenda y se administra solo, las 24 horas."
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(agencia)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faq)} />
+  </Fragment>
+
+  <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-tinta">Saltar al contenido</a>
   <Encabezado />
-  <main>
+  <main id="contenido">
     <div class="relative isolate">
       <FondoLuz />
       <Portada />
       <Vitrina />
     </div>
     <Tecnologias />
-
-    <!-- v0: lo que sigue se construye después de aprobar el estilo -->
-    <section class="mx-auto max-w-6xl px-4 py-16" aria-label="Secciones pendientes">
-      <div class="rounded-2xl border border-dashed border-white/20 p-6 text-texto-2">
-        <p class="font-semibold text-texto">[v0] Aquí siguen las demás secciones de la portada:</p>
-        <p class="mt-2 text-sm">{pendientes.join(' · ')}</p>
-      </div>
-    </section>
+    <Problema />
+    <Proceso />
+    <Rubros />
+    <Demos />
+    <Calculadora />
+    <Datos />
+    <Precios />
+    <Testimonios />
+    <Preguntas />
+    <Contacto />
   </main>
+  <Pie />
   <WhatsAppFlotante />
 </Base>

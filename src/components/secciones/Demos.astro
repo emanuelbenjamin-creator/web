@@ -1,0 +1,30 @@
+---
+import Linea from '../iconos/Linea.astro';
+
+const demos = [
+  { titulo: 'Agente de WhatsApp', texto: 'Un cliente pregunta precios y el agente responde, toma el pedido y agenda.' },
+  { titulo: 'CRM con seguimiento automático', texto: 'Un contacto nuevo entra solo al CRM y recibe seguimiento hasta cerrar la venta.' },
+  { titulo: 'Reporte automático', texto: 'El resumen de ventas, caja e inventario que llega solo por WhatsApp.' },
+];
+---
+<!-- [VIDEO PENDIENTE]: reemplazar cada espacio por el video (YouTube/Vimeo con carga diferida o <video> con póster). -->
+<section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-demos">
+  <div class="mx-auto max-w-6xl">
+    <h2 id="titulo-demos" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Mira cómo funciona</h2>
+    <p class="mt-4 max-w-xl text-texto-2">Videos cortos del sistema trabajando, de principio a fin.</p>
+    <ul class="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
+      {demos.map((d) => (
+        <li>
+          <div class="flex aspect-video flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/25 bg-[radial-gradient(80%_80%_at_50%_0%,rgb(var(--luz-1)/0.18),transparent_70%)]">
+            <span class="inline-flex size-14 items-center justify-center rounded-full bg-white/10 text-texto">
+              <Linea nombre="play" class="size-6 translate-x-0.5" />
+            </span>
+            <span class="text-sm font-semibold text-tenue">[VIDEO PENDIENTE]</span>
+          </div>
+          <h3 class="mt-4 font-titulo text-xl font-medium tracking-tight">{d.titulo}</h3>
+          <p class="mt-1 text-texto-2">{d.texto}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -13,14 +13,11 @@ Referencia de diseño para todas las páginas del sitio. Cuando algo cambie
 ## Dirección visual
 
 - **Referencia elegida por el cliente:** portada de Hostinger Horizons (fondo oscuro con columnas de luz, titular centrado y vitrina con pestañas).
-- **Paleta violeta (por defecto):**
+- **Paleta violeta (elegida por el cliente):**
   - fondo `#0A0B14`; superficies `#141625`, `#1C1F33` y `#0E0F1A`;
   - acento `#6A45F5`, con texto blanco (5.55:1);
   - acento como texto `#B3A6FF` (9.2:1);
   - brillo cálido `#FF8A4C` / `#FF5FA2`, solo en el fondo de la portada.
-- **Variante lima (para comparar, `?acento=lima`):**
-  - acento `#C6F84C`, con texto oscuro (15:1);
-  - brillo lima y menta.
 - **Texto:** principal `#F5F4FA`, secundario `#A9ACC2`.
 - **Tipografías:**
   - Bricolage Grotesque en los titulares (500–600, tracking −0.03em);

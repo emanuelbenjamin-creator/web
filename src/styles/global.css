@@ -2,9 +2,8 @@
 @import "@fontsource-variable/bricolage-grotesque/opsz.css";
 @import "@fontsource-variable/figtree";
 
-/* Acento intercambiable: violeta (por defecto, como la referencia) o lima
-   (?acento=lima). Contrastes verificados: blanco sobre #6A45F5 5.55:1,
-   #B3A6FF sobre el fondo 9.2:1, fondo sobre lima 15:1. */
+/* Acento violeta. Contrastes verificados: blanco sobre #6A45F5 5.55:1,
+   #B3A6FF sobre el fondo 9.2:1, #6A45F5 sobre la banda clara 5.2:1. */
 :root {
   --ac: #6a45f5;            /* botones y marcas */
   --ac-texto: #ffffff;      /* texto sobre el acento */
@@ -13,15 +12,6 @@
   --luz-1: 106 69 245;      /* columnas de luz */
   --luz-2: 255 138 76;      /* brillo cálido de abajo */
   --luz-3: 255 95 162;
-}
-:root[data-acento="lima"] {
-  --ac: #c6f84c;
-  --ac-texto: #0a0b14;
-  --ac-claro: #c6f84c;
-  --ac-sobre-blanco: #3f6212;
-  --luz-1: 150 214 52;
-  --luz-2: 62 216 195;
-  --luz-3: 198 248 76;
 }
 
 @theme inline {
@@ -41,6 +31,10 @@
   --color-texto-2: #a9acc2;
   --color-tenue: #7d8099;
   --color-tinta: #0a0b14;
+  --color-tinta-2: #2b2e45; /* texto sobre la banda clara */
+  --color-tinta-3: #555a7a; /* fuentes y notas sobre la banda clara */
+  --color-papel: #f5f4fa;
+  --color-error: #ff8a8a; /* mensajes de error de formularios */
   --color-whatsapp: #25d366; /* solo el botón flotante de WhatsApp */
 
   --font-titulo: "Bricolage Grotesque Variable", ui-sans-serif, sans-serif;

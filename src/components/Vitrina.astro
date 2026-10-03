@@ -10,11 +10,11 @@ import { PILARES } from '../datos/sitio';
 const textos = {
   responde: {
     titulo: 'Nunca más pierdas un cliente por responder tarde',
-    texto: 'Un agente de IA atiende WhatsApp, Instagram, Facebook y el chat de tu web las 24 horas. Responde con la información real de tu negocio y pasa la conversación a una persona cuando hace falta.',
+    texto: 'Un agente de IA para WhatsApp, Instagram, Facebook y el chat de tu web atiende las 24 horas. Responde con la información real de tu negocio y pasa la conversación a una persona cuando hace falta.',
   },
   vende: {
     titulo: 'Ningún cliente se pierde en el camino',
-    texto: 'Cada persona que te escribe por WhatsApp, redes, tu web o tus anuncios entra sola a tu CRM y recibe seguimiento hasta comprar. También recuperamos clientes antiguos y cotizaciones sin respuesta.',
+    texto: 'Un CRM para pymes que se llena solo: cada persona que te escribe por WhatsApp, redes, tu web o tus anuncios entra al embudo y recibe seguimiento hasta comprar. También recuperamos clientes antiguos y cotizaciones sin respuesta.',
   },
   agenda: {
     titulo: 'Citas sin llamadas ni idas y vueltas',
@@ -22,11 +22,11 @@ const textos = {
   },
   administra: {
     titulo: 'Menos Excel, más tiempo para tu negocio',
-    texto: 'Leemos tus facturas y comprobantes automáticamente. Los reportes de ventas, caja e inventario te llegan solos, y las cobranzas se recuerdan sin que tengas que hacerlo tú.',
+    texto: 'Automatización de procesos para empresas: leemos tus facturas y comprobantes, los reportes de ventas, caja e inventario te llegan solos, y las cobranzas se recuerdan sin que tengas que hacerlo tú.',
   },
   conecta: {
     titulo: 'Tus sistemas, por fin conectados',
-    texto: 'Unimos tu CRM, ERP, facturación electrónica, tienda online, Excel y correo para que la información fluya sola. Nadie vuelve a copiar y pegar datos.',
+    texto: 'Integración de sistemas sin complicaciones: unimos tu CRM, ERP, facturación electrónica, tienda online, Excel y correo para que la información fluya sola. Nadie vuelve a copiar y pegar datos.',
   },
 } as const;
 
@@ -34,7 +34,7 @@ const vistas = { responde: Responde, vende: Vende, agenda: Agenda, administra: A
 ---
 <section id="servicios" class="relative px-3 pb-16 sm:px-4 md:pb-24">
   <h2 class="sr-only">Qué automatizamos</h2>
-  <div class="mx-auto max-w-6xl rounded-[24px] border border-white/10 bg-tarjeta/95 p-4 shadow-[0_40px_120px_-30px_rgb(0_0_0/0.8)] backdrop-blur-sm sm:p-8 lg:p-12" data-vitrina>
+  <div class="mx-auto max-w-6xl rounded-[24px] border border-white/10 bg-tarjeta/95 p-4 shadow-[0_40px_120px_-30px_rgb(0_0_0/0.8)] backdrop-blur-sm sm:p-8 lg:p-12" data-vitrina data-pestanas>
     <div
       role="tablist"
       aria-label="Los 5 pilares de Automatiza Studio"
@@ -85,33 +85,6 @@ const vistas = { responde: Responde, vende: Vende, agenda: Agenda, administra: A
 </section>
 
 <script>
-  // Pestañas accesibles: clic, flechas, Inicio y Fin. Al cambiar, el panel
-  // nuevo vuelve a reproducir su animación de entrada.
-  document.querySelectorAll<HTMLElement>('[data-vitrina]').forEach((vitrina) => {
-    const pestanas = [...vitrina.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
-    const elegir = (pestana: HTMLButtonElement, enfocar = false) => {
-      pestanas.forEach((p) => {
-        const activa = p === pestana;
-        p.setAttribute('aria-selected', String(activa));
-        p.tabIndex = activa ? 0 : -1;
-        const panel = document.getElementById(p.getAttribute('aria-controls') ?? '');
-        if (panel) panel.hidden = !activa;
-      });
-      if (enfocar) pestana.focus();
-      // En celular la fila de pestañas se desliza para mostrar la elegida.
-      const fila = pestana.parentElement;
-      if (fila && fila.scrollWidth > fila.clientWidth) {
-        fila.scrollTo({ left: pestana.offsetLeft - 16, behavior: 'smooth' });
-      }
-    };
-    pestanas.forEach((p, i) => {
-      p.addEventListener('click', () => elegir(p));
-      p.addEventListener('keydown', (e) => {
-        const ir = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: pestanas.length - 1 }[e.key];
-        if (ir === undefined) return;
-        e.preventDefault();
-        elegir(pestanas[(ir + pestanas.length) % pestanas.length], true);
-      });
-    });
-  });
+  import { activarPestanas } from '../scripts/pestanas';
+  activarPestanas();
 </script>

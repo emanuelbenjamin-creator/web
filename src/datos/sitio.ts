@@ -11,7 +11,7 @@ export const SITIO = {
   agenda: '[ENLACE DE CALENDLY O SIMILAR]',
 };
 
-const pendiente = (valor: string) => valor.startsWith('[');
+export const pendiente = (valor: string) => valor.startsWith('[');
 
 // Enlace de WhatsApp con un mensaje ya escrito. Mientras falte el número,
 // lleva al formulario de contacto para que ningún botón quede roto.

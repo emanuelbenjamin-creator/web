@@ -1,0 +1,38 @@
+---
+import Linea from '../iconos/Linea.astro';
+
+const dolores = [
+  { icono: 'chat', titulo: 'Mensajes sin responder', texto: 'Te escriben de noche o el fin de semana, y para cuando respondes ya le compraron a otro.' },
+  { icono: 'frio', titulo: 'Clientes que se enfrían', texto: 'Cotizas, el cliente no contesta y nadie le vuelve a escribir.' },
+  { icono: 'calendario', titulo: 'Citas olvidadas', texto: 'Las inasistencias te dejan horas vacías que ya no recuperas.' },
+  { icono: 'tabla', titulo: 'Horas perdidas en Excel', texto: 'Reportes, conciliaciones y cobranzas que alguien arma a mano cada semana.' },
+  { icono: 'enlace', titulo: 'Sistemas que no se hablan', texto: 'Tu tienda, tu facturación y tu CRM no se conectan, y los datos se copian y pegan.' },
+  { icono: 'equipo', titulo: 'Personal saturado', texto: 'Tu equipo responde lo mismo todo el día en vez de vender y atender mejor.' },
+] as const;
+---
+<section class="px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-problema">
+  <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <h2 id="titulo-problema" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] text-balance sm:text-5xl">
+        Tu negocio pierde clientes y horas en tareas que pueden hacerse solas.
+      </h2>
+      <p class="mt-6 max-w-md text-texto-2">
+        No es falta de esfuerzo de tu equipo. Es que todavía hacen a mano lo que hoy hace una automatización con IA, sin
+        descanso y sin errores de tipeo.
+      </p>
+    </div>
+    <ul class="divide-y divide-linea border-y border-linea">
+      {dolores.map((d) => (
+        <li class="flex gap-4 py-6">
+          <span class="mt-0.5 inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-acento-claro">
+            <Linea nombre={d.icono} />
+          </span>
+          <div>
+            <h3 class="text-lg font-semibold">{d.titulo}</h3>
+            <p class="mt-1 text-texto-2">{d.texto}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
