@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* Tokens del sitio: colores, tipografías y radios. Se completan con el
+   estilo definido para la landing; los componentes usan solo estos nombres
+   (bg-fondo, text-texto, font-titulo, etc.). */
+@theme {
+  --color-fondo: #ffffff;
+  --color-superficie: #f5f6fa;
+  --color-borde: #e3e6ef;
+  --color-texto: #14182b;
+  --color-texto-suave: #4a5170;
+  --color-acento: #3f6bff;
+  --color-acento-texto: #ffffff;
+
+  --font-titulo: system-ui, sans-serif;
+  --font-cuerpo: system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--font-cuerpo);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
