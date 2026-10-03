@@ -2,12 +2,14 @@
 // Marco de las vistas de ejemplo: barra superior, contenido y la tarjeta
 // blanca flotante con los tres resultados del pilar.
 import Check from '../iconos/Check.astro';
+import { textos } from '../../i18n';
 
 interface Props {
   titulo: string;
   puntos: string[];
 }
 const { titulo, puntos } = Astro.props;
+const t = textos(Astro.currentLocale);
 ---
 <div class="relative pb-2 sm:pb-10">
   <div class="overflow-hidden rounded-2xl border border-white/10 bg-superficie">
@@ -16,7 +18,7 @@ const { titulo, puntos } = Astro.props;
         <span class="size-2 shrink-0 rounded-full bg-acento-claro"></span>
         <span class="truncate">{titulo}</span>
       </span>
-      <span class="shrink-0 rounded-md border border-white/15 px-2 py-0.5 text-tenue">Vista de ejemplo</span>
+      <span class="shrink-0 rounded-md border border-white/15 px-2 py-0.5 text-tenue">{t.comun.vistaEjemplo}</span>
     </div>
     <div class="relative min-h-[18rem] bg-[radial-gradient(120%_70%_at_100%_0%,rgb(var(--luz-1)/0.22),transparent_60%)] p-4 sm:p-5 sm:pb-24">
       <slot />

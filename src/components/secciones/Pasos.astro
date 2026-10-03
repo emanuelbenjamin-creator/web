@@ -1,0 +1,29 @@
+---
+// Pasos numerados (01–04) unidos por una línea: vertical en celular,
+// horizontal en escritorio.
+interface Props {
+  titulo: string;
+  bajada?: string;
+  pasos: { titulo: string; texto: string }[];
+  id?: string;
+}
+const { titulo, bajada, pasos, id = 'titulo-pasos' } = Astro.props;
+---
+<section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby={id}>
+  <div class="mx-auto max-w-6xl">
+    <h2 id={id} class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">{titulo}</h2>
+    {bajada && <p class="mt-4 max-w-xl text-texto-2">{bajada}</p>}
+    <ol class:list={['relative mt-14 grid gap-10 md:gap-8', pasos.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-4']}>
+      <span class="absolute top-0 bottom-0 left-[1.15rem] w-px bg-gradient-to-b from-acento via-white/15 to-transparent md:top-[1.15rem] md:right-0 md:bottom-auto md:left-0 md:h-px md:w-auto md:bg-gradient-to-r" aria-hidden="true"></span>
+      {pasos.map((p, i) => (
+        <li class="relative pl-14 md:pt-14 md:pl-0">
+          <span class="absolute top-0 left-0 inline-flex size-[2.3rem] items-center justify-center rounded-full border border-white/20 bg-fondo font-titulo text-sm font-semibold text-acento-claro tabular-nums">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <h3 class="font-titulo text-xl font-medium tracking-tight">{p.titulo}</h3>
+          <p class="mt-2 text-texto-2">{p.texto}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

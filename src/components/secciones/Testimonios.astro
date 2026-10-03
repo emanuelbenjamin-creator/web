@@ -1,10 +1,12 @@
 ---
 // [TESTIMONIO REAL PENDIENTE]: solo testimonios reales, con permiso del cliente.
 // No publicar nombres, logos ni resultados inventados.
+import { textos } from '../../i18n';
+const t = textos(Astro.currentLocale).testimonios;
 ---
 <section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-testimonios">
   <div class="mx-auto max-w-6xl">
-    <h2 id="titulo-testimonios" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Testimonios</h2>
+    <h2 id="titulo-testimonios" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">{t.titulo}</h2>
     <ul class="mt-12 grid gap-5 md:grid-cols-3">
       {[1, 2, 3].map(() => (
         <li class="flex min-h-56 flex-col justify-between rounded-[24px] border border-dashed border-white/25 p-7">

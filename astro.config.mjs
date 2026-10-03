@@ -7,7 +7,18 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://automatizastudio.com',
   trailingSlash: 'always',
-  integrations: [sitemap({ filter: (pagina) => !pagina.includes('/404') })],
+  // Español en la raíz y la versión en inglés en /en/.
+  i18n: {
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
+    routing: { prefixDefaultLocale: false },
+  },
+  integrations: [
+    sitemap({
+      filter: (pagina) => !pagina.includes('/404'),
+      i18n: { defaultLocale: 'es', locales: { es: 'es-PE', en: 'en-US' } },
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

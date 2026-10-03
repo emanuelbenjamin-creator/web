@@ -1,0 +1,395 @@
+// Textos en español de la portada y de las partes comunes del sitio
+// (encabezado, pie, formulario). La versión en inglés (en.ts) tiene la misma
+// forma: TypeScript avisa si falta algún texto.
+import { RUBROS } from '../datos/rubros';
+import { PREGUNTAS } from '../datos/preguntas';
+import { TECNOLOGIAS } from '../datos/sitio';
+
+export const es = {
+  idioma: 'es',
+  locale: 'es-PE',
+  inicio: '/',
+  meta: {
+    titulo: 'Automatiza Studio | Agencia de automatización con IA en Perú',
+    descripcion:
+      'Agentes de IA para WhatsApp, CRM para pymes, automatización de procesos e integración de sistemas. Tu negocio responde, vende, agenda y se administra solo, las 24 horas.',
+    ogLocale: 'es_PE',
+    descripcionAgencia:
+      'Agencia de automatización con IA: agentes de IA para WhatsApp, CRM, agenda automática, automatización de procesos e integración de sistemas.',
+    areas: ['Perú', 'Latinoamérica', 'España', 'Estados Unidos'],
+  },
+  // Anclas de las secciones de la portada.
+  ids: {
+    servicios: 'servicios',
+    rubros: 'rubros',
+    precios: 'precios',
+    contacto: 'contacto',
+    demos: 'demos',
+    preguntas: 'preguntas',
+    calculadora: 'calculadora',
+  },
+  comun: {
+    saltar: 'Saltar al contenido',
+    inicioAria: 'Automatiza Studio, inicio',
+    agendar: 'Agenda tu diagnóstico gratis',
+    escribenos: 'Escríbenos por WhatsApp',
+    whatsappCorto: 'WhatsApp',
+    mensajeWhatsApp: 'Hola, quiero automatizar mi negocio',
+    vistaEjemplo: 'Vista de ejemplo',
+  },
+  pilares: {
+    responde: 'Responde',
+    vende: 'Vende',
+    agenda: 'Agenda',
+    administra: 'Administra',
+    conecta: 'Conecta',
+  },
+  encabezado: {
+    navAria: 'Principal',
+    navMovilAria: 'Principal (móvil)',
+    idiomaAria: 'Idioma',
+    abrirMenu: 'Abrir menú',
+    cerrarMenu: 'Cerrar menú',
+    servicios: 'Servicios',
+    rubros: 'Rubros',
+    precios: 'Precios',
+    nosotros: 'Nosotros',
+    blog: 'Blog',
+    contacto: 'Contacto',
+    verTodos: 'Ver todos',
+  },
+  portada: {
+    titulo: 'Tu negocio funcionando en automático',
+    bajada: 'Responde, vende, agenda y se administra solo, las 24 horas. Sin contratar más personal.',
+    probar: 'Prueba nuestro agente',
+    probarCola: ' por WhatsApp',
+    mensajeProbar: 'Hola, quiero probar su agente de IA',
+    micro: 'Diagnóstico de 30 minutos, sin compromiso.',
+    garantias: ['Diagnóstico gratis', 'Propuesta en 48 horas', 'Listo en 1 a 3 semanas'],
+  },
+  vitrina: {
+    tituloOculto: 'Qué automatizamos',
+    tablistAria: 'Los 5 pilares de Automatiza Studio',
+    verComoFunciona: 'Ver cómo funciona',
+    textos: {
+      responde: {
+        titulo: 'Nunca más pierdas un cliente por responder tarde',
+        texto:
+          'Un agente de IA para WhatsApp, Instagram, Facebook y el chat de tu web atiende las 24 horas. Responde con la información real de tu negocio y pasa la conversación a una persona cuando hace falta.',
+      },
+      vende: {
+        titulo: 'Ningún cliente se pierde en el camino',
+        texto:
+          'Un CRM para pymes que se llena solo: cada persona que te escribe por WhatsApp, redes, tu web o tus anuncios entra al embudo y recibe seguimiento hasta comprar. También recuperamos clientes antiguos y cotizaciones sin respuesta.',
+      },
+      agenda: {
+        titulo: 'Citas sin llamadas ni idas y vueltas',
+        texto:
+          'Tus clientes reservan solos desde WhatsApp o tu web, directo en tu calendario. El sistema confirma, recuerda y reprograma por ti, para que falten menos.',
+      },
+      administra: {
+        titulo: 'Menos Excel, más tiempo para tu negocio',
+        texto:
+          'Automatización de procesos para empresas: leemos tus facturas y comprobantes, los reportes de ventas, caja e inventario te llegan solos, y las cobranzas se recuerdan sin que tengas que hacerlo tú.',
+      },
+      conecta: {
+        titulo: 'Tus sistemas, por fin conectados',
+        texto:
+          'Integración de sistemas sin complicaciones: unimos tu CRM, ERP, facturación electrónica, tienda online, Excel y correo para que la información fluya sola. Nadie vuelve a copiar y pegar datos.',
+      },
+    },
+    vistas: {
+      responde: {
+        titulo: 'WhatsApp · atención automática',
+        puntos: ['Responde precios y dudas', 'Toma pedidos y agenda', 'Pasa a una persona si hace falta'],
+        cliente: 'Cliente:',
+        agente: 'Agente:',
+        alInstante: ' · al instante',
+        mensajes: [
+          { de: 'cliente', texto: 'Hola, ¿cuánto cuesta una limpieza dental? ¿Atienden mañana?', hora: '23:47' },
+          { de: 'agente', texto: '¡Hola! Sí, mañana tenemos 10:00 y 16:30. La limpieza incluye revisión y pulido. ¿Te reservo una?', hora: '23:47' },
+          { de: 'cliente', texto: '16:30, por favor', hora: '23:48' },
+          { de: 'agente', texto: 'Listo, quedó agendada para mañana a las 16:30. Te enviaré un recordatorio.', hora: '23:48' },
+        ],
+      },
+      vende: {
+        titulo: 'CRM · embudo de ventas',
+        puntos: ['Cada contacto entra solo', 'Seguimiento hasta cerrar', 'Recupera clientes y cotizaciones'],
+        columnas: [
+          { titulo: 'Nuevos', tarjetas: [
+            { texto: 'Contacto de Instagram', detalle: 'Entró solo hace 2 min', nuevo: true },
+            { texto: 'Anuncio de Meta', detalle: 'Calificado por el agente', nuevo: false },
+          ] },
+          { titulo: 'En seguimiento', tarjetas: [
+            { texto: 'Cotización enviada', detalle: 'Recordatorio automático mañana', nuevo: false },
+            { texto: 'Carrito abandonado', detalle: 'Mensaje de recuperación enviado', nuevo: false },
+          ] },
+          { titulo: 'Cerrados', tarjetas: [
+            { texto: 'Venta cerrada', detalle: 'Después de 3 seguimientos', nuevo: false },
+          ] },
+        ],
+      },
+      agenda: {
+        titulo: 'Agenda · conectada a Google Calendar',
+        puntos: ['Reservas desde WhatsApp o la web', 'Confirmaciones automáticas', 'Recordatorios que evitan faltas'],
+        dias: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+        citas: [
+          { hora: '09:00', que: 'Consulta', estado: 'Confirmada', nueva: false },
+          { hora: '11:30', que: 'Control', estado: 'Recordatorio enviado', nueva: false },
+          { hora: '16:30', que: 'Limpieza dental', estado: 'Reservada por WhatsApp hace 1 min', nueva: true },
+        ],
+      },
+      administra: {
+        titulo: 'Reporte automático · 20:00',
+        puntos: ['Lee facturas y comprobantes', 'Reportes que llegan solos', 'Alertas de stock y cobranzas'],
+        resumen: 'Resumen de hoy',
+        ventasSemana: 'Ventas de la semana',
+        filas: [
+          { que: 'Facturas leídas hoy', valor: '37' },
+          { que: 'Cobranzas recordadas', valor: '5' },
+          { que: 'Productos con poco stock', valor: '3' },
+        ],
+        nota: 'Llega solo por WhatsApp o correo, todos los días.',
+      },
+      conecta: {
+        titulo: 'Tus sistemas, conectados',
+        puntos: ['Funciona con lo que ya usas', 'Sin copiar y pegar datos', 'Conecta sistemas propios'],
+        pasos: [
+          'Entra un pedido en tu tienda online',
+          'Se crea el cliente en tu CRM',
+          'Se emite la factura electrónica',
+          'Se descuenta el stock en tu ERP o Excel',
+          'Te llega el resumen por correo',
+        ],
+        nota: 'Sin que nadie copie y pegue nada.',
+      },
+    },
+  },
+  tecnologias: {
+    titulo: 'Trabajamos con las herramientas que ya usan las empresas líderes',
+    lista: TECNOLOGIAS,
+  },
+  problema: {
+    titulo: 'Tu negocio pierde clientes y horas en tareas que pueden hacerse solas.',
+    bajada:
+      'No es falta de esfuerzo de tu equipo. Es que todavía hacen a mano lo que hoy hace una automatización con IA, sin descanso y sin errores de tipeo.',
+    dolores: [
+      { icono: 'chat', titulo: 'Mensajes sin responder', texto: 'Te escriben de noche o el fin de semana, y para cuando respondes ya le compraron a otro.' },
+      { icono: 'frio', titulo: 'Clientes que se enfrían', texto: 'Cotizas, el cliente no contesta y nadie le vuelve a escribir.' },
+      { icono: 'calendario', titulo: 'Citas olvidadas', texto: 'Las inasistencias te dejan horas vacías que ya no recuperas.' },
+      { icono: 'tabla', titulo: 'Horas perdidas en Excel', texto: 'Reportes, conciliaciones y cobranzas que alguien arma a mano cada semana.' },
+      { icono: 'enlace', titulo: 'Sistemas que no se hablan', texto: 'Tu tienda, tu facturación y tu CRM no se conectan, y los datos se copian y pegan.' },
+      { icono: 'equipo', titulo: 'Personal saturado', texto: 'Tu equipo responde lo mismo todo el día en vez de vender y atender mejor.' },
+    ],
+  },
+  proceso: {
+    titulo: 'Cómo trabajamos',
+    bajada: 'De la primera conversación a tu negocio funcionando solo, en cuatro pasos.',
+    pasos: [
+      { titulo: 'Diagnóstico gratis', texto: '30 minutos para entender tu negocio y detectar qué conviene automatizar primero.' },
+      { titulo: 'Propuesta en 48 horas', texto: 'Te enviamos qué vamos a hacer, en cuánto tiempo y cuánto cuesta. Sin letra chica.' },
+      { titulo: 'Implementación en 1 a 3 semanas', texto: 'Lo construimos, lo conectamos a tus sistemas y lo probamos con tu equipo antes de lanzarlo.' },
+      { titulo: 'Soporte y mejora continua', texto: 'Revisamos cómo funciona, lo ajustamos y le sumamos mejoras cada mes.' },
+    ],
+  },
+  rubros: {
+    titulo: 'Lo que cambia en tu rubro',
+    bajada: 'Elige tu tipo de negocio y mira el antes y el después.',
+    nota: 'Ejemplos de lo que se puede automatizar, no casos de clientes.',
+    tablistAria: 'Rubros',
+    antes: 'Antes',
+    ahora: 'Ahora',
+    resolvemos: 'Lo resolvemos con:',
+    verSoluciones: (nombre: string) => `Ver soluciones para ${nombre.toLowerCase()}`,
+    lista: RUBROS.map((r) => ({
+      id: r.id as string,
+      nombre: r.nombre as string,
+      antes: r.antes as string,
+      ahora: r.ahora as string,
+      pilares: [...r.pilares] as string[],
+    })),
+    conPagina: true, // en español cada rubro tiene su página
+  },
+  demos: {
+    titulo: 'Mira cómo funciona',
+    bajada: 'Videos cortos del sistema trabajando, de principio a fin.',
+    lista: [
+      { titulo: 'Agente de WhatsApp', texto: 'Un cliente pregunta precios y el agente responde, toma el pedido y agenda.' },
+      { titulo: 'CRM con seguimiento automático', texto: 'Un contacto nuevo entra solo al CRM y recibe seguimiento hasta cerrar la venta.' },
+      { titulo: 'Reporte automático', texto: 'El resumen de ventas, caja e inventario que llega solo por WhatsApp.' },
+    ],
+  },
+  calculadora: {
+    titulo: '¿Cuánto te cuestan las tareas repetitivas?',
+    bajada: 'Mueve los valores y mira cuánto dinero se va cada mes en trabajo que se puede automatizar.',
+    horas: 'Horas a la semana en tareas repetitivas',
+    ayudaHoras: 'Responder mensajes, armar reportes, copiar datos, confirmar citas…',
+    costo: 'Costo por hora de quien las hace',
+    ayudaCosto: 'Sueldo mensual ÷ horas trabajadas al mes. Si no lo sabes, deja el valor de ejemplo.',
+    moneda: 'PEN',
+    simbolo: 'S/',
+    costoInicial: 15,
+    dejando: 'Estás dejando ir',
+    alMes: 'al mes',
+    alAnio: 'Al año',
+    jornadas: 'Jornadas de 8 horas al mes',
+    formula: 'Cálculo referencial: horas por semana × costo por hora × 52 semanas ÷ 12 meses.',
+  },
+  datos: {
+    titulo: 'Las pymes peruanas ya están automatizando',
+    fuente: 'Fuente:',
+    destacado: {
+      cifra: '93%',
+      texto: 'de las pymes peruanas prefiere tercerizar o compartir la gestión tecnológica en lugar de tener un área interna.',
+      frase: 'No necesitas un área de sistemas: nos tienes a nosotros.',
+      fuente: 'ASUS, 2025',
+    },
+    grupos: [
+      {
+        titulo: 'En Perú',
+        lista: [
+          { cifra: '83%', texto: 'de los dueños de pymes peruanas dice estar listo para implementar IA.', fuente: 'ASUS, Future of SMB, 2026' },
+          { cifra: '43%', texto: 'de las pymes peruanas ya depende menos de su personal para tareas repetitivas gracias a la automatización.', fuente: 'ASUS, 2025' },
+          { cifra: '3.9×', texto: 'más inversión en IA como porcentaje del gasto en TI: Perú proyecta el mayor crecimiento de Latinoamérica.', fuente: 'Lenovo/IDC, 2026' },
+          { cifra: '77%', texto: 'de los consumidores peruanos usa WhatsApp en su proceso de compra.', fuente: 'Accenture y Facebook, 2020' },
+          { cifra: '65%', texto: 'de las compras online en Perú en 2024 se hizo desde el celular.', fuente: 'Ipsos' },
+        ],
+      },
+      {
+        titulo: 'En el mundo',
+        lista: [
+          { cifra: '178%', texto: 'creció en un año la demanda de integración de IA en empresas.', fuente: 'Upwork, In-Demand Skills 2026' },
+          { cifra: '75%', texto: 'de las pymes del mundo ya experimenta con IA, y el 91% de las que la usan dice que aumentó sus ingresos.', fuente: 'Salesforce, SMB Trends Report (3,350 empresas)' },
+        ],
+      },
+    ],
+  },
+  precios: {
+    titulo: 'Planes y precios',
+    bajada: 'Precios desde, para que sepas por dónde empezar. Tu propuesta exacta llega en 48 horas, después del diagnóstico.',
+    monedaAria: 'Moneda',
+    monedas: [
+      { id: 'pen', texto: 'Perú (S/)' },
+      { id: 'usd', texto: 'Otros países (US$)' },
+    ],
+    implementacionDesde: 'Implementación desde',
+    masElegido: 'El más elegido',
+    planes: [
+      {
+        id: 'responde',
+        nombre: 'Plan Responde',
+        resumen: 'Agente de IA para WhatsApp y redes.',
+        precio: { pen: 'S/1,500', usd: 'US$500' },
+        mensual: { pen: 'desde S/250 al mes', usd: 'mantenimiento desde US$150 al mes' },
+        plazo: 'Listo en 1 a 2 semanas',
+        destacado: false,
+        incluye: [
+          'Agente de IA para WhatsApp, Instagram y Facebook',
+          'Entrenado con la información de tu negocio',
+          'Toma pedidos y califica a los interesados',
+          'Pasa la conversación a una persona cuando hace falta',
+        ],
+      },
+      {
+        id: 'vende-agenda',
+        nombre: 'Plan Vende y Agenda',
+        resumen: 'Agente de IA + CRM + seguimiento + agenda.',
+        precio: { pen: 'S/3,500', usd: 'US$1,200' },
+        mensual: { pen: 'desde S/450 al mes', usd: 'mantenimiento desde US$150 al mes' },
+        plazo: 'Listo en 2 a 3 semanas',
+        destacado: true,
+        incluye: [
+          'Todo lo del Plan Responde',
+          'CRM con embudo de ventas',
+          'Seguimiento automático por WhatsApp y correo',
+          'Reservas, confirmaciones y recordatorios en tu calendario',
+        ],
+      },
+      {
+        id: 'empresa',
+        nombre: 'Plan Empresa Automática',
+        resumen: 'Procesos, sistemas conectados y asistente interno.',
+        precio: { pen: 'S/6,000', usd: 'US$2,500' },
+        mensual: { pen: 'cotización a medida', usd: 'mantenimiento desde US$150 al mes' },
+        plazo: 'Plazo según el alcance',
+        destacado: false,
+        incluye: [
+          'Procesos administrativos automáticos',
+          'Integración de tus sistemas: CRM, ERP, facturación, tienda',
+          'Asistente de IA con la información de tu empresa',
+          'Cotización a medida',
+        ],
+      },
+    ],
+    notaMoneda: { pen: 'Precios en soles sin IGV.', usd: 'Precios en dólares para empresas fuera de Perú.' },
+    mensualidad: 'La mensualidad incluye soporte, servidor y mejoras.',
+    meta: 'Lo que cobra Meta por los mensajes de WhatsApp va aparte: cada número tiene un cupo gratuito de mensajes de atención al mes y, pasado ese cupo, Meta cobra por mensaje según su tarifa. Las campañas masivas también se pagan a Meta.',
+    franja: 'Empieza con un diagnóstico gratis de 30 minutos y recibe tu propuesta en 48 horas.',
+  },
+  testimonios: { titulo: 'Testimonios' },
+  preguntas: {
+    titulo: 'Preguntas frecuentes',
+    bajada: '¿Tienes otra duda? Escríbenos por WhatsApp y te respondemos.',
+    lista: PREGUNTAS,
+  },
+  contacto: {
+    titulo: 'Agenda tu diagnóstico gratis',
+    bajada: '30 minutos, sin compromiso. Te enviamos la propuesta en 48 horas.',
+    agendaLlamada: 'Agenda una llamada:',
+    ubicacion: (ciudad: string) => `${ciudad}, Perú · Atención 100% remota en Perú, Latinoamérica, España y EE. UU.`,
+    nombre: 'Nombre',
+    empresa: 'Empresa',
+    rubro: 'Rubro',
+    eligeRubro: 'Elige tu rubro',
+    otro: 'Otro',
+    whatsapp: 'WhatsApp',
+    telefonoEjemplo: '+51 999 999 999',
+    sistemas: '¿Qué sistemas usas?',
+    listaSistemas: ['CRM', 'ERP', 'Facturación electrónica', 'Tienda online', 'Excel o Google Sheets', 'Correo', 'Otro'],
+    automatizar: '¿Qué te gustaría automatizar?',
+    ejemplo: 'Por ejemplo: responder los mensajes de WhatsApp y agendar citas.',
+    aceptoAntes: 'Acepto la ',
+    politica: 'Política de Privacidad',
+    aceptoDespues: ' y el uso de mis datos para responder esta solicitud (Ley 29733).',
+    enviarWhatsApp: 'Enviar por WhatsApp',
+    enviar: 'Enviar solicitud',
+    notaWhatsApp: 'Se abrirá WhatsApp con tu mensaje listo para enviar.',
+    notaCorreo: 'Se abrirá tu correo con el mensaje listo para enviar.',
+    listo: '¡Listo! Envía el mensaje que se abrió y te respondemos para coordinar tu diagnóstico.',
+    // Textos que usa el script del formulario en el navegador.
+    js: {
+      errores: {
+        nombre: 'Escribe tu nombre.',
+        empresa: 'Escribe el nombre de tu empresa.',
+        rubro: 'Elige tu rubro.',
+        whatsapp: 'Escribe un número de WhatsApp válido, con código de país.',
+        mensaje: 'Cuéntanos qué te gustaría automatizar.',
+        privacidad: 'Necesitamos tu aceptación para responderte.',
+        otro: 'Revisa este campo.',
+      },
+      saludo: 'Hola, quiero agendar mi diagnóstico gratis.',
+      nombre: 'Nombre',
+      empresa: 'Empresa',
+      rubro: 'Rubro',
+      whatsapp: 'WhatsApp',
+      sistemas: 'Sistemas que usa',
+      sinSistemas: 'no lo indicó',
+      automatizar: 'Quiere automatizar',
+      asunto: 'Diagnóstico gratis',
+    },
+  },
+  pie: {
+    eslogan: 'Tu negocio, en automático.',
+    remoto: 'Atención 100% remota',
+    servicios: 'Servicios',
+    rubros: 'Rubros',
+    empresa: 'Empresa',
+    legal: 'Legal',
+    navAria: 'Pie de página',
+    privacidad: 'Política de Privacidad',
+    terminos: 'Términos',
+    libro: 'Libro de Reclamaciones',
+    derechos: '© 2026 Automatiza Studio. Todos los derechos reservados.',
+    hecho: 'Hecho en Perú para el mundo.',
+  },
+};

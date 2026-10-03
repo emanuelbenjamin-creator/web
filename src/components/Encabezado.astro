@@ -1,49 +1,116 @@
 ---
 import WhatsApp from './iconos/WhatsApp.astro';
-import { enlaceWhatsApp, publicada } from '../datos/sitio';
+import { PILARES, enlaceWhatsApp, publicada } from '../datos/sitio';
+import { RUBROS } from '../datos/rubros';
+import { ancla, textos } from '../i18n';
 
-const menu = [
-  { texto: 'Servicios', href: '/#servicios' },
-  { texto: 'Rubros', href: '/#rubros' },
-  { texto: 'Precios', href: '/#precios' },
-  { texto: 'Nosotros', href: '/nosotros/' },
-  { texto: 'Contacto', href: '/#contacto' },
-].filter((m) => m.href.startsWith('/#') || publicada(m.href));
+const t = textos(Astro.currentLocale);
+const e = t.encabezado;
+const enEspanol = t.idioma === 'es';
+
+interface Item { texto: string; href: string; detalle?: string }
+interface Entrada { texto: string; href: string; sub?: Item[]; anchoSub?: 'normal' | 'doble' }
+
+// Menú: en español, Servicios y Rubros despliegan sus páginas (cuando
+// existen); en inglés todo lleva a las secciones de la portada /en/.
+const menu: Entrada[] = enEspanol
+  ? [
+      {
+        texto: e.servicios,
+        href: ancla(t, 'servicios'),
+        sub: PILARES.filter((p) => publicada(p.ruta)).map((p) => ({ texto: p.nombre, href: p.ruta, detalle: p.lema })),
+      },
+      {
+        texto: e.rubros,
+        href: ancla(t, 'rubros'),
+        sub: RUBROS.filter((r) => publicada(`/rubros/${r.id}/`)).map((r) => ({ texto: r.nombre, href: `/rubros/${r.id}/` })),
+        anchoSub: 'doble',
+      },
+      { texto: e.precios, href: publicada('/precios/') ? '/precios/' : ancla(t, 'precios') },
+      ...(publicada('/nosotros/') ? [{ texto: e.nosotros, href: '/nosotros/' }] : []),
+      { texto: e.contacto, href: publicada('/contacto/') ? '/contacto/' : ancla(t, 'contacto') },
+    ]
+  : [
+      { texto: e.servicios, href: ancla(t, 'servicios') },
+      { texto: e.rubros, href: ancla(t, 'rubros') },
+      { texto: e.precios, href: ancla(t, 'precios') },
+      { texto: e.contacto, href: ancla(t, 'contacto') },
+    ];
+
+const otroIdioma = enEspanol
+  ? { corto: 'EN', largo: 'English', href: '/en/', lang: 'en', listo: publicada('/en/') }
+  : { corto: 'ES', largo: 'Español', href: '/', lang: 'es', listo: true };
+const flecha = 'M6 9l6 6 6-6';
 ---
 
 <header class="sticky top-0 z-40 border-b border-transparent bg-fondo/70 backdrop-blur-md transition-colors data-[bajo=true]:border-linea" data-encabezado>
   <div class="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 md:gap-6 md:px-6">
-    <a href="/" class="flex shrink-0 items-baseline gap-2 font-titulo text-[1.05rem] tracking-tight" aria-label="Automatiza Studio, inicio">
+    <a href={t.inicio} class="flex shrink-0 items-baseline gap-2 font-titulo text-[1.05rem] tracking-tight" aria-label={t.comun.inicioAria}>
       <span class="font-bold">Automatiza</span>
       <span class="h-3.5 w-px self-center bg-texto/25" aria-hidden="true"></span>
       <span class="font-normal text-texto-2">Studio</span>
     </a>
 
-    <nav class="hidden lg:block" aria-label="Principal">
+    <nav class="hidden lg:block" aria-label={e.navAria}>
       <ul class="flex items-center gap-1 text-[0.95rem] text-texto/85">
-        {menu.map((m) => (
-          <li><a href={m.href} class="rounded-lg px-3 py-2 transition-colors hover:bg-white/5 hover:text-texto">{m.texto}</a></li>
-        ))}
+        {menu.map((m, i) =>
+          m.sub && m.sub.length > 0 ? (
+            <li class="relative" data-desplegable>
+              <button
+                type="button"
+                class="group inline-flex items-center gap-1 rounded-lg px-3 py-2 transition-colors hover:bg-white/5 hover:text-texto aria-expanded:bg-white/5 aria-expanded:text-texto"
+                aria-expanded="false"
+                aria-controls={`submenu-${i}`}
+              >
+                {m.texto}
+                <svg class="size-4 transition-transform duration-150 group-aria-expanded:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={flecha} /></svg>
+              </button>
+              <div
+                id={`submenu-${i}`}
+                hidden
+                class:list={[
+                  'absolute top-full left-0 mt-2 rounded-2xl border border-white/10 bg-tarjeta p-2 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.8)]',
+                  m.anchoSub === 'doble' ? 'w-[34rem]' : 'w-80',
+                ]}
+              >
+                <ul class:list={['grid gap-0.5', m.anchoSub === 'doble' && 'grid-cols-2']}>
+                  {m.sub.map((s) => (
+                    <li>
+                      <a href={s.href} class="block rounded-xl px-3 py-2.5 transition-colors hover:bg-white/[0.06]">
+                        <span class="block font-semibold text-texto">{s.texto}</span>
+                        {s.detalle && <span class="block text-sm text-texto-2">{s.detalle}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a href={m.href} class="mt-1 block rounded-xl border-t border-white/10 px-3 pt-3 pb-2 text-sm font-semibold text-acento-claro hover:underline">{e.verTodos} →</a>
+              </div>
+            </li>
+          ) : (
+            <li><a href={m.href} class="rounded-lg px-3 py-2 transition-colors hover:bg-white/5 hover:text-texto">{m.texto}</a></li>
+          ),
+        )}
       </ul>
     </nav>
 
     <div class="ml-auto flex items-center gap-1.5 md:gap-3">
-      <div class="hidden items-center rounded-lg border border-linea p-0.5 text-sm sm:flex" aria-label="Idioma">
-        <span class="rounded-md bg-white/10 px-2 py-1 font-semibold" aria-current="true">ES</span>
-        {publicada('/en/') ? (
-          <a href="/en/" class="rounded-md px-2 py-1 text-texto-2 transition-colors hover:text-texto" hreflang="en" lang="en">EN</a>
+      <div class="hidden items-center rounded-lg border border-linea p-0.5 text-sm sm:flex" aria-label={e.idiomaAria}>
+        {enEspanol && <span class="rounded-md bg-white/10 px-2 py-1 font-semibold" aria-current="true">ES</span>}
+        {otroIdioma.listo ? (
+          <a href={otroIdioma.href} class="rounded-md px-2 py-1 text-texto-2 transition-colors hover:text-texto" hreflang={otroIdioma.lang} lang={otroIdioma.lang}>{otroIdioma.corto}</a>
         ) : (
           <span class="cursor-not-allowed rounded-md px-2 py-1 text-tenue" title="English version coming soon" lang="en">EN</span>
         )}
+        {!enEspanol && <span class="rounded-md bg-white/10 px-2 py-1 font-semibold" aria-current="true">EN</span>}
       </div>
       <a
-        href={enlaceWhatsApp()}
-        aria-label="Escríbenos por WhatsApp"
+        href={enlaceWhatsApp(t.comun.mensajeWhatsApp, ancla(t, 'contacto'))}
+        aria-label={t.comun.escribenos}
         class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-xl border border-texto/40 px-3 text-sm font-semibold transition-colors hover:border-texto hover:bg-white/5 md:px-4"
       >
         <WhatsApp class="size-4" />
-        <span class="hidden sm:inline">Escríbenos por WhatsApp</span>
-        <span class="hidden min-[380px]:inline sm:hidden">WhatsApp</span>
+        <span class="hidden sm:inline">{t.comun.escribenos}</span>
+        <span class="hidden min-[380px]:inline sm:hidden">{t.comun.whatsappCorto}</span>
       </a>
       <button
         type="button"
@@ -51,23 +118,36 @@ const menu = [
         aria-expanded="false"
         aria-controls="menu-movil"
         data-abrir-menu
+        data-abrir={e.abrirMenu}
+        data-cerrar={e.cerrarMenu}
       >
-        <span class="sr-only">Abrir menú</span>
+        <span class="sr-only">{e.abrirMenu}</span>
         <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16" data-icono-abierto></path>
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
         </svg>
       </button>
     </div>
   </div>
 
-  <nav id="menu-movil" class="hidden border-t border-linea bg-fondo/95 lg:hidden" aria-label="Principal (móvil)">
+  <nav id="menu-movil" class="hidden max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-linea bg-fondo/95 lg:hidden" aria-label={e.navMovilAria}>
     <ul class="mx-auto flex max-w-6xl flex-col px-4 py-3 text-lg">
       {menu.map((m) => (
-        <li><a href={m.href} class="block rounded-lg px-2 py-3 hover:bg-white/5" data-cerrar-menu>{m.texto}</a></li>
+        <li>
+          <a href={m.href} class="block rounded-lg px-2 py-3 hover:bg-white/5" data-cerrar-menu>{m.texto}</a>
+          {m.sub && m.sub.length > 0 && (
+            <ul class="mb-2 ml-2 border-l border-white/10 pl-3 text-base">
+              {m.sub.map((s) => (
+                <li><a href={s.href} class="block rounded-lg px-2 py-2 text-texto-2 hover:bg-white/5 hover:text-texto" data-cerrar-menu>{s.texto}</a></li>
+              ))}
+            </ul>
+          )}
+        </li>
       ))}
       <li class="mt-2 flex items-center gap-3 border-t border-linea px-2 pt-4 text-base">
-        <span class="font-semibold">ES</span>
-        {publicada('/en/') ? <a href="/en/" class="text-texto-2" hreflang="en" lang="en">English</a> : <span class="text-tenue" lang="en">English (coming soon)</span>}
+        <span class="font-semibold">{enEspanol ? 'Español' : 'English'}</span>
+        {otroIdioma.listo
+          ? <a href={otroIdioma.href} class="text-texto-2" hreflang={otroIdioma.lang} lang={otroIdioma.lang}>{otroIdioma.largo}</a>
+          : <span class="text-tenue" lang="en">English (coming soon)</span>}
       </li>
     </ul>
   </nav>
@@ -81,11 +161,43 @@ const menu = [
   const alternar = (abrir: boolean) => {
     boton?.setAttribute('aria-expanded', String(abrir));
     menu?.classList.toggle('hidden', !abrir);
-    boton?.querySelector('.sr-only')?.replaceChildren(abrir ? 'Cerrar menú' : 'Abrir menú');
+    boton?.querySelector('.sr-only')?.replaceChildren((abrir ? boton.dataset.cerrar : boton.dataset.abrir) ?? '');
   };
   boton?.addEventListener('click', () => alternar(boton.getAttribute('aria-expanded') !== 'true'));
   menu?.querySelectorAll('[data-cerrar-menu]').forEach((a) => a.addEventListener('click', () => alternar(false)));
-  document.addEventListener('keydown', (e) => e.key === 'Escape' && alternar(false));
+
+  // Submenús del escritorio: se abren con clic o teclado y se cierran al
+  // salir, con Escape o al hacer clic afuera.
+  const desplegables = [...document.querySelectorAll<HTMLElement>('[data-desplegable]')];
+  const abrirSub = (d: HTMLElement, abrir: boolean) => {
+    d.querySelector('button')?.setAttribute('aria-expanded', String(abrir));
+    const panel = d.querySelector<HTMLElement>('[id^="submenu-"]');
+    if (panel) panel.hidden = !abrir;
+  };
+  desplegables.forEach((d) => {
+    const b = d.querySelector('button');
+    b?.addEventListener('click', () => {
+      const abrir = b.getAttribute('aria-expanded') !== 'true';
+      desplegables.forEach((otro) => otro !== d && abrirSub(otro, false));
+      abrirSub(d, abrir);
+    });
+    d.addEventListener('focusout', (ev) => {
+      if (!d.contains(ev.relatedTarget as Node | null)) abrirSub(d, false);
+    });
+  });
+  document.addEventListener('click', (ev) => {
+    desplegables.forEach((d) => !d.contains(ev.target as Node) && abrirSub(d, false));
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'Escape') return;
+    alternar(false);
+    desplegables.forEach((d) => {
+      if (d.querySelector('button')?.getAttribute('aria-expanded') === 'true') {
+        abrirSub(d, false);
+        d.querySelector('button')?.focus();
+      }
+    });
+  });
 
   // Borde inferior cuando la página ya bajó.
   const marcar = () => encabezado?.setAttribute('data-bajo', String(window.scrollY > 8));

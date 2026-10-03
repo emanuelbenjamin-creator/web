@@ -1,0 +1,24 @@
+---
+// Los dos botones de siempre: agendar el diagnóstico y escribir por WhatsApp.
+import WhatsApp from './iconos/WhatsApp.astro';
+import { enlaceAgenda, enlaceWhatsApp } from '../datos/sitio';
+import { ancla, textos } from '../i18n';
+interface Props { centrado?: boolean; mensaje?: string }
+const t = textos(Astro.currentLocale);
+const { centrado = false, mensaje = t.comun.mensajeWhatsApp } = Astro.props;
+const respaldo = ancla(t, 'contacto');
+---
+<div class:list={['flex flex-col gap-3 sm:flex-row sm:flex-wrap', centrado && 'items-center justify-center']}>
+  <a
+    href={enlaceAgenda(respaldo)}
+    class="inline-flex min-h-13 items-center justify-center whitespace-nowrap rounded-xl bg-white px-7 font-semibold text-tinta shadow-[0_10px_30px_-10px_rgb(0_0_0/0.6)] transition-transform duration-150 hover:-translate-y-0.5"
+  >
+    {t.comun.agendar}
+  </a>
+  <a
+    href={enlaceWhatsApp(mensaje, respaldo)}
+    class="inline-flex min-h-13 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-white/30 bg-white/5 px-6 font-semibold transition-colors hover:border-white/60 hover:bg-white/10"
+  >
+    <WhatsApp class="size-5" /> {t.comun.escribenos}
+  </a>
+</div>

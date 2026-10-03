@@ -1,0 +1,27 @@
+---
+// Estructura común de todas las páginas: encabezado, contenido y pie.
+import Base from './Base.astro';
+import Encabezado from '../components/Encabezado.astro';
+import Pie from '../components/secciones/Pie.astro';
+import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
+import { textos } from '../i18n';
+
+interface Props {
+  titulo: string; // <title>
+  descripcion: string;
+  alternos?: { es: string; en: string };
+  tipoOg?: 'website' | 'article';
+}
+const { titulo, descripcion, alternos, tipoOg } = Astro.props;
+const t = textos(Astro.currentLocale);
+---
+<Base titulo={titulo} descripcion={descripcion} alternos={alternos} tipoOg={tipoOg}>
+  <Fragment slot="head"><slot name="head" /></Fragment>
+  <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-tinta">{t.comun.saltar}</a>
+  <Encabezado />
+  <main id="contenido">
+    <slot />
+  </main>
+  <Pie />
+  <WhatsAppFlotante />
+</Base>

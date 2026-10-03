@@ -1,0 +1,14 @@
+---
+// Cierre de las páginas internas: el mismo llamado de la portada.
+import Acciones from './Acciones.astro';
+import { textos } from '../i18n';
+interface Props { titulo?: string; texto?: string; mensaje?: string }
+const t = textos(Astro.currentLocale);
+const { titulo = t.contacto.titulo, texto = t.contacto.bajada, mensaje } = Astro.props;
+---
+<section class="relative isolate overflow-hidden border-t border-linea px-4 py-20 text-center md:px-6 md:py-28" aria-labelledby="titulo-llamado">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(55%_75%_at_50%_100%,rgb(var(--luz-1)/0.38),transparent_70%)]" aria-hidden="true"></div>
+  <h2 id="titulo-llamado" class="mx-auto max-w-3xl font-titulo text-[2.3rem] leading-[1.05] font-medium tracking-[-0.035em] text-balance sm:text-6xl">{titulo}</h2>
+  <p class="mx-auto mt-5 max-w-xl text-lg text-texto-2">{texto}</p>
+  <div class="mt-9"><Acciones centrado mensaje={mensaje} /></div>
+</section>

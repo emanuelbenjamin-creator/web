@@ -1,18 +1,24 @@
 ---
 import '../styles/global.css';
+import { textos } from '../i18n';
 
 interface Props {
   titulo: string;
   descripcion: string;
   imagen?: string; // ruta en public/ para la vista previa en redes
+  // Versiones de la misma página en cada idioma (para hreflang).
+  alternos?: { es: string; en: string };
+  tipoOg?: 'website' | 'article';
 }
 
-const { titulo, descripcion, imagen } = Astro.props;
+const { titulo, descripcion, imagen, alternos, tipoOg = 'website' } = Astro.props;
+const t = textos(Astro.currentLocale);
 const urlImagen = imagen && Astro.site ? new URL(imagen, Astro.site).href : imagen;
+const absoluta = (ruta: string) => (Astro.site ? new URL(ruta, Astro.site).href : ruta);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={t.idioma}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,9 +27,16 @@ const urlImagen = imagen && Astro.site ? new URL(imagen, Astro.site).href : imag
     <meta name="theme-color" content="#0a0b14" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {Astro.site && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />}
+    {alternos && (
+      <>
+        <link rel="alternate" hreflang="es" href={absoluta(alternos.es)} />
+        <link rel="alternate" hreflang="en" href={absoluta(alternos.en)} />
+        <link rel="alternate" hreflang="x-default" href={absoluta(alternos.es)} />
+      </>
+    )}
 
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_PE" />
+    <meta property="og:type" content={tipoOg} />
+    <meta property="og:locale" content={t.meta.ogLocale} />
     <meta property="og:site_name" content="Automatiza Studio" />
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descripcion} />
@@ -32,7 +45,6 @@ const urlImagen = imagen && Astro.site ? new URL(imagen, Astro.site).href : imag
     <meta name="twitter:title" content={titulo} />
     <meta name="twitter:description" content={descripcion} />
     <slot name="head" />
-
   </head>
   <body class="min-h-dvh antialiased">
     <slot />

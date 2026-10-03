@@ -6,38 +6,21 @@ import Agenda from './vitrina/Agenda.astro';
 import Administra from './vitrina/Administra.astro';
 import Conecta from './vitrina/Conecta.astro';
 import { PILARES, publicada } from '../datos/sitio';
+import { textos } from '../i18n';
 
-const textos = {
-  responde: {
-    titulo: 'Nunca más pierdas un cliente por responder tarde',
-    texto: 'Un agente de IA para WhatsApp, Instagram, Facebook y el chat de tu web atiende las 24 horas. Responde con la información real de tu negocio y pasa la conversación a una persona cuando hace falta.',
-  },
-  vende: {
-    titulo: 'Ningún cliente se pierde en el camino',
-    texto: 'Un CRM para pymes que se llena solo: cada persona que te escribe por WhatsApp, redes, tu web o tus anuncios entra al embudo y recibe seguimiento hasta comprar. También recuperamos clientes antiguos y cotizaciones sin respuesta.',
-  },
-  agenda: {
-    titulo: 'Citas sin llamadas ni idas y vueltas',
-    texto: 'Tus clientes reservan solos desde WhatsApp o tu web, directo en tu calendario. El sistema confirma, recuerda y reprograma por ti, para que falten menos.',
-  },
-  administra: {
-    titulo: 'Menos Excel, más tiempo para tu negocio',
-    texto: 'Automatización de procesos para empresas: leemos tus facturas y comprobantes, los reportes de ventas, caja e inventario te llegan solos, y las cobranzas se recuerdan sin que tengas que hacerlo tú.',
-  },
-  conecta: {
-    titulo: 'Tus sistemas, por fin conectados',
-    texto: 'Integración de sistemas sin complicaciones: unimos tu CRM, ERP, facturación electrónica, tienda online, Excel y correo para que la información fluya sola. Nadie vuelve a copiar y pegar datos.',
-  },
-} as const;
-
+const t = textos(Astro.currentLocale);
+const v = t.vitrina;
 const vistas = { responde: Responde, vende: Vende, agenda: Agenda, administra: Administra, conecta: Conecta };
+// En español, "Ver cómo funciona" lleva a la página del pilar; si no existe
+// (o en inglés), a los videos de demostración de la portada.
+const destino = (ruta: string) => (t.idioma === 'es' && publicada(ruta) ? ruta : `#${t.ids.demos}`);
 ---
-<section id="servicios" class="relative px-3 pb-16 sm:px-4 md:pb-24">
-  <h2 class="sr-only">Qué automatizamos</h2>
+<section id={t.ids.servicios} class="relative px-3 pb-16 sm:px-4 md:pb-24">
+  <h2 class="sr-only">{v.tituloOculto}</h2>
   <div class="mx-auto max-w-6xl rounded-[24px] border border-white/10 bg-tarjeta/95 p-4 shadow-[0_40px_120px_-30px_rgb(0_0_0/0.8)] backdrop-blur-sm sm:p-8 lg:p-12" data-vitrina data-pestanas>
     <div
       role="tablist"
-      aria-label="Los 5 pilares de Automatiza Studio"
+      aria-label={v.tablistAria}
       class="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0"
     >
       {PILARES.map((p, i) => (
@@ -50,7 +33,7 @@ const vistas = { responde: Responde, vende: Vende, agenda: Agenda, administra: A
           tabindex={i === 0 ? 0 : -1}
           class="min-h-11 shrink-0 snap-start rounded-full border border-transparent bg-white/[0.07] px-5 text-[0.95rem] font-medium text-texto/85 transition-colors hover:bg-white/[0.12] hover:text-texto aria-selected:border-white/80 aria-selected:bg-fondo aria-selected:text-texto"
         >
-          {p.nombre}
+          {t.pilares[p.id]}
         </button>
       ))}
     </div>
@@ -67,14 +50,14 @@ const vistas = { responde: Responde, vende: Vende, agenda: Agenda, administra: A
         >
           <div class="aparecer">
             <h3 class="font-titulo text-[2rem] leading-[1.08] font-medium tracking-[-0.03em] text-balance sm:text-[2.5rem] lg:text-[2.75rem]">
-              {textos[p.id].titulo}
+              {v.textos[p.id].titulo}
             </h3>
-            <p class="mt-5 max-w-lg text-texto-2">{textos[p.id].texto}</p>
+            <p class="mt-5 max-w-lg text-texto-2">{v.textos[p.id].texto}</p>
             <a
-              href={publicada(p.ruta) ? p.ruta : '#demos'}
+              href={destino(p.ruta)}
               class="mt-8 inline-flex min-h-12 items-center gap-2 rounded-xl bg-acento px-6 font-semibold text-sobre-acento transition-[filter,transform] duration-150 hover:-translate-y-0.5 hover:brightness-110"
             >
-              Ver cómo funciona <Flecha />
+              {v.verComoFunciona} <Flecha />
             </a>
           </div>
           <Vista />

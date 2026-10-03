@@ -1,27 +1,21 @@
 ---
 import Ventana from './Ventana.astro';
-
-const pasos = [
-  'Entra un pedido en tu tienda online',
-  'Se crea el cliente en tu CRM',
-  'Se emite la factura electrónica',
-  'Se descuenta el stock en tu ERP o Excel',
-  'Te llega el resumen por correo',
-];
+import { textos } from '../../i18n';
+const v = textos(Astro.currentLocale).vitrina.vistas.conecta;
 ---
-<Ventana titulo="Tus sistemas, conectados" puntos={['Funciona con lo que ya usas', 'Sin copiar y pegar datos', 'Conecta sistemas propios']}>
+<Ventana titulo={v.titulo} puntos={v.puntos}>
   <ol class="relative space-y-3 pl-7 text-[0.9rem]">
     <span class="absolute top-2 bottom-2 left-[0.55rem] w-px bg-white/15" aria-hidden="true">
       <span class="conecta__pulso absolute -left-[3px] size-[7px] rounded-full bg-acento-claro"></span>
     </span>
-    {pasos.map((p, i) => (
+    {v.pasos.map((p, i) => (
       <li class="aparecer relative" style={`animation-delay:${i * 120}ms`}>
         <span class="absolute top-[0.35rem] -left-[1.6rem] size-3 rounded-full border-2 border-acento-claro bg-superficie" aria-hidden="true"></span>
         {p}
       </li>
     ))}
   </ol>
-  <p class="mt-4 text-[0.75rem] text-texto-2">Sin que nadie copie y pegue nada.</p>
+  <p class="mt-4 text-[0.75rem] text-texto-2">{v.nota}</p>
 </Ventana>
 
 <style>

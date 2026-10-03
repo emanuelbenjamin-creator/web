@@ -1,10 +1,7 @@
 ---
-// Plantilla de las páginas internas: encabezado y pie del sitio, título de
-// página con un brillo suave arriba y el contenido en un ancho de lectura.
-import Base from './Base.astro';
-import Encabezado from '../components/Encabezado.astro';
-import Pie from '../components/secciones/Pie.astro';
-import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
+// Páginas de texto (legales, contacto, nosotros): título con un brillo suave
+// arriba y el contenido en un ancho de lectura.
+import Pagina from './Pagina.astro';
 
 interface Props {
   titulo: string;       // H1 de la página
@@ -15,23 +12,20 @@ interface Props {
 }
 const { titulo, tituloSeo, descripcion, bajada, ancho = 'lectura' } = Astro.props;
 ---
-<Base titulo={tituloSeo ?? `${titulo} | Automatiza Studio`} descripcion={descripcion}>
-  <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-tinta">Saltar al contenido</a>
-  <Encabezado />
-  <main id="contenido">
-    <div class="relative isolate overflow-hidden border-b border-linea px-4 pt-16 pb-12 md:px-6 md:pt-24 md:pb-16">
-      <div class="absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(70%_100%_at_50%_0%,rgb(var(--luz-1)/0.32),transparent_70%)]" aria-hidden="true"></div>
-      <div class:list={['mx-auto', ancho === 'lectura' ? 'max-w-3xl' : 'max-w-6xl']}>
-        <h1 class="font-titulo text-[2.4rem] leading-[1.05] font-medium tracking-[-0.035em] text-balance sm:text-6xl">{titulo}</h1>
-        {bajada && <p class="mt-5 max-w-2xl text-lg text-texto-2">{bajada}</p>}
-      </div>
+<Pagina titulo={tituloSeo ?? `${titulo} | Automatiza Studio`} descripcion={descripcion}>
+  <Fragment slot="head"><slot name="head" /></Fragment>
+  <div class="relative isolate overflow-hidden border-b border-linea px-4 pt-16 pb-12 md:px-6 md:pt-24 md:pb-16">
+    <div class="absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(70%_100%_at_50%_0%,rgb(var(--luz-1)/0.32),transparent_70%)]" aria-hidden="true"></div>
+    <div class:list={['mx-auto', ancho === 'lectura' ? 'max-w-3xl' : 'max-w-6xl']}>
+      <slot name="migas" />
+      <h1 class="font-titulo text-[2.4rem] leading-[1.05] font-medium tracking-[-0.035em] text-balance sm:text-6xl">{titulo}</h1>
+      {bajada && <p class="mt-5 max-w-2xl text-lg text-texto-2">{bajada}</p>}
     </div>
-    <div class="px-4 py-14 md:px-6 md:py-20">
-      <div class:list={['mx-auto', ancho === 'lectura' ? 'max-w-3xl' : 'max-w-6xl']}>
-        <slot />
-      </div>
+  </div>
+  <div class="px-4 py-14 md:px-6 md:py-20">
+    <div class:list={['mx-auto', ancho === 'lectura' ? 'max-w-3xl' : 'max-w-6xl']}>
+      <slot />
     </div>
-  </main>
-  <Pie />
-  <WhatsAppFlotante />
-</Base>
+  </div>
+  <slot name="despues" />
+</Pagina>

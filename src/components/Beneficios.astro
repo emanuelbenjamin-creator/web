@@ -1,0 +1,24 @@
+---
+// Lista de lo que incluye un servicio: título, texto y un check, separados
+// por líneas finas (sin tarjetas).
+import Check from './iconos/Check.astro';
+interface Props { titulo: string; bajada?: string; items: { titulo: string; texto: string }[] }
+const { titulo, bajada, items } = Astro.props;
+---
+<section class="px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-beneficios">
+  <div class="mx-auto max-w-6xl">
+    <h2 id="titulo-beneficios" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">{titulo}</h2>
+    {bajada && <p class="mt-4 max-w-xl text-texto-2">{bajada}</p>}
+    <ul class="mt-12 grid border-t border-linea sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((it) => (
+        <li class="flex gap-3 border-b border-linea py-7 sm:pr-8">
+          <Check class="mt-0.5 size-6 shrink-0 text-acento-claro" />
+          <div>
+            <h3 class="text-lg font-semibold">{it.titulo}</h3>
+            <p class="mt-1 text-texto-2">{it.texto}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

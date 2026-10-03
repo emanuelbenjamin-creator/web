@@ -1,10 +1,11 @@
 ---
-import { TECNOLOGIAS } from '../datos/sitio';
+import { textos } from '../i18n';
+const t = textos(Astro.currentLocale).tecnologias;
 ---
 <!-- [BORRA LAS QUE NO USES ANTES DE PUBLICAR]: la lista está en src/datos/sitio.ts -->
 <section class="border-y border-linea px-4 py-12 md:py-14" aria-labelledby="titulo-tecnologias">
-  <h2 id="titulo-tecnologias" class="text-center text-sm text-tenue">Trabajamos con las herramientas que ya usan las empresas líderes</h2>
+  <h2 id="titulo-tecnologias" class="text-center text-sm text-tenue">{t.titulo}</h2>
   <ul class="mx-auto mt-6 flex max-w-5xl flex-wrap items-center justify-center gap-x-7 gap-y-3 font-titulo text-[1.05rem] font-medium tracking-tight text-texto/60 md:gap-x-10 md:text-lg">
-    {TECNOLOGIAS.map((t) => <li class="transition-colors hover:text-texto">{t}</li>)}
+    {t.lista.map((n) => <li class="transition-colors hover:text-texto">{n}</li>)}
   </ul>
 </section>

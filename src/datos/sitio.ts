@@ -1,3 +1,5 @@
+import { RUBROS } from './rubros';
+
 // Datos de contacto en un solo lugar. Todo lo que va entre [CORCHETES] lo
 // completa Automatiza Studio antes de publicar.
 export const SITIO = {
@@ -14,29 +16,44 @@ export const SITIO = {
 export const pendiente = (valor: string) => valor.startsWith('[');
 
 // Enlace de WhatsApp con un mensaje ya escrito. Mientras falte el número,
-// lleva al formulario de contacto para que ningún botón quede roto.
-export function enlaceWhatsApp(mensaje = 'Hola, quiero automatizar mi negocio') {
-  if (pendiente(SITIO.whatsapp)) return '/#contacto';
+// lleva al formulario de contacto (respaldo) para que ningún botón quede roto.
+export function enlaceWhatsApp(mensaje = 'Hola, quiero automatizar mi negocio', respaldo = '/#contacto') {
+  if (pendiente(SITIO.whatsapp)) return respaldo;
   return `https://wa.me/${SITIO.whatsapp}?text=${encodeURIComponent(mensaje)}`;
 }
 
-export function enlaceAgenda() {
-  return pendiente(SITIO.agenda) ? '/#contacto' : SITIO.agenda;
+export function enlaceAgenda(respaldo = '/#contacto') {
+  return pendiente(SITIO.agenda) ? respaldo : SITIO.agenda;
 }
 
 // Páginas internas ya construidas. Al crear una página nueva se agrega
 // aquí, y los enlaces que apuntan a ella se activan solos (mientras tanto
 // llevan a su sección de la portada o no se muestran, para que no haya 404).
-export const PUBLICADAS = new Set<string>(['/privacidad/', '/terminos/', '/libro-de-reclamaciones/']);
-export const publicada = (ruta: string) => PUBLICADAS.has(ruta);
 
+// Los 5 pilares: la ruta de su página y una línea para el menú.
 export const PILARES = [
-  { id: 'responde', nombre: 'Responde', ruta: '/servicios/responde' },
-  { id: 'vende', nombre: 'Vende', ruta: '/servicios/vende' },
-  { id: 'agenda', nombre: 'Agenda', ruta: '/servicios/agenda' },
-  { id: 'administra', nombre: 'Administra', ruta: '/servicios/administra' },
-  { id: 'conecta', nombre: 'Conecta', ruta: '/servicios/conecta' },
+  { id: 'responde', nombre: 'Responde', ruta: '/servicios/responde/', lema: 'Atención automática 24/7' },
+  { id: 'vende', nombre: 'Vende', ruta: '/servicios/vende/', lema: 'Ningún cliente se pierde' },
+  { id: 'agenda', nombre: 'Agenda', ruta: '/servicios/agenda/', lema: 'Citas sin llamadas' },
+  { id: 'administra', nombre: 'Administra', ruta: '/servicios/administra/', lema: 'Menos Excel, más tiempo' },
+  { id: 'conecta', nombre: 'Conecta', ruta: '/servicios/conecta/', lema: 'Tus sistemas, conectados' },
 ] as const;
+export type IdPilar = (typeof PILARES)[number]['id'];
+
+// Páginas internas ya construidas. Al crear una página nueva se agrega
+// aquí, y los enlaces que apuntan a ella se activan solos (mientras tanto
+// llevan a su sección de la portada o no se muestran, para que no haya 404).
+export const PUBLICADAS = new Set<string>([
+  '/privacidad/',
+  '/terminos/',
+  '/libro-de-reclamaciones/',
+  '/precios/',
+  '/nosotros/',
+  '/contacto/',
+  ...PILARES.map((p) => p.ruta),
+  ...RUBROS.map((r) => `/rubros/${r.id}/`),
+]);
+export const publicada = (ruta: string) => PUBLICADAS.has(ruta);
 
 // [BORRA LAS QUE NO USES ANTES DE PUBLICAR]
 export const TECNOLOGIAS = [

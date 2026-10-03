@@ -1,0 +1,80 @@
+---
+// La portada completa. La usan / (español) y /en/ (inglés): los textos salen
+// del idioma de la URL.
+import Base from '../layouts/Base.astro';
+import Encabezado from './Encabezado.astro';
+import FondoLuz from './FondoLuz.astro';
+import Portada from './Portada.astro';
+import Vitrina from './Vitrina.astro';
+import Tecnologias from './Tecnologias.astro';
+import Problema from './secciones/Problema.astro';
+import Proceso from './secciones/Proceso.astro';
+import Rubros from './secciones/Rubros.astro';
+import Demos from './secciones/Demos.astro';
+import Calculadora from './secciones/Calculadora.astro';
+import Datos from './secciones/Datos.astro';
+import Precios from './secciones/Precios.astro';
+import Testimonios from './secciones/Testimonios.astro';
+import Preguntas from './secciones/Preguntas.astro';
+import Contacto from './secciones/Contacto.astro';
+import Pie from './secciones/Pie.astro';
+import WhatsAppFlotante from './WhatsAppFlotante.astro';
+import { SITIO, publicada } from '../datos/sitio';
+import { textos } from '../i18n';
+
+const t = textos(Astro.currentLocale);
+
+// Datos estructurados para Google: la agencia y sus preguntas frecuentes
+// (sin las que todavía tienen la respuesta pendiente).
+const agencia = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: SITIO.nombre,
+  url: new URL(t.inicio, SITIO.dominio).href,
+  email: SITIO.correo,
+  description: t.meta.descripcionAgencia,
+  areaServed: t.meta.areas,
+  address: { '@type': 'PostalAddress', addressCountry: 'PE' },
+  inLanguage: t.idioma,
+};
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: t.preguntas.lista
+    .filter((p) => !('pendiente' in p && p.pendiente))
+    .map((p) => ({ '@type': 'Question', name: p.pregunta, acceptedAnswer: { '@type': 'Answer', text: p.respuesta } })),
+};
+---
+<Base
+  titulo={t.meta.titulo}
+  descripcion={t.meta.descripcion}
+  alternos={publicada('/en/') ? { es: '/', en: '/en/' } : undefined}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(agencia)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faq)} />
+  </Fragment>
+
+  <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-tinta">{t.comun.saltar}</a>
+  <Encabezado />
+  <main id="contenido">
+    <div class="relative isolate">
+      <FondoLuz />
+      <Portada />
+      <Vitrina />
+    </div>
+    <Tecnologias />
+    <Problema />
+    <Proceso />
+    <Rubros />
+    <Demos />
+    <Calculadora />
+    <Datos />
+    <Precios />
+    <Testimonios />
+    <Preguntas />
+    <Contacto />
+  </main>
+  <Pie />
+  <WhatsAppFlotante />
+</Base>

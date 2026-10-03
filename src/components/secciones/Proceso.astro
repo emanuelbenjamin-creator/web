@@ -1,27 +1,6 @@
 ---
-const pasos = [
-  { titulo: 'Diagnóstico gratis', texto: '30 minutos para entender tu negocio y detectar qué conviene automatizar primero.' },
-  { titulo: 'Propuesta en 48 horas', texto: 'Te enviamos qué vamos a hacer, en cuánto tiempo y cuánto cuesta. Sin letra chica.' },
-  { titulo: 'Implementación en 1 a 3 semanas', texto: 'Lo construimos, lo conectamos a tus sistemas y lo probamos con tu equipo antes de lanzarlo.' },
-  { titulo: 'Soporte y mejora continua', texto: 'Revisamos cómo funciona, lo ajustamos y le sumamos mejoras cada mes.' },
-];
+import Pasos from './Pasos.astro';
+import { textos } from '../../i18n';
+const t = textos(Astro.currentLocale).proceso;
 ---
-<section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-proceso">
-  <div class="mx-auto max-w-6xl">
-    <h2 id="titulo-proceso" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Cómo trabajamos</h2>
-    <p class="mt-4 max-w-xl text-texto-2">De la primera conversación a tu negocio funcionando solo, en cuatro pasos.</p>
-
-    <ol class="relative mt-14 grid gap-10 md:grid-cols-4 md:gap-8">
-      <span class="absolute top-0 bottom-0 left-[1.15rem] w-px bg-gradient-to-b from-acento via-white/15 to-transparent md:top-[1.15rem] md:right-0 md:bottom-auto md:left-0 md:h-px md:w-auto md:bg-gradient-to-r" aria-hidden="true"></span>
-      {pasos.map((p, i) => (
-        <li class="relative pl-14 md:pt-14 md:pl-0">
-          <span class="absolute top-0 left-0 inline-flex size-[2.3rem] items-center justify-center rounded-full border border-white/20 bg-fondo font-titulo text-sm font-semibold text-acento-claro tabular-nums">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-          <h3 class="font-titulo text-xl font-medium tracking-tight">{p.titulo}</h3>
-          <p class="mt-2 text-texto-2">{p.texto}</p>
-        </li>
-      ))}
-    </ol>
-  </div>
-</section>
+<Pasos titulo={t.titulo} bajada={t.bajada} pasos={t.pasos} id="titulo-proceso" />

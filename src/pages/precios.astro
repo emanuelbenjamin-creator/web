@@ -1,0 +1,98 @@
+---
+import Pagina from '../layouts/Pagina.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Precios from '../components/secciones/Precios.astro';
+import Preguntas from '../components/secciones/Preguntas.astro';
+import LlamadoFinal from '../components/LlamadoFinal.astro';
+import Check from '../components/iconos/Check.astro';
+import { enlaceWhatsApp } from '../datos/sitio';
+import { PREGUNTAS } from '../datos/preguntas';
+
+const SI = 'si', NO = 'no';
+const filas: { que: string; valores: string[] }[] = [
+  { que: 'Agente de IA en WhatsApp, Instagram y Facebook', valores: [SI, SI, 'Según tu propuesta'] },
+  { que: 'Entrenado con la información de tu negocio', valores: [SI, SI, SI] },
+  { que: 'Pase de la conversación a una persona', valores: [SI, SI, 'Según tu propuesta'] },
+  { que: 'CRM con embudo de ventas', valores: [NO, SI, 'Según tu propuesta'] },
+  { que: 'Seguimiento automático por WhatsApp y correo', valores: [NO, SI, 'Según tu propuesta'] },
+  { que: 'Reservas, confirmaciones y recordatorios', valores: [NO, SI, 'Según tu propuesta'] },
+  { que: 'Procesos administrativos automáticos', valores: [NO, NO, SI] },
+  { que: 'Integración de tus sistemas', valores: [NO, NO, SI] },
+  { que: 'Asistente de IA con la información de tu empresa', valores: [NO, NO, SI] },
+  { que: 'Soporte, servidor y mejoras en la mensualidad', valores: [SI, SI, SI] },
+  { que: 'Listo en', valores: ['1 a 2 semanas', '2 a 3 semanas', 'Según el alcance'] },
+];
+const planes = ['Plan Responde', 'Plan Vende y Agenda', 'Plan Empresa Automática'];
+const complementarios = [
+  { titulo: 'Recepcionista de IA por voz', texto: 'Contesta las llamadas de tu negocio y agenda citas, como lo hace el agente en WhatsApp.', etiqueta: 'Próximamente' },
+  { titulo: 'Contenido con IA para redes', texto: 'Publicaciones y textos para tus redes sociales, preparados con IA y revisados por personas.' },
+  { titulo: 'Capacitación en IA para equipos', texto: 'Talleres prácticos para que tu equipo use la IA en su trabajo diario.' },
+];
+const preguntas = [
+  { pregunta: '¿Los precios incluyen IGV?', respuesta: 'No. Los precios en soles no incluyen IGV. Los precios en dólares son para empresas fuera de Perú.' },
+  ...PREGUNTAS.filter((p) => ['¿Cuánto demora?', '¿Qué incluye la mensualidad?', '¿Puedo cancelar cuando quiera?'].includes(p.pregunta)),
+];
+---
+<Pagina
+  titulo="Planes y precios | Automatiza Studio"
+  descripcion="Precios de agentes de IA para WhatsApp, CRM, agenda automática y automatización de procesos: Plan Responde desde S/1,500, Plan Vende y Agenda desde S/3,500 y Plan Empresa Automática desde S/6,000."
+>
+  <Cabecera
+    titulo="Planes y precios"
+    bajada="Precios desde, para que sepas por dónde empezar. Tu propuesta exacta llega en 48 horas, después del diagnóstico gratis."
+    migas={[{ texto: 'Inicio', href: '/' }, { texto: 'Precios' }]}
+  />
+  <Precios conTitulo={false} />
+
+  <section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-comparar">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-comparar" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Qué incluye cada plan</h2>
+      <div class="relative mt-10 overflow-x-auto rounded-2xl border border-white/10">
+        <table class="w-full min-w-[640px] text-left">
+          <thead>
+            <tr class="border-b border-white/10 bg-tarjeta">
+              <th scope="col" class="p-4 font-medium text-tenue">Incluye</th>
+              {planes.map((p) => <th scope="col" class="p-4 font-titulo text-lg font-medium">{p}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {filas.map((f) => (
+              <tr class="border-b border-white/10 last:border-0">
+                <th scope="row" class="p-4 font-normal text-texto-2">{f.que}</th>
+                {f.valores.map((v) => (
+                  <td class="p-4">
+                    {v === SI ? <><Check class="size-5 text-acento-claro" /><span class="sr-only">Incluido</span></>
+                      : v === NO ? <><span class="text-tenue" aria-hidden="true">—</span><span class="sr-only">No incluido</span></>
+                      : <span class="text-sm text-texto-2">{v}</span>}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-complementarios">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="titulo-complementarios" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">También te ayudamos con</h2>
+      <p class="mt-4 max-w-xl text-texto-2">Servicios que se suman a cualquier plan. Pregúntanos por su precio.</p>
+      <ul class="mt-12 grid gap-4 md:grid-cols-3">
+        {complementarios.map((s) => (
+          <li class="flex flex-col rounded-2xl border border-white/10 bg-tarjeta p-7">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="font-titulo text-xl font-medium tracking-tight">{s.titulo}</h3>
+              {s.etiqueta && <span class="shrink-0 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">{s.etiqueta}</span>}
+            </div>
+            <p class="mt-3 flex-1 text-texto-2">{s.texto}</p>
+            <a href={enlaceWhatsApp(`Hola, quiero información sobre: ${s.titulo}`)} class="mt-6 inline-flex min-h-11 items-center font-semibold text-acento-claro hover:underline">Consultar →</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Preguntas lista={preguntas} titulo="Preguntas sobre precios" bajada="" />
+  <LlamadoFinal />
+</Pagina>

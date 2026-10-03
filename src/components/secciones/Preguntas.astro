@@ -1,14 +1,24 @@
 ---
-import { PREGUNTAS } from '../../datos/preguntas';
+import { textos } from '../../i18n';
+
+interface Props {
+  // Por defecto, las preguntas generales del idioma; las páginas de pilares
+  // y el blog pasan las suyas.
+  lista?: { pregunta: string; respuesta: string }[];
+  titulo?: string;
+  bajada?: string;
+}
+const t = textos(Astro.currentLocale);
+const { lista = t.preguntas.lista, titulo = t.preguntas.titulo, bajada = t.preguntas.bajada } = Astro.props;
 ---
-<section id="preguntas" class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-preguntas">
+<section id={t.ids.preguntas} class="border-t border-linea px-4 py-20 md:px-6 md:py-28" aria-labelledby="titulo-preguntas">
   <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
     <div>
-      <h2 id="titulo-preguntas" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">Preguntas frecuentes</h2>
-      <p class="mt-4 max-w-sm text-texto-2">¿Tienes otra duda? Escríbenos por WhatsApp y te respondemos.</p>
+      <h2 id="titulo-preguntas" class="font-titulo text-[2.1rem] leading-[1.06] font-medium tracking-[-0.03em] sm:text-5xl">{titulo}</h2>
+      {bajada && <p class="mt-4 max-w-sm text-texto-2">{bajada}</p>}
     </div>
     <div class="divide-y divide-linea border-y border-linea">
-      {PREGUNTAS.map((p) => (
+      {lista.map((p) => (
         <details class="group">
           <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-semibold [&::-webkit-details-marker]:hidden">
             {p.pregunta}
