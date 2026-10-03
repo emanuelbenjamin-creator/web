@@ -9,8 +9,8 @@ const columnas = [
 <div class="luz" aria-hidden="true">
   {['luz__columnas luz__columnas--suave', 'luz__columnas luz__columnas--nitida'].map((capa) => (
     <div class={capa}>
-      {columnas.map(([alto, brillo], i) => (
-        <span class="luz__columna" style={`--alto:${alto}%;--brillo:${brillo};--retraso:${-i * 1.7}s`}></span>
+      {columnas.map(([alto, brillo]) => (
+        <span class="luz__columna" style={`--alto:${alto}%;--brillo:${brillo}`}></span>
       ))}
     </div>
   ))}

@@ -1,6 +1,10 @@
 ---
 import '../styles/global.css';
 import { textos } from '../i18n';
+// Las dos fuentes que usa la primera pantalla se piden de inmediato, sin
+// esperar a leer el CSS, para que el texto aparezca antes con su letra final.
+import fuenteTitulos from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
+import fuenteTexto from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 
 interface Props {
   titulo: string;
@@ -30,6 +34,8 @@ const absoluta = (ruta: string) => (Astro.site ? new URL(ruta, Astro.site).href 
     <meta name="description" content={descripcion} />
     <meta name="theme-color" content="#0a0b14" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href={fuenteTitulos} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fuenteTexto} as="font" type="font/woff2" crossorigin />
     {Astro.site && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />}
     {alternos && (
       <>
